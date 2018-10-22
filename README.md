@@ -1,2 +1,2 @@
-# R-Type
-R-Type project
+# RTYPE
+RTYPE
