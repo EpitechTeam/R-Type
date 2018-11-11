@@ -1,3 +1,0 @@
-/home/kahoul/epitech-tek3/R-Type/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/kahoul/epitech-tek3/R-Type/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/kahoul/epitech-tek3/R-Type/cmake-build-debug/CMakeFiles/R_Type.dir

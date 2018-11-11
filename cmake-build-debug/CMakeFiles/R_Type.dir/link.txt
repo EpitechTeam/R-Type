@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/R_Type.dir/src/server/src/main.cpp.o CMakeFiles/R_Type.dir/src/server/src/Room.cpp.o CMakeFiles/R_Type.dir/src/server/src/Server.cpp.o CMakeFiles/R_Type.dir/src/server/src/Session.cpp.o  -o R_Type 
