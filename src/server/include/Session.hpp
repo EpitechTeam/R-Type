@@ -6,6 +6,7 @@
 #define PROJECT_SESSION_HPP
 
 #include "Room.hpp"
+#include "Command.hpp"
 
 class Server;
 

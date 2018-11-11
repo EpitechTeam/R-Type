@@ -16,14 +16,16 @@ public:
     Server(boost::asio::io_context &io_context,
            const tcp::endpoint &endpoint);
 
-    void deliver(const Message &msg);
+    void deliver(const Message &msg, participant_ptr participant);
+
+    void execCommand(Command &command, participant_ptr participant);
 
 private:
     void doAccept();
 
 
     tcp::acceptor _acceptor;
-    Room _room;
+    std::list<Room> _rooms;
 };
 
 #endif //PROJECT_Server_HPP

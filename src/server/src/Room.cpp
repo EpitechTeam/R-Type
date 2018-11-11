@@ -4,6 +4,11 @@
 
 #include "../include/Room.hpp"
 
+Room::Room(std::string &name, int maxSlots)
+        : _name(name), _maxSlots(maxSlots) {
+    std::cout << "Room " << name << " with " << maxSlots << " slots max created." << std::endl;
+}
+
 void
 Room::join(participant_ptr participant) {
     _participants.insert(participant);

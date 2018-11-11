@@ -8,6 +8,7 @@
 Session::Session(tcp::socket socket, Server *server)
         : _socket(std::move(socket)),
           _server(server) {
+    std::cout << "Client Connected." << std::endl;
 }
 
 void
@@ -44,7 +45,7 @@ Session::doReadBody() {
                             boost::asio::buffer(_read_msg.body(), _read_msg.body_length()),
                             [this, self](boost::system::error_code ec, std::size_t /*length*/) {
                                 if (!ec) {
-                                    _server->deliver(_read_msg);
+                                    _server->deliver(_read_msg, shared_from_this());
                                     doReadHeader();
                                 } else {
                                 }
