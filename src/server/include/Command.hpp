@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <list>
-
+#include <vector>
 #include <stdio.h>
 #include <string.h>
 
@@ -15,7 +15,7 @@ class Command {
 public:
     Command(std::string command) {
         char *cstr = new char [command.length() + 1];
-        std::strcpy (cstr, command.c_str());
+        strcpy (cstr, command.c_str());
 
         char *tmp = strtok(cstr, "=");
         bool first = true;

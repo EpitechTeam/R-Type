@@ -16,6 +16,7 @@
 #include <boost/asio.hpp>
 
 #include "Message.hpp"
+#include "Participant.hpp"
 
 using boost::asio::ip::tcp;
 
@@ -24,28 +25,6 @@ using boost::asio::ip::tcp;
 typedef std::deque<Message> MessageQueue;
 
 //----------------------------------------------------------------------
-
-class Participant
-{
-public:
-    virtual ~Participant() {}
-    virtual void deliver(const Message& msg) = 0;
-
-
-    void setName(std::string &name) {
-        this->_name = name;
-    }
-
-    std::string getName(void) const {
-        return this->_name;
-    }
-
-private:
-    std::string _name;
-};
-
-typedef std::shared_ptr<Participant> participant_ptr;
-
 
 class Room {
 public:

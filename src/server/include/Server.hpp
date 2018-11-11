@@ -10,6 +10,7 @@
 #define PROJECT_SERVER_HPP
 
 #include "Session.hpp"
+#include "Parser.hpp"
 
 class Server {
 public:
@@ -18,14 +19,13 @@ public:
 
     void deliver(const Message &msg, participant_ptr participant);
 
-    void execCommand(Command &command, participant_ptr participant);
-
+    std::list<Room> _rooms;
 private:
     void doAccept();
 
 
     tcp::acceptor _acceptor;
-    std::list<Room> _rooms;
+    Parser *_parser;
 };
 
 #endif //PROJECT_Server_HPP
