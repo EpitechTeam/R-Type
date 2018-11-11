@@ -40,7 +40,7 @@ Parser::createRoom(Command &command, participant_ptr participant, Server *server
     std::string name(command.getArg(0));
     std::string slots(command.getArg(1));
 
-    server->_rooms.emplace_back(name, std::stoi(slots));
+    server->_rooms.emplace_back(server->getIo_context(), name, std::stoi(slots), server->getUdpEndpoint());
 }
 
 void

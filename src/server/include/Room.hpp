@@ -14,11 +14,14 @@
 #include <set>
 #include <utility>
 #include <boost/asio.hpp>
+#include <boost/bind.hpp>
+
 
 #include "Message.hpp"
 #include "Participant.hpp"
 
 using boost::asio::ip::tcp;
+using boost::asio::ip::udp;
 
 //----------------------------------------------------------------------
 
@@ -26,9 +29,33 @@ typedef std::deque<Message> MessageQueue;
 
 //----------------------------------------------------------------------
 
+class UDPServer {
+public:
+    UDPServer(boost::asio::io_context &, const udp::endpoint &);
+
+    ~UDPServer();
+
+private:
+    void startReceive();
+
+    void handleReceive(const boost::system::error_code& error,
+                       std::size_t bytes_transferred);
+
+    void handleSend(std::shared_ptr<std::string> message,
+                    const boost::system::error_code& ec,
+                    std::size_t bytes_transferred);
+
+private:
+    udp::socket _socket;
+    udp::endpoint _remoteEndpoint;
+    std::array<char, 1024> _recvBuffer;
+
+};
+//----------------------------------------------------------------------
+
 class Room {
 public:
-    Room(std::string &name, int maxSlots);
+    Room(boost::asio::io_context &, std::string &name, int maxSlots, const udp::endpoint&);
 
     static Room *find(std::list<Room> &rooms, std::string &name) {
 
@@ -59,6 +86,9 @@ private:
     MessageQueue _recent_msgs;
     std::string _name;
     int _maxSlots;
+    UDPServer _udpServer;
+
 };
+
 
 #endif //PROJECT_ROOM_HPP
