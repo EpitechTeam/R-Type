@@ -1,13 +1,13 @@
-//
+//4
 // Created by cherkaoui on 10/11/18.
 //
 
-#ifndef R_TYPE_MENU_HPP
-#define R_TYPE_MENU_HPP
+#ifndef R_TYPE_JOINROOM_HPP
+#define R_TYPE_JOINROOM_HPP
 
 #include "client.hpp"
 
-class Menu {
+class JoinRoom {
 
 public:
     sf::Texture texture;
@@ -23,9 +23,7 @@ public:
     float positionx = 30;
     float positiony = 442;
 
-
-
-    Menu(){
+    JoinRoom(){
         if (!texture.loadFromFile("./src/client/myasset/background.jpg")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
@@ -50,16 +48,16 @@ public:
             std::cout << "ERROR FONT" << std::endl;
         }
         text.setFont(font); // font est un sf::Font
-        text.setString("multyplayer");
+        text.setString("server:");
         text.setCharacterSize(120);
-        text.setPosition(250, 180 + 200);
+        text.setPosition(250, 190 + 200);
         text2.setFont(font);
-        text2.setString("Exit");
+        text2.setString("room name:");
         text2.setCharacterSize(120);
-        text2.setPosition(360, 350 + 200);
+        text2.setPosition(250, 320 + 200);
     };
 
-    ~Menu(){
+    ~JoinRoom(){
 
     };
 
@@ -80,12 +78,12 @@ public:
         if (event.key.code == sf::Keyboard::Return)
         {
             if (starship.getPosition().y > 550) {
-                return 0;
+                return 3;
             } else {
-                return AUTH;
+                return 2;
             }
         }
-        return MENU;
+        return 4;
     }
 
     void draw(sf::RenderWindow *window){
@@ -111,5 +109,4 @@ public:
         window->draw(this->starship);
     }
 };
-
-#endif //R_TYPE_MENU_HPP
+#endif //R_TYPE_JOINROOM_HPP

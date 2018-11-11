@@ -16,6 +16,14 @@ add_executable(R_Type
         src/client/source/lib/Menu.hpp
         src/client/source/lib/Connection.cpp
         src/client/source/lib/Connection.hpp
+        src/client/source/lib/CreateRoom.cpp
+        src/client/source/lib/CreateRoom.hpp
+        src/client/source/lib/Room.cpp
+        src/client/source/lib/Room.hpp
+        src/client/source/lib/JoinRoom.cpp
+        src/client/source/lib/JoinRoom.hpp
+        src/client/source/lib/Auth.cpp
+        src/client/source/lib/Auth.hpp
         src/client/source/lib/utils.cpp
         src/client/source/main.cpp)
 

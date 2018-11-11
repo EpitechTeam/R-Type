@@ -80,12 +80,12 @@ public:
         if (event.key.code == sf::Keyboard::Return)
         {
             if (starship.getPosition().y > 550) {
-                return 1;
+                return JOINROOM;
             } else {
-                return 1;
+                return CREATEROOM;
             }
         }
-        return 2;
+        return LOBBY;
     }
 
     void draw(sf::RenderWindow *window){
