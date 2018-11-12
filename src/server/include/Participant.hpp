@@ -32,8 +32,6 @@ public:
 
     void setRoom(Room *room);
 
-    virtual void exitRoom(void) = 0;
-
     Room *_currentRoom = NULL;
 
 private:

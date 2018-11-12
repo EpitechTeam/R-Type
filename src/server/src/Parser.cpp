@@ -10,9 +10,9 @@ Parser::Parser(Server *server)
 
     this->_functions.emplace("createRoom", Parser::createRoom);
     this->_functions.emplace("joinRoom", Parser::joinRoom);
-    this->_functions.emplace("exitRoom", Parser::exitRoom);
+    this->_functions.emplace("leaveRoom", Parser::leaveRoom);
     this->_functions.emplace("setName", Parser::setName);
-    this->_functions.emplace("printName", Parser::printRoom);
+    this->_functions.emplace("printRoom", Parser::printRoom);
     this->_functions.emplace("message", Parser::message);
 }
 
@@ -54,14 +54,21 @@ Parser::joinRoom(Command &command, participant_ptr participant, Server *server) 
         std::cout << "Unknown room" << std::endl;
     } else {
         tmp->join(participant);
-        std::cout << participant->getName() << " enter the room" << tmp->getName() << "." << std::endl;
+        std::cout << participant->getName() << " enter the room " << tmp->getName() << "." << std::endl;
     }
 }
 
 void
-Parser::exitRoom(Command &command, participant_ptr participant, Server *server) {
+Parser::leaveRoom(Command &command, participant_ptr participant, Server *server) {
 
-    participant->exitRoom();
+    if (participant->_currentRoom) {
+
+        std::cout << participant->getName() << " leave the room " << participant->_currentRoom->getName() << "." << std::endl;
+        participant->_currentRoom->leave(participant);
+        participant->_currentRoom = NULL;
+    } else {
+        std::cout << participant->getName() << " isn't in a room." << std::endl;
+    }
 }
 
 void
@@ -77,9 +84,12 @@ Parser::printRoom(Command &command, participant_ptr participant, Server *server)
 
     auto tmp = Room::find(server->_rooms, roomName);
     std::cout << "Room " << roomName << "[";
-    for (auto it : tmp->_participants) {
-        std::cout << it->getName() << ", ";
+    if (tmp->_participants.size() > 0) {
+        for (auto it : tmp->_participants) {
+            std::cout << it->getName() << ", ";
+        }
     }
+
     std::cout << "]" << std::endl;
 }
 
