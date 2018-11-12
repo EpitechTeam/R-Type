@@ -5,10 +5,15 @@
 #include "../include/Session.hpp"
 #include "../include/Server.hpp"
 
+int Session::counter = 1;
+
 Session::Session(tcp::socket socket, Server *server)
         : _socket(std::move(socket)),
           _server(server) {
-    std::cout << "Client Connected." << std::endl;
+    std::string name("Player" + std::to_string(this->counter++));
+
+    this->setName(name);
+    std::cout << this->getName() << " Connected." << std::endl;
 }
 
 void

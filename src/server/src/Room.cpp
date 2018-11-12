@@ -2,8 +2,6 @@
 // Created by kahoul on 10/11/18.
 //
 
-#include <Room.hpp>
-
 #include "../include/Room.hpp"
 
 Room::Room(boost::asio::io_context &io_context, std::string &name, int maxSlots, const udp::endpoint& udpEndpoint)

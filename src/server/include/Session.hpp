@@ -33,6 +33,7 @@ private:
     tcp::socket _socket;
     Message _read_msg;
     MessageQueue _write_msgs;
+    static int counter;
 };
 
 #endif //PROJECT_SESSION_HPP

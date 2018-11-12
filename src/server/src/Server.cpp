@@ -2,8 +2,6 @@
 // Created by kahoul on 10/11/18.
 //
 
-#include <Server.hpp>
-
 #include "../include/Server.hpp"
 
 Server::Server
@@ -21,6 +19,8 @@ Server::doAccept() {
                 if (!ec)
                 {
                     std::make_shared<Session>(std::move(socket), this)->start();
+                } else {
+                    std::cout << ec << std::endl;
                 }
 
                 this->doAccept();
