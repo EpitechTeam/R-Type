@@ -14,12 +14,14 @@ Room::Room(boost::asio::io_context &io_context, std::string &name, int maxSlots,
 void
 Room::join(participant_ptr participant) {
     _participants.insert(participant);
+    participant->setRoom(this);
     for (auto msg: _recent_msgs)
         participant->deliver(msg);
 }
 
 void
 Room::leave(participant_ptr participant) {
+    participant->setRoom(NULL);
     _participants.erase(participant);
 }
 

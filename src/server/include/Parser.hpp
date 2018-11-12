@@ -22,8 +22,10 @@ public:
 private:
     static void createRoom(Command &command, participant_ptr participant, Server *server);
     static void joinRoom(Command &command, participant_ptr participant, Server *server);
+    static void exitRoom(Command &command, participant_ptr participant, Server *server);
     static void setName(Command &command, participant_ptr participant, Server *server);
     static void printRoom(Command &command, participant_ptr participant, Server *server);
+    static void message(Command &command, participant_ptr participant, Server *server);
 
     std::map<std::string,
     std::function<void(Command &, participant_ptr, Server *server)>> _functions;

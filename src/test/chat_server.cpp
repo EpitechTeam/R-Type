@@ -184,6 +184,7 @@ class chat_server
 			{
 				if (!ec)
 				{
+					std::cout << "Connected !!!!" << std::endl;
 					std::make_shared<chat_session>(std::move(socket), room_)->start();
 				}
 

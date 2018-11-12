@@ -878,6 +878,7 @@ include_directories(include/boost/spirit/home/classic/phoenix)
 include_directories(include/boost/spirit/home/classic/symbols)
 include_directories(include/boost/spirit/home/classic/tree)
 include_directories(include/boost/spirit/home/classic/utility)
+include_directories(include/boost/spirit/home/classic/utility/impl)
 include_directories(include/boost/spirit/home/classic/utility/impl/chset)
 include_directories(include/boost/spirit/home/karma)
 include_directories(include/boost/spirit/home/karma/action)
@@ -2449,26 +2450,7 @@ add_executable(R_Type
         include/boost/archive/detail/polymorphic_oarchive_route.hpp
         include/boost/archive/detail/register_archive.hpp
         include/boost/archive/detail/utf8_codecvt_facet.hpp
-        include/boost/archive/impl/archive_serializer_map.ipp
-        include/boost/archive/impl/basic_binary_iarchive.ipp
-        include/boost/archive/impl/basic_binary_iprimitive.ipp
-        include/boost/archive/impl/basic_binary_oarchive.ipp
-        include/boost/archive/impl/basic_binary_oprimitive.ipp
-        include/boost/archive/impl/basic_text_iarchive.ipp
-        include/boost/archive/impl/basic_text_iprimitive.ipp
-        include/boost/archive/impl/basic_text_oarchive.ipp
-        include/boost/archive/impl/basic_text_oprimitive.ipp
         include/boost/archive/impl/basic_xml_grammar.hpp
-        include/boost/archive/impl/basic_xml_iarchive.ipp
-        include/boost/archive/impl/basic_xml_oarchive.ipp
-        include/boost/archive/impl/text_iarchive_impl.ipp
-        include/boost/archive/impl/text_oarchive_impl.ipp
-        include/boost/archive/impl/text_wiarchive_impl.ipp
-        include/boost/archive/impl/text_woarchive_impl.ipp
-        include/boost/archive/impl/xml_iarchive_impl.ipp
-        include/boost/archive/impl/xml_oarchive_impl.ipp
-        include/boost/archive/impl/xml_wiarchive_impl.ipp
-        include/boost/archive/impl/xml_woarchive_impl.ipp
         include/boost/archive/iterators/base64_exception.hpp
         include/boost/archive/iterators/base64_from_binary.hpp
         include/boost/archive/iterators/binary_from_base64.hpp
@@ -2531,56 +2513,15 @@ add_executable(R_Type
         include/boost/archive/xml_oarchive.hpp
         include/boost/archive/xml_wiarchive.hpp
         include/boost/archive/xml_woarchive.hpp
-        include/boost/asio/detail/impl/buffer_sequence_adapter.ipp
-        include/boost/asio/detail/impl/descriptor_ops.ipp
         include/boost/asio/detail/impl/dev_poll_reactor.hpp
-        include/boost/asio/detail/impl/dev_poll_reactor.ipp
         include/boost/asio/detail/impl/epoll_reactor.hpp
-        include/boost/asio/detail/impl/epoll_reactor.ipp
-        include/boost/asio/detail/impl/eventfd_select_interrupter.ipp
-        include/boost/asio/detail/impl/handler_tracking.ipp
         include/boost/asio/detail/impl/kqueue_reactor.hpp
-        include/boost/asio/detail/impl/kqueue_reactor.ipp
-        include/boost/asio/detail/impl/null_event.ipp
-        include/boost/asio/detail/impl/pipe_select_interrupter.ipp
-        include/boost/asio/detail/impl/posix_event.ipp
-        include/boost/asio/detail/impl/posix_mutex.ipp
-        include/boost/asio/detail/impl/posix_thread.ipp
-        include/boost/asio/detail/impl/posix_tss_ptr.ipp
-        include/boost/asio/detail/impl/reactive_descriptor_service.ipp
-        include/boost/asio/detail/impl/reactive_serial_port_service.ipp
-        include/boost/asio/detail/impl/reactive_socket_service_base.ipp
-        include/boost/asio/detail/impl/resolver_service_base.ipp
-        include/boost/asio/detail/impl/scheduler.ipp
         include/boost/asio/detail/impl/select_reactor.hpp
-        include/boost/asio/detail/impl/select_reactor.ipp
         include/boost/asio/detail/impl/service_registry.hpp
-        include/boost/asio/detail/impl/service_registry.ipp
-        include/boost/asio/detail/impl/signal_set_service.ipp
-        include/boost/asio/detail/impl/socket_ops.ipp
-        include/boost/asio/detail/impl/socket_select_interrupter.ipp
         include/boost/asio/detail/impl/strand_executor_service.hpp
-        include/boost/asio/detail/impl/strand_executor_service.ipp
         include/boost/asio/detail/impl/strand_service.hpp
-        include/boost/asio/detail/impl/strand_service.ipp
-        include/boost/asio/detail/impl/throw_error.ipp
-        include/boost/asio/detail/impl/timer_queue_ptime.ipp
-        include/boost/asio/detail/impl/timer_queue_set.ipp
-        include/boost/asio/detail/impl/win_event.ipp
-        include/boost/asio/detail/impl/win_iocp_handle_service.ipp
         include/boost/asio/detail/impl/win_iocp_io_context.hpp
-        include/boost/asio/detail/impl/win_iocp_io_context.ipp
-        include/boost/asio/detail/impl/win_iocp_serial_port_service.ipp
-        include/boost/asio/detail/impl/win_iocp_socket_service_base.ipp
-        include/boost/asio/detail/impl/win_mutex.ipp
-        include/boost/asio/detail/impl/win_object_handle_service.ipp
-        include/boost/asio/detail/impl/win_static_mutex.ipp
-        include/boost/asio/detail/impl/win_thread.ipp
-        include/boost/asio/detail/impl/win_tss_ptr.ipp
-        include/boost/asio/detail/impl/winrt_ssocket_service_base.ipp
         include/boost/asio/detail/impl/winrt_timer_scheduler.hpp
-        include/boost/asio/detail/impl/winrt_timer_scheduler.ipp
-        include/boost/asio/detail/impl/winsock_init.ipp
         include/boost/asio/detail/array.hpp
         include/boost/asio/detail/array_fwd.hpp
         include/boost/asio/detail/assert.hpp
@@ -2783,7 +2724,6 @@ add_executable(R_Type
         include/boost/asio/experimental/co_spawn.hpp
         include/boost/asio/experimental/detached.hpp
         include/boost/asio/experimental/redirect_error.hpp
-        include/boost/asio/generic/detail/impl/endpoint.ipp
         include/boost/asio/generic/detail/endpoint.hpp
         include/boost/asio/generic/basic_endpoint.hpp
         include/boost/asio/generic/datagram_protocol.hpp
@@ -2795,45 +2735,30 @@ add_executable(R_Type
         include/boost/asio/impl/connect.hpp
         include/boost/asio/impl/defer.hpp
         include/boost/asio/impl/dispatch.hpp
-        include/boost/asio/impl/error.ipp
         include/boost/asio/impl/execution_context.hpp
-        include/boost/asio/impl/execution_context.ipp
         include/boost/asio/impl/executor.hpp
-        include/boost/asio/impl/executor.ipp
-        include/boost/asio/impl/handler_alloc_hook.ipp
         include/boost/asio/impl/io_context.hpp
-        include/boost/asio/impl/io_context.ipp
         include/boost/asio/impl/post.hpp
         include/boost/asio/impl/read.hpp
         include/boost/asio/impl/read_at.hpp
         include/boost/asio/impl/read_until.hpp
         include/boost/asio/impl/serial_port_base.hpp
-        include/boost/asio/impl/serial_port_base.ipp
         include/boost/asio/impl/spawn.hpp
         include/boost/asio/impl/src.hpp
         include/boost/asio/impl/system_context.hpp
-        include/boost/asio/impl/system_context.ipp
         include/boost/asio/impl/system_executor.hpp
         include/boost/asio/impl/thread_pool.hpp
-        include/boost/asio/impl/thread_pool.ipp
         include/boost/asio/impl/use_future.hpp
         include/boost/asio/impl/write.hpp
         include/boost/asio/impl/write_at.hpp
-        include/boost/asio/ip/detail/impl/endpoint.ipp
         include/boost/asio/ip/detail/endpoint.hpp
         include/boost/asio/ip/detail/socket_option.hpp
         include/boost/asio/ip/impl/address.hpp
-        include/boost/asio/ip/impl/address.ipp
         include/boost/asio/ip/impl/address_v4.hpp
-        include/boost/asio/ip/impl/address_v4.ipp
         include/boost/asio/ip/impl/address_v6.hpp
-        include/boost/asio/ip/impl/address_v6.ipp
         include/boost/asio/ip/impl/basic_endpoint.hpp
-        include/boost/asio/ip/impl/host_name.ipp
         include/boost/asio/ip/impl/network_v4.hpp
-        include/boost/asio/ip/impl/network_v4.ipp
         include/boost/asio/ip/impl/network_v6.hpp
-        include/boost/asio/ip/impl/network_v6.ipp
         include/boost/asio/ip/address.hpp
         include/boost/asio/ip/address_v4.hpp
         include/boost/asio/ip/address_v4_iterator.hpp
@@ -2860,7 +2785,6 @@ add_executable(R_Type
         include/boost/asio/ip/udp.hpp
         include/boost/asio/ip/unicast.hpp
         include/boost/asio/ip/v6_only.hpp
-        include/boost/asio/local/detail/impl/endpoint.ipp
         include/boost/asio/local/detail/endpoint.hpp
         include/boost/asio/local/basic_endpoint.hpp
         include/boost/asio/local/connect_pair.hpp
@@ -2872,8 +2796,6 @@ add_executable(R_Type
         include/boost/asio/posix/descriptor_base.hpp
         include/boost/asio/posix/stream_descriptor.hpp
         include/boost/asio/posix/stream_descriptor_service.hpp
-        include/boost/asio/ssl/detail/impl/engine.ipp
-        include/boost/asio/ssl/detail/impl/openssl_init.ipp
         include/boost/asio/ssl/detail/buffered_handshake_op.hpp
         include/boost/asio/ssl/detail/engine.hpp
         include/boost/asio/ssl/detail/handshake_op.hpp
@@ -2887,9 +2809,6 @@ add_executable(R_Type
         include/boost/asio/ssl/detail/verify_callback.hpp
         include/boost/asio/ssl/detail/write_op.hpp
         include/boost/asio/ssl/impl/context.hpp
-        include/boost/asio/ssl/impl/context.ipp
-        include/boost/asio/ssl/impl/error.ipp
-        include/boost/asio/ssl/impl/rfc2818_verification.ipp
         include/boost/asio/ssl/impl/src.hpp
         include/boost/asio/ssl/context.hpp
         include/boost/asio/ssl/context_base.hpp
@@ -3119,22 +3038,6 @@ add_executable(R_Type
         include/boost/beast/core/detail/type_traits.hpp
         include/boost/beast/core/detail/variant.hpp
         include/boost/beast/core/detail/varint.hpp
-        include/boost/beast/core/impl/buffered_read_stream.ipp
-        include/boost/beast/core/impl/buffers_adapter.ipp
-        include/boost/beast/core/impl/buffers_cat.ipp
-        include/boost/beast/core/impl/buffers_prefix.ipp
-        include/boost/beast/core/impl/buffers_suffix.ipp
-        include/boost/beast/core/impl/file_posix.ipp
-        include/boost/beast/core/impl/file_stdio.ipp
-        include/boost/beast/core/impl/file_win32.ipp
-        include/boost/beast/core/impl/flat_buffer.ipp
-        include/boost/beast/core/impl/flat_static_buffer.ipp
-        include/boost/beast/core/impl/handler_ptr.ipp
-        include/boost/beast/core/impl/multi_buffer.ipp
-        include/boost/beast/core/impl/read_size.ipp
-        include/boost/beast/core/impl/static_buffer.ipp
-        include/boost/beast/core/impl/static_string.ipp
-        include/boost/beast/core/impl/string_param.ipp
         include/boost/beast/core/bind_handler.hpp
         include/boost/beast/core/buffered_read_stream.hpp
         include/boost/beast/core/buffers_adapter.hpp
@@ -3165,20 +3068,6 @@ add_executable(R_Type
         include/boost/beast/http/detail/chunk_encode.hpp
         include/boost/beast/http/detail/rfc7230.hpp
         include/boost/beast/http/detail/type_traits.hpp
-        include/boost/beast/http/impl/basic_parser.ipp
-        include/boost/beast/http/impl/chunk_encode.ipp
-        include/boost/beast/http/impl/error.ipp
-        include/boost/beast/http/impl/field.ipp
-        include/boost/beast/http/impl/fields.ipp
-        include/boost/beast/http/impl/file_body_win32.ipp
-        include/boost/beast/http/impl/message.ipp
-        include/boost/beast/http/impl/parser.ipp
-        include/boost/beast/http/impl/read.ipp
-        include/boost/beast/http/impl/rfc7230.ipp
-        include/boost/beast/http/impl/serializer.ipp
-        include/boost/beast/http/impl/status.ipp
-        include/boost/beast/http/impl/verb.ipp
-        include/boost/beast/http/impl/write.ipp
         include/boost/beast/http/basic_dynamic_body.hpp
         include/boost/beast/http/basic_file_body.hpp
         include/boost/beast/http/basic_parser.hpp
@@ -3211,17 +3100,6 @@ add_executable(R_Type
         include/boost/beast/websocket/detail/stream_base.hpp
         include/boost/beast/websocket/detail/type_traits.hpp
         include/boost/beast/websocket/detail/utf8_checker.hpp
-        include/boost/beast/websocket/impl/accept.ipp
-        include/boost/beast/websocket/impl/close.ipp
-        include/boost/beast/websocket/impl/error.ipp
-        include/boost/beast/websocket/impl/handshake.ipp
-        include/boost/beast/websocket/impl/ping.ipp
-        include/boost/beast/websocket/impl/read.ipp
-        include/boost/beast/websocket/impl/rfc6455.ipp
-        include/boost/beast/websocket/impl/ssl.ipp
-        include/boost/beast/websocket/impl/stream.ipp
-        include/boost/beast/websocket/impl/teardown.ipp
-        include/boost/beast/websocket/impl/write.ipp
         include/boost/beast/websocket/error.hpp
         include/boost/beast/websocket/option.hpp
         include/boost/beast/websocket/rfc6455.hpp
@@ -3235,7 +3113,6 @@ add_executable(R_Type
         include/boost/beast/zlib/detail/inflate_stream.hpp
         include/boost/beast/zlib/detail/ranges.hpp
         include/boost/beast/zlib/detail/window.hpp
-        include/boost/beast/zlib/impl/error.ipp
         include/boost/beast/zlib/deflate_stream.hpp
         include/boost/beast/zlib/error.hpp
         include/boost/beast/zlib/inflate_stream.hpp
@@ -3503,23 +3380,6 @@ add_executable(R_Type
         include/boost/circular_buffer/debug.hpp
         include/boost/circular_buffer/details.hpp
         include/boost/circular_buffer/space_optimized.hpp
-        include/boost/compatibility/cpp_c_headers/cassert
-        include/boost/compatibility/cpp_c_headers/cctype
-        include/boost/compatibility/cpp_c_headers/cerrno
-        include/boost/compatibility/cpp_c_headers/cfloat
-        include/boost/compatibility/cpp_c_headers/climits
-        include/boost/compatibility/cpp_c_headers/clocale
-        include/boost/compatibility/cpp_c_headers/cmath
-        include/boost/compatibility/cpp_c_headers/csetjmp
-        include/boost/compatibility/cpp_c_headers/csignal
-        include/boost/compatibility/cpp_c_headers/cstdarg
-        include/boost/compatibility/cpp_c_headers/cstddef
-        include/boost/compatibility/cpp_c_headers/cstdio
-        include/boost/compatibility/cpp_c_headers/cstdlib
-        include/boost/compatibility/cpp_c_headers/cstring
-        include/boost/compatibility/cpp_c_headers/ctime
-        include/boost/compatibility/cpp_c_headers/cwchar
-        include/boost/compatibility/cpp_c_headers/cwctype
         include/boost/compute/algorithm/detail/balanced_path.hpp
         include/boost/compute/algorithm/detail/binary_find.hpp
         include/boost/compute/algorithm/detail/compact.hpp
@@ -4056,7 +3916,6 @@ add_executable(R_Type
         include/boost/context/execution_context.hpp
         include/boost/context/execution_context_v1.hpp
         include/boost/context/execution_context_v2.hpp
-        include/boost/context/execution_context_v2_void.ipp
         include/boost/context/fiber.hpp
         include/boost/context/fiber_fcontext.hpp
         include/boost/context/fiber_ucontext.hpp
@@ -4193,18 +4052,13 @@ add_executable(R_Type
         include/boost/coroutine/symmetric_coroutine.hpp
         include/boost/coroutine2/detail/config.hpp
         include/boost/coroutine2/detail/coroutine.hpp
-        include/boost/coroutine2/detail/create_control_block.ipp
         include/boost/coroutine2/detail/decay_copy.hpp
         include/boost/coroutine2/detail/disable_overload.hpp
         include/boost/coroutine2/detail/forced_unwind.hpp
         include/boost/coroutine2/detail/pull_control_block_cc.hpp
-        include/boost/coroutine2/detail/pull_control_block_cc.ipp
         include/boost/coroutine2/detail/pull_coroutine.hpp
-        include/boost/coroutine2/detail/pull_coroutine.ipp
         include/boost/coroutine2/detail/push_control_block_cc.hpp
-        include/boost/coroutine2/detail/push_control_block_cc.ipp
         include/boost/coroutine2/detail/push_coroutine.hpp
-        include/boost/coroutine2/detail/push_coroutine.ipp
         include/boost/coroutine2/detail/state.hpp
         include/boost/coroutine2/detail/wrap.hpp
         include/boost/coroutine2/all.hpp
@@ -4283,7 +4137,6 @@ add_executable(R_Type
         include/boost/date_time/filetime_functions.hpp
         include/boost/date_time/format_date_parser.hpp
         include/boost/date_time/gregorian_calendar.hpp
-        include/boost/date_time/gregorian_calendar.ipp
         include/boost/date_time/int_adapter.hpp
         include/boost/date_time/iso_format.hpp
         include/boost/date_time/local_time_adjustor.hpp
@@ -4411,7 +4264,6 @@ add_executable(R_Type
         include/boost/detail/sp_typeinfo.hpp
         include/boost/detail/templated_streams.hpp
         include/boost/detail/utf8_codecvt_facet.hpp
-        include/boost/detail/utf8_codecvt_facet.ipp
         include/boost/detail/workaround.hpp
         include/boost/dll/detail/demangling/demangle_symbol.hpp
         include/boost/dll/detail/demangling/itanium.hpp
@@ -6705,8 +6557,6 @@ add_executable(R_Type
         include/boost/graph/distributed/adjlist/serialization.hpp
         include/boost/graph/distributed/detail/dijkstra_shortest_paths.hpp
         include/boost/graph/distributed/detail/filtered_queue.hpp
-        include/boost/graph/distributed/detail/mpi_process_group.ipp
-        include/boost/graph/distributed/detail/queue.ipp
         include/boost/graph/distributed/detail/remote_update_set.hpp
         include/boost/graph/distributed/detail/tag_allocator.hpp
         include/boost/graph/distributed/adjacency_list.hpp
@@ -8704,7 +8554,6 @@ add_executable(R_Type
         include/boost/math/quaternion.hpp
         include/boost/math/special_functions.hpp
         include/boost/math/tr1.hpp
-        include/boost/math/tr1_c_macros.ipp
         include/boost/metaparse/error/digit_expected.hpp
         include/boost/metaparse/error/end_of_input_expected.hpp
         include/boost/metaparse/error/index_out_of_range.hpp
@@ -10206,9 +10055,6 @@ add_executable(R_Type
         include/boost/msm/front/row2.hpp
         include/boost/msm/front/state_machine_def.hpp
         include/boost/msm/front/states.hpp
-        include/boost/msm/mpl_graph/detail/adjacency_list_graph.ipp
-        include/boost/msm/mpl_graph/detail/graph_implementation_interface.ipp
-        include/boost/msm/mpl_graph/detail/incidence_list_graph.ipp
         include/boost/msm/mpl_graph/adjacency_list_graph.hpp
         include/boost/msm/mpl_graph/breadth_first_search.hpp
         include/boost/msm/mpl_graph/depth_first_search.hpp
@@ -11167,8 +11013,6 @@ add_executable(R_Type
         include/boost/polygon/voronoi_geometry_type.hpp
         include/boost/pool/detail/guard.hpp
         include/boost/pool/detail/mutex.hpp
-        include/boost/pool/detail/pool_construct.ipp
-        include/boost/pool/detail/pool_construct_simple.ipp
         include/boost/pool/object_pool.hpp
         include/boost/pool/pool.hpp
         include/boost/pool/pool_alloc.hpp
@@ -11714,7 +11558,6 @@ add_executable(R_Type
         include/boost/program_options/variables_map.hpp
         include/boost/program_options/version.hpp
         include/boost/property_map/parallel/detail/untracked_pair.hpp
-        include/boost/property_map/parallel/impl/distributed_property_map.ipp
         include/boost/property_map/parallel/basic_reduce.hpp
         include/boost/property_map/parallel/caching_property_map.hpp
         include/boost/property_map/parallel/distributed_property_map.hpp
@@ -12863,18 +12706,6 @@ add_executable(R_Type
         include/boost/spirit/home/classic/attribute/closure_fwd.hpp
         include/boost/spirit/home/classic/attribute/parametric.hpp
         include/boost/spirit/home/classic/attribute/typeof.hpp
-        include/boost/spirit/home/classic/core/composite/impl/alternative.ipp
-        include/boost/spirit/home/classic/core/composite/impl/difference.ipp
-        include/boost/spirit/home/classic/core/composite/impl/directives.ipp
-        include/boost/spirit/home/classic/core/composite/impl/exclusive_or.ipp
-        include/boost/spirit/home/classic/core/composite/impl/intersection.ipp
-        include/boost/spirit/home/classic/core/composite/impl/kleene_star.ipp
-        include/boost/spirit/home/classic/core/composite/impl/list.ipp
-        include/boost/spirit/home/classic/core/composite/impl/optional.ipp
-        include/boost/spirit/home/classic/core/composite/impl/positive.ipp
-        include/boost/spirit/home/classic/core/composite/impl/sequence.ipp
-        include/boost/spirit/home/classic/core/composite/impl/sequential_and.ipp
-        include/boost/spirit/home/classic/core/composite/impl/sequential_or.ipp
         include/boost/spirit/home/classic/core/composite/actions.hpp
         include/boost/spirit/home/classic/core/composite/alternative.hpp
         include/boost/spirit/home/classic/core/composite/composite.hpp
@@ -12892,26 +12723,16 @@ add_executable(R_Type
         include/boost/spirit/home/classic/core/composite/sequence.hpp
         include/boost/spirit/home/classic/core/composite/sequential_and.hpp
         include/boost/spirit/home/classic/core/composite/sequential_or.hpp
-        include/boost/spirit/home/classic/core/impl/match.ipp
-        include/boost/spirit/home/classic/core/impl/match_attr_traits.ipp
-        include/boost/spirit/home/classic/core/impl/parser.ipp
-        include/boost/spirit/home/classic/core/non_terminal/impl/grammar.ipp
-        include/boost/spirit/home/classic/core/non_terminal/impl/object_with_id.ipp
-        include/boost/spirit/home/classic/core/non_terminal/impl/rule.ipp
         include/boost/spirit/home/classic/core/non_terminal/impl/static.hpp
-        include/boost/spirit/home/classic/core/non_terminal/impl/subrule.ipp
         include/boost/spirit/home/classic/core/non_terminal/grammar.hpp
         include/boost/spirit/home/classic/core/non_terminal/parser_context.hpp
         include/boost/spirit/home/classic/core/non_terminal/parser_id.hpp
         include/boost/spirit/home/classic/core/non_terminal/rule.hpp
         include/boost/spirit/home/classic/core/non_terminal/subrule.hpp
         include/boost/spirit/home/classic/core/non_terminal/subrule_fwd.hpp
-        include/boost/spirit/home/classic/core/primitives/impl/numerics.ipp
-        include/boost/spirit/home/classic/core/primitives/impl/primitives.ipp
         include/boost/spirit/home/classic/core/primitives/numerics.hpp
         include/boost/spirit/home/classic/core/primitives/numerics_fwd.hpp
         include/boost/spirit/home/classic/core/primitives/primitives.hpp
-        include/boost/spirit/home/classic/core/scanner/impl/skipper.ipp
         include/boost/spirit/home/classic/core/scanner/scanner.hpp
         include/boost/spirit/home/classic/core/scanner/scanner_fwd.hpp
         include/boost/spirit/home/classic/core/scanner/skipper.hpp
@@ -12923,14 +12744,10 @@ add_executable(R_Type
         include/boost/spirit/home/classic/core/parser.hpp
         include/boost/spirit/home/classic/core/safe_bool.hpp
         include/boost/spirit/home/classic/core/typeof.hpp
-        include/boost/spirit/home/classic/debug/impl/parser_names.ipp
         include/boost/spirit/home/classic/debug/debug_node.hpp
         include/boost/spirit/home/classic/debug/minimal.hpp
         include/boost/spirit/home/classic/debug/parser_names.hpp
         include/boost/spirit/home/classic/debug/typeof.hpp
-        include/boost/spirit/home/classic/dynamic/impl/conditions.ipp
-        include/boost/spirit/home/classic/dynamic/impl/select.ipp
-        include/boost/spirit/home/classic/dynamic/impl/switch.ipp
         include/boost/spirit/home/classic/dynamic/for.hpp
         include/boost/spirit/home/classic/dynamic/if.hpp
         include/boost/spirit/home/classic/dynamic/lazy.hpp
@@ -12941,12 +12758,9 @@ add_executable(R_Type
         include/boost/spirit/home/classic/dynamic/switch.hpp
         include/boost/spirit/home/classic/dynamic/typeof.hpp
         include/boost/spirit/home/classic/dynamic/while.hpp
-        include/boost/spirit/home/classic/error_handling/impl/exceptions.ipp
         include/boost/spirit/home/classic/error_handling/exceptions.hpp
         include/boost/spirit/home/classic/error_handling/exceptions_fwd.hpp
         include/boost/spirit/home/classic/error_handling/typeof.hpp
-        include/boost/spirit/home/classic/iterator/impl/file_iterator.ipp
-        include/boost/spirit/home/classic/iterator/impl/position_iterator.ipp
         include/boost/spirit/home/classic/iterator/file_iterator.hpp
         include/boost/spirit/home/classic/iterator/file_iterator_fwd.hpp
         include/boost/spirit/home/classic/iterator/fixed_size_queue.hpp
@@ -12955,10 +12769,6 @@ add_executable(R_Type
         include/boost/spirit/home/classic/iterator/position_iterator.hpp
         include/boost/spirit/home/classic/iterator/position_iterator_fwd.hpp
         include/boost/spirit/home/classic/iterator/typeof.hpp
-        include/boost/spirit/home/classic/meta/impl/fundamental.ipp
-        include/boost/spirit/home/classic/meta/impl/parser_traits.ipp
-        include/boost/spirit/home/classic/meta/impl/refactoring.ipp
-        include/boost/spirit/home/classic/meta/impl/traverse.ipp
         include/boost/spirit/home/classic/meta/as_parser.hpp
         include/boost/spirit/home/classic/meta/fundamental.hpp
         include/boost/spirit/home/classic/meta/parser_traits.hpp
@@ -12977,13 +12787,9 @@ add_executable(R_Type
         include/boost/spirit/home/classic/phoenix/statements.hpp
         include/boost/spirit/home/classic/phoenix/tuple_helpers.hpp
         include/boost/spirit/home/classic/phoenix/tuples.hpp
-        include/boost/spirit/home/classic/symbols/impl/symbols.ipp
-        include/boost/spirit/home/classic/symbols/impl/tst.ipp
         include/boost/spirit/home/classic/symbols/symbols.hpp
         include/boost/spirit/home/classic/symbols/symbols_fwd.hpp
         include/boost/spirit/home/classic/symbols/typeof.hpp
-        include/boost/spirit/home/classic/tree/impl/parse_tree_utils.ipp
-        include/boost/spirit/home/classic/tree/impl/tree_to_xml.ipp
         include/boost/spirit/home/classic/tree/ast.hpp
         include/boost/spirit/home/classic/tree/ast_fwd.hpp
         include/boost/spirit/home/classic/tree/common.hpp
@@ -12994,15 +12800,7 @@ add_executable(R_Type
         include/boost/spirit/home/classic/tree/tree_to_xml.hpp
         include/boost/spirit/home/classic/tree/typeof.hpp
         include/boost/spirit/home/classic/utility/impl/chset/basic_chset.hpp
-        include/boost/spirit/home/classic/utility/impl/chset/basic_chset.ipp
         include/boost/spirit/home/classic/utility/impl/chset/range_run.hpp
-        include/boost/spirit/home/classic/utility/impl/chset/range_run.ipp
-        include/boost/spirit/home/classic/utility/impl/chset.ipp
-        include/boost/spirit/home/classic/utility/impl/chset_operators.ipp
-        include/boost/spirit/home/classic/utility/impl/confix.ipp
-        include/boost/spirit/home/classic/utility/impl/escape_char.ipp
-        include/boost/spirit/home/classic/utility/impl/lists.ipp
-        include/boost/spirit/home/classic/utility/impl/regex.ipp
         include/boost/spirit/home/classic/utility/chset.hpp
         include/boost/spirit/home/classic/utility/chset_operators.hpp
         include/boost/spirit/home/classic/utility/confix.hpp
@@ -13907,20 +13705,11 @@ add_executable(R_Type
         include/boost/spirit/repository/include/qi_subrule.hpp
         include/boost/spirit/version.hpp
         include/boost/stacktrace/detail/addr2line_impls.hpp
-        include/boost/stacktrace/detail/collect_msvc.ipp
-        include/boost/stacktrace/detail/collect_noop.ipp
-        include/boost/stacktrace/detail/collect_unwind.ipp
         include/boost/stacktrace/detail/frame_decl.hpp
-        include/boost/stacktrace/detail/frame_msvc.ipp
-        include/boost/stacktrace/detail/frame_noop.ipp
-        include/boost/stacktrace/detail/frame_unwind.ipp
         include/boost/stacktrace/detail/libbacktrace_impls.hpp
         include/boost/stacktrace/detail/location_from_symbol.hpp
         include/boost/stacktrace/detail/pop_options.h
         include/boost/stacktrace/detail/push_options.h
-        include/boost/stacktrace/detail/safe_dump_noop.ipp
-        include/boost/stacktrace/detail/safe_dump_posix.ipp
-        include/boost/stacktrace/detail/safe_dump_win.ipp
         include/boost/stacktrace/detail/to_hex_array.hpp
         include/boost/stacktrace/detail/unwind_base_impls.hpp
         include/boost/stacktrace/detail/void_ptr_cast.hpp
@@ -13958,7 +13747,6 @@ add_executable(R_Type
         include/boost/statechart/state_machine.hpp
         include/boost/statechart/termination.hpp
         include/boost/statechart/transition.hpp
-        include/boost/system/detail/error_code.ipp
         include/boost/system/detail/local_free_on_destruction.hpp
         include/boost/system/api_config.hpp
         include/boost/system/config.hpp
@@ -13998,27 +13786,6 @@ add_executable(R_Type
         include/boost/test/detail/suppress_warnings.hpp
         include/boost/test/detail/throw_exception.hpp
         include/boost/test/detail/workaround.hpp
-        include/boost/test/impl/compiler_log_formatter.ipp
-        include/boost/test/impl/cpp_main.ipp
-        include/boost/test/impl/debug.ipp
-        include/boost/test/impl/decorator.ipp
-        include/boost/test/impl/execution_monitor.ipp
-        include/boost/test/impl/framework.ipp
-        include/boost/test/impl/junit_log_formatter.ipp
-        include/boost/test/impl/plain_report_formatter.ipp
-        include/boost/test/impl/progress_monitor.ipp
-        include/boost/test/impl/results_collector.ipp
-        include/boost/test/impl/results_reporter.ipp
-        include/boost/test/impl/test_framework_init_observer.ipp
-        include/boost/test/impl/test_main.ipp
-        include/boost/test/impl/test_tools.ipp
-        include/boost/test/impl/test_tree.ipp
-        include/boost/test/impl/unit_test_log.ipp
-        include/boost/test/impl/unit_test_main.ipp
-        include/boost/test/impl/unit_test_monitor.ipp
-        include/boost/test/impl/unit_test_parameters.ipp
-        include/boost/test/impl/xml_log_formatter.ipp
-        include/boost/test/impl/xml_report_formatter.ipp
         include/boost/test/included/execution_monitor.hpp
         include/boost/test/included/prg_exec_monitor.hpp
         include/boost/test/included/test_exec_monitor.hpp
@@ -14981,16 +14748,9 @@ add_executable(R_Type
         include/boost/uuid/detail/config.hpp
         include/boost/uuid/detail/md5.hpp
         include/boost/uuid/detail/random_provider.hpp
-        include/boost/uuid/detail/random_provider_arc4random.ipp
-        include/boost/uuid/detail/random_provider_bcrypt.ipp
         include/boost/uuid/detail/random_provider_detect_platform.hpp
-        include/boost/uuid/detail/random_provider_getentropy.ipp
         include/boost/uuid/detail/random_provider_include_platform.hpp
-        include/boost/uuid/detail/random_provider_posix.ipp
-        include/boost/uuid/detail/random_provider_wincrypt.ipp
         include/boost/uuid/detail/sha1.hpp
-        include/boost/uuid/detail/uuid_generic.ipp
-        include/boost/uuid/detail/uuid_x86.ipp
         include/boost/uuid/basic_name_generator.hpp
         include/boost/uuid/entropy_error.hpp
         include/boost/uuid/name_generator.hpp
@@ -15194,10 +14954,8 @@ add_executable(R_Type
         include/boost/vmd/vmd.hpp
         include/boost/wave/cpplexer/re2clex/aq.hpp
         include/boost/wave/cpplexer/re2clex/cpp_re.hpp
-        include/boost/wave/cpplexer/re2clex/cpp_re.inc
         include/boost/wave/cpplexer/re2clex/cpp_re2c_lexer.hpp
         include/boost/wave/cpplexer/re2clex/scanner.hpp
-        include/boost/wave/cpplexer/re2clex/strict_cpp_re.inc
         include/boost/wave/cpplexer/convert_trigraphs.hpp
         include/boost/wave/cpplexer/cpp_lex_interface.hpp
         include/boost/wave/cpplexer/cpp_lex_interface_generator.hpp
@@ -15390,10 +15148,8 @@ add_executable(R_Type
         include/boost/xpressive/detail/static/visitor.hpp
         include/boost/xpressive/detail/static/width_of.hpp
         include/boost/xpressive/detail/utility/chset/basic_chset.hpp
-        include/boost/xpressive/detail/utility/chset/basic_chset.ipp
         include/boost/xpressive/detail/utility/chset/chset.hpp
         include/boost/xpressive/detail/utility/chset/range_run.hpp
-        include/boost/xpressive/detail/utility/chset/range_run.ipp
         include/boost/xpressive/detail/utility/algorithm.hpp
         include/boost/xpressive/detail/utility/any.hpp
         include/boost/xpressive/detail/utility/boyer_moore.hpp
@@ -15576,7 +15332,10 @@ add_executable(R_Type
         include/boost/visit_each.hpp
         include/boost/wave.hpp
         include/boost/weak_ptr.hpp
+        src/server/include/Command.hpp
         src/server/include/Message.hpp
+        src/server/include/Parser.hpp
+        src/server/include/Participant.hpp
         src/server/include/Room.hpp
         src/server/include/Server.hpp
         src/server/include/Session.hpp
@@ -28904,6 +28663,7 @@ add_executable(R_Type
         src/server/includeOSX/boost/wave.hpp
         src/server/includeOSX/boost/weak_ptr.hpp
         src/server/src/main.cpp
+        src/server/src/Parser.cpp
         src/server/src/Room.cpp
         src/server/src/Server.cpp
         src/server/src/Session.cpp)

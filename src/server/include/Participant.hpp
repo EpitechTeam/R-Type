@@ -17,6 +17,8 @@
 
 #include "Message.hpp"
 
+class Room;
+
 class Participant
 {
 public:
@@ -24,13 +26,15 @@ public:
     virtual void deliver(const Message& msg) = 0;
 
 
-    void setName(std::string &name) {
-        this->_name = name;
-    }
+    void setName(std::string &name);
 
-    std::string getName(void) const {
-        return this->_name;
-    }
+    std::string getName(void) const;
+
+    void setRoom(Room *room);
+
+    virtual void exitRoom(void) = 0;
+
+    Room *_currentRoom = NULL;
 
 private:
     std::string _name;

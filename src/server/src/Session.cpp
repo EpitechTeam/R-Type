@@ -68,3 +68,10 @@ Session::doWrite() {
                                  }
                              });
 }
+
+void
+Session::exitRoom(void) {
+    if (this->_currentRoom) {
+        // this->_currentRoom->leave(shared_from_this());
+    }
+}

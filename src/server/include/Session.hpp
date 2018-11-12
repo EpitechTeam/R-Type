@@ -27,6 +27,8 @@ private:
 
     void doWrite();
 
+    void exitRoom(void);
+
     Server *_server;
     tcp::socket _socket;
     Message _read_msg;

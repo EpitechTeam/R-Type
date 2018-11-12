@@ -66,6 +66,10 @@ public:
         }
     }
 
+    bool containParticipant(participant_ptr participant) {
+
+    }
+
     std::string getName() const {
         return this->_name;
     }
@@ -75,7 +79,6 @@ public:
     void leave(participant_ptr participant);
 
     void deliver(const Message &msg);
-
 
 
     std::set <participant_ptr> _participants;
