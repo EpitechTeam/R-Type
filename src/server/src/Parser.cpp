@@ -8,12 +8,12 @@
 Parser::Parser(Server *server)
         : _server(server) {
 
-    this->_functions.emplace("createRoom", Parser::createRoom);
-    this->_functions.emplace("joinRoom", Parser::joinRoom);
-    this->_functions.emplace("leaveRoom", Parser::leaveRoom);
-    this->_functions.emplace("setName", Parser::setName);
-    this->_functions.emplace("printRoom", Parser::printRoom);
-    this->_functions.emplace("message", Parser::message);
+    this->_functions.emplace("createRoom", make_pair(Parser::createRoom , 2 ));
+    this->_functions.emplace("joinRoom", make_pair(Parser::joinRoom, 1 ));
+    this->_functions.emplace("leaveRoom", make_pair(Parser::leaveRoom, 0 ));
+    this->_functions.emplace("setName", make_pair(Parser::setName, 1 ));
+    this->_functions.emplace("printRoom", make_pair(Parser::printRoom, 1 ));
+    this->_functions.emplace("message", make_pair(Parser::message, 1 ));
 }
 
 void
@@ -30,7 +30,12 @@ Parser::execCommand(Command &command, participant_ptr participant) {
         }
 
         std::cout << " Executed." << std::endl;
-        function->second(command, participant, this->_server);
+        if (command.argLen() == function->second.second) {
+            function->second.first(command, participant, this->_server);
+        } else {
+            std::cout << "Bad arguments nb: expects "<< function->second.second << " arguments, " << command.argLen()
+            << " provided." << std::endl;
+        }
     } else {
         std::cout << "Command [" << command.getCommand() << "] not Supported." << std::endl;
     }

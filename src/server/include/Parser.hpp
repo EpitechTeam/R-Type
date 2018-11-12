@@ -13,6 +13,10 @@
 
 class Server;
 
+typedef std::function<void(Command &, participant_ptr, Server *)> Function;
+
+typedef std::pair<Function, int> Params;
+
 class Parser {
 public:
     Parser(Server *server);
@@ -27,8 +31,7 @@ private:
     static void printRoom(Command &command, participant_ptr participant, Server *server);
     static void message(Command &command, participant_ptr participant, Server *server);
 
-    std::map<std::string,
-    std::function<void(Command &, participant_ptr, Server *server)>> _functions;
+    std::map<std::string, Params >_functions;
     Server *_server;
 };
 
