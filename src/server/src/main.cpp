@@ -18,8 +18,8 @@ int main(int argc, char *argv[]) {
 
         tcp::endpoint endpoint(tcp::v4(), std::atoi(argv[1]));
         udp::endpoint udpEndpoint(udp::v4(), std::atoi(argv[1]));
-        Server server(io_context, endpoint, udpEndpoint);
-    //    UDPServer server(io_context, udpEndpoint);
+//        Server server(io_context, endpoint, udpEndpoint);
+        UDPServer server(io_context, udpEndpoint);
 
         io_context.run();
 

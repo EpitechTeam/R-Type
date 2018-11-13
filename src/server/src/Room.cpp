@@ -2,6 +2,10 @@
 // Created by kahoul on 10/11/18.
 //
 
+#include <Room.hpp>
+
+#include "Room.hpp"
+
 #include "../include/Room.hpp"
 
 Room::Room(boost::asio::io_context &io_context, std::string &name, int maxSlots, const udp::endpoint& udpEndpoint)
@@ -33,12 +37,49 @@ Room::deliver(const Message &msg) {
         participant->deliver(msg);
 }
 
+UDPParser::UDPParser() {
+    _playerFncs["getAllPlayersPositions"] = UDPParser::getAllPlayerPositions;
+
+}
+UDPParser::~UDPParser() {
+
+}
+
+std::string UDPParser::getAllPlayerPositions(std::vector<TestPlayer> Players) {
+    std::ostringstream ss;
+
+    for(auto const& player: Players) {
+        ss << player.name << "," << player.posX << "," << player.posY << ";";
+    }
+    ss << std::endl;
+    return (ss.str());
+}
+
+void UDPParser::parseCommand(const std::string &cmd, std::vector<TestPlayer> Players) {
+
+    std::string newCmd = cmd.substr(0, cmd.length() - 1);
+
+    if (_playerFncs.count(newCmd) == 0) {
+        _cmdToSend = "\n";
+        return;
+    }
+    _cmdToSend = _playerFncs[newCmd](Players);
+}
+
+std::string UDPParser::getCmdToSend() {
+    return (_cmdToSend);
+}
+
 UDPServer::UDPServer(boost::asio::io_context& io_context, const udp::endpoint &endpoint)
             : _socket(io_context, endpoint){
+    _players.push_back({0, "player1", 10, 20});
+    _players.push_back({1, "player2", 5, 13});
     startReceive();
 }
 
-UDPServer::~UDPServer() = default;
+UDPServer::~UDPServer() {
+
+}
 
 void UDPServer::startReceive() {
     _socket.async_receive_from(boost::asio::buffer(_recvBuffer),
@@ -47,16 +88,26 @@ void UDPServer::startReceive() {
                     boost::asio::placeholders::bytes_transferred));
 }
 
-void UDPServer::handleReceive(const boost::system::error_code &error, size_t bytes_transferred) {
-    auto message = std::make_shared<std::string>("Hello world\n");
+void UDPServer::handleReceive(const boost::system::error_code& error,
+                              std::size_t bytes_transferred) {
+    if (!error || error == boost::asio::error::message_size) {
 
-    _socket.async_send_to(boost::asio::buffer(*message), _remoteEndpoint,
-            boost::bind(&UDPServer::handleSend, this, message,
-                    boost::asio::placeholders::error,
-                    boost::asio::placeholders::bytes_transferred));
+        std::string command = std::string(_recvBuffer.begin(), _recvBuffer.begin()+bytes_transferred);
+        std::cout << "# command: " << command << "#" << std::endl;
+
+        _udpParser.parseCommand(command, _players);
+
+        auto message = std::make_shared<std::string>(_udpParser.getCmdToSend());
+
+        _socket.async_send_to(boost::asio::buffer(*message), _remoteEndpoint,
+                              boost::bind(&UDPServer::handleSend, this, message,
+                                          boost::asio::placeholders::error,
+                                          boost::asio::placeholders::bytes_transferred));
+
+        startReceive();
+    }
 }
 
-void UDPServer::handleSend(std::shared_ptr<std::string> message, const boost::system::error_code &ec,
+void UDPServer::handleSend(std::shared_ptr<std::string> message, const boost::system::error_code& error,
                            std::size_t bytes_transferred) {
-    startReceive();
 }

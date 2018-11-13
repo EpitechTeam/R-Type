@@ -15,6 +15,7 @@
 #include <utility>
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
+#include <boost/array.hpp>
 
 
 #include "Message.hpp"
@@ -29,6 +30,38 @@ typedef std::deque<Message> MessageQueue;
 
 //----------------------------------------------------------------------
 
+struct TestPlayer {
+    int id;
+    std::string name;
+    int posX;
+    int posY;
+};
+
+typedef std::string (*FncPtr)(std::vector<TestPlayer>);
+
+
+
+class UDPParser {
+public:
+    UDPParser();
+    ~UDPParser();
+
+    void parseCommand(const std::string &, std::vector<TestPlayer>);
+
+    std::string getCmdToSend();
+
+private:
+    static std::string getAllPlayerPositions(std::vector<TestPlayer>);
+
+private:
+    std::string _cmdToSend;
+    std::map<std::string, FncPtr> _playerFncs;
+
+};
+
+//----------------------------------------------------------------------
+
+
 class UDPServer {
 public:
     UDPServer(boost::asio::io_context &, const udp::endpoint &);
@@ -41,14 +74,15 @@ private:
     void handleReceive(const boost::system::error_code& error,
                        std::size_t bytes_transferred);
 
-    void handleSend(std::shared_ptr<std::string> message,
-                    const boost::system::error_code& ec,
+    void handleSend(std::shared_ptr<std::string> message, const boost::system::error_code& error,
                     std::size_t bytes_transferred);
 
 private:
     udp::socket _socket;
     udp::endpoint _remoteEndpoint;
-    std::array<char, 1024> _recvBuffer;
+    boost::array<char, 1024> _recvBuffer;
+    UDPParser _udpParser;
+    std::vector<TestPlayer> _players;
 
 };
 //----------------------------------------------------------------------
@@ -79,7 +113,6 @@ public:
     void leave(participant_ptr participant);
 
     void deliver(const Message &msg);
-
 
     std::set <participant_ptr> _participants;
 private:
