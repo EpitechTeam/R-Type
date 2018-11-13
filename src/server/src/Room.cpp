@@ -56,14 +56,11 @@ std::string UDPParser::getAllPlayerPositions(std::vector<TestPlayer> Players) {
 }
 
 void UDPParser::parseCommand(const std::string &cmd, std::vector<TestPlayer> Players) {
-
-    std::string newCmd = cmd.substr(0, cmd.length() - 1);
-
-    if (_playerFncs.count(newCmd) == 0) {
+    if (_playerFncs.count(cmd) == 0) {
         _cmdToSend = "\n";
         return;
     }
-    _cmdToSend = _playerFncs[newCmd](Players);
+    _cmdToSend = _playerFncs[cmd](Players);
 }
 
 std::string UDPParser::getCmdToSend() {
@@ -93,9 +90,10 @@ void UDPServer::handleReceive(const boost::system::error_code& error,
     if (!error || error == boost::asio::error::message_size) {
 
         std::string command = std::string(_recvBuffer.begin(), _recvBuffer.begin()+bytes_transferred);
-        std::cout << "# command: " << command << "#" << std::endl;
+        std::string newCmd = command.substr(0, command.length() - 1);
+        std::cout << "# command: " << newCmd << "#" << std::endl;
 
-        _udpParser.parseCommand(command, _players);
+        _udpParser.parseCommand(newCmd, _players);
 
         auto message = std::make_shared<std::string>(_udpParser.getCmdToSend());
 
