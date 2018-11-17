@@ -29,7 +29,8 @@ Parser::execCommand(Command &command, participant_ptr participant) {
 
         std::cout << " Executed." << std::endl;
         if (command.argLen() == function->second.second) {
-            function->second.first(command, participant, this->_server);
+            Response response = function->second.first(command, participant, this->_server);
+            Parser::writeResponse(participant, response);
         } else {
             std::cout << "Bad arguments nb: expects "<< function->second.second << " arguments, " << command.argLen()
             << " provided." << std::endl;
@@ -40,6 +41,6 @@ Parser::execCommand(Command &command, participant_ptr participant) {
 }
 
 void
-Parser::writeResponse(participant_ptr participant, int status, std::string msg) {
- participant->deliver(Message(std::to_string(status) + " " + msg));
+Parser::writeResponse(participant_ptr participant, Response &response) {
+ participant->deliver(Message(std::to_string(response.status) + " " + response.message));
 }

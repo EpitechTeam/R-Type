@@ -13,9 +13,16 @@
 
 class Server;
 
-typedef std::function<void(Command &, participant_ptr, Server *)> Function;
+
+struct Response {
+    int status;
+    std::string message;
+};
+
+typedef std::function<Response(Command &, participant_ptr, Server *)> Function;
 
 typedef std::pair<Function, int> Params;
+
 
 class Parser {
 public:
@@ -28,14 +35,16 @@ public:
     void execCommand(Command &command, participant_ptr participant);
 
 private:
-    static void createRoom(Command &command, participant_ptr participant, Server *server);
-    static void joinRoom(Command &command, participant_ptr participant, Server *server);
-    static void leaveRoom(Command &command, participant_ptr participant, Server *server);
-    static void setName(Command &command, participant_ptr participant, Server *server);
-    static void printRoom(Command &command, participant_ptr participant, Server *server);
-    static void message(Command &command, participant_ptr participant, Server *server);
+    static Response createRoom(Command &command, participant_ptr participant, Server *server);
+    static Response joinRoom(Command &command, participant_ptr participant, Server *server);
+    static Response leaveRoom(Command &command, participant_ptr participant, Server *server);
+    static Response setName(Command &command, participant_ptr participant, Server *server);
+    static Response message(Command &command, participant_ptr participant, Server *server);
+    static Response getRooms(Command &command, participant_ptr participant, Server *server);
+    static Response getRoomPlayers(Command &command, participant_ptr participant, Server *server);
+    static Response roomState(Command &command, participant_ptr participant, Server *server);
 
-    static void writeResponse(participant_ptr participant, int status, std::string msg);
+    static void writeResponse(participant_ptr participant, Response &response);
 
     std::map<Type, std::map<std::string, Params >>_functions;
     Server *_server;
