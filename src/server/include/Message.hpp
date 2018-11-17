@@ -34,6 +34,14 @@ class Message
         this->encode_header();
     }
 
+    Message(const std::string &str)
+            : body_length_(0)
+    {
+        this->body_length(str.length());
+        std::memcpy(this->body(), str.c_str(), this->body_length());
+        this->encode_header();
+    }
+
 
 	const char* data() const
 	{

@@ -21,6 +21,10 @@ class Parser {
 public:
     Parser(Server *server);
 
+    void initPreGameCommands();
+
+    void initGameCommands();
+
     void execCommand(Command &command, participant_ptr participant);
 
 private:
@@ -31,7 +35,9 @@ private:
     static void printRoom(Command &command, participant_ptr participant, Server *server);
     static void message(Command &command, participant_ptr participant, Server *server);
 
-    std::map<std::string, Params >_functions;
+    static void writeResponse(participant_ptr participant, int status, std::string msg);
+
+    std::map<Type, std::map<std::string, Params >>_functions;
     Server *_server;
 };
 

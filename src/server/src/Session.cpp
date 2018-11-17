@@ -10,6 +10,7 @@ int Session::counter = 1;
 Session::Session(tcp::socket socket, Server *server)
         : _socket(std::move(socket)),
           _server(server) {
+    this->_type = PreGameObj;
     std::string name("Player" + std::to_string(this->counter++));
 
     this->setName(name);
@@ -38,7 +39,8 @@ Session::doReadHeader() {
                             [this, self](boost::system::error_code ec, std::size_t /*length*/) {
                                 if (!ec && _read_msg.decode_header()) {
                                     this->doReadBody();
-                                } else {
+                                } else if (this->_currentRoom) {
+                                    this->_currentRoom->leave(shared_from_this());
                                 }
                             });
 }
@@ -52,7 +54,8 @@ Session::doReadBody() {
                                 if (!ec) {
                                     _server->deliver(_read_msg, shared_from_this());
                                     doReadHeader();
-                                } else {
+                                } else if (this->_currentRoom) {
+                                    this->_currentRoom->leave(shared_from_this());
                                 }
                             });
 }
@@ -69,7 +72,8 @@ Session::doWrite() {
                                      if (!_write_msgs.empty()) {
                                          doWrite();
                                      }
-                                 } else {
+                                 } else if (this->_currentRoom) {
+                                     this->_currentRoom->leave(shared_from_this());
                                  }
                              });
 }

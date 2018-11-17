@@ -2,10 +2,6 @@
 // Created by kahoul on 10/11/18.
 //
 
-#include <Room.hpp>
-
-#include "Room.hpp"
-
 #include "../include/Room.hpp"
 
 Room::Room(boost::asio::io_context &io_context, std::string &name, int maxSlots, const udp::endpoint& udpEndpoint)
@@ -23,6 +19,7 @@ Room::join(participant_ptr participant) {
 
 void
 Room::leave(participant_ptr participant) {
+    std::cout << participant->getName() << " leave the room " << this->getName() << "." << std::endl;
     participant->setRoom(NULL);
     _participants.erase(participant);
 }

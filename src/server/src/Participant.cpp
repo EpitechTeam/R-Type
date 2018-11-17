@@ -20,3 +20,8 @@ void
 Participant::setRoom(Room *room) {
     this->_currentRoom = room;
 }
+
+Type
+Participant::getType(void) const {
+    return this->_type;
+}

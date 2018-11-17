@@ -19,9 +19,14 @@
 
 class Room;
 
+enum Type { UNKNOWN , PreGameObj, GameObj };
+
 class Participant
 {
 public:
+    Participant()
+        : _type(UNKNOWN)
+    {}
     virtual ~Participant() {}
     virtual void deliver(const Message& msg) = 0;
 
@@ -32,10 +37,14 @@ public:
 
     void setRoom(Room *room);
 
+    Type getType(void) const;
+
     Room *_currentRoom = NULL;
+    Type _type;
 
 private:
     std::string _name;
+
 };
 
 typedef std::shared_ptr<Participant> participant_ptr;
