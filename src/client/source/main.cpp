@@ -85,7 +85,7 @@ public:
     int view = 1;
     RType(){
         window = new sf::RenderWindow(sf::VideoMode(1280, 720), "R * TYPE by [ EZTeam feat BABOU'GAMES ] ®");
-        window->setFramerateLimit(60);
+        //window->setFramerateLimit(60);
     }
     ~RType(){
     }

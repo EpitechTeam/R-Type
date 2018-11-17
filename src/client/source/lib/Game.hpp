@@ -42,7 +42,7 @@ public:
         text.setString("Game name:");
         text.setColor(sf::Color::White);
         text.setCharacterSize(30);
-        text.setPosition(20, 555);
+        text.setPosition(20, 650);
 
         front_promt.setFont(font);
         front_promt.setCharacterSize(30);
@@ -133,7 +133,7 @@ public:
             else
                 point = i;
             front_promt.setString(chat[i - 1]);
-            front_promt.setPosition(20, 80 + (39 * point ));
+            front_promt.setPosition(20, 200 + (39 * point ));
             window->draw(this->front_promt);
         }
 
