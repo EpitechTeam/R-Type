@@ -8,12 +8,12 @@
 Parser::Parser(Server *server)
         : _server(server) {
 
-    this->_functions.emplace("createRoom", make_pair(Parser::createRoom , 2 ));
-    this->_functions.emplace("joinRoom", make_pair(Parser::joinRoom, 1 ));
-    this->_functions.emplace("leaveRoom", make_pair(Parser::leaveRoom, 0 ));
-    this->_functions.emplace("setName", make_pair(Parser::setName, 1 ));
-    this->_functions.emplace("printRoom", make_pair(Parser::printRoom, 1 ));
-    this->_functions.emplace("message", make_pair(Parser::message, 1 ));
+    this->_functions.emplace("CREATE_ROOM", make_pair(Parser::createRoom , 2 ));
+    this->_functions.emplace("JOIN_ROOM", make_pair(Parser::joinRoom, 1 ));
+    this->_functions.emplace("LEAVE_ROOM", make_pair(Parser::leaveRoom, 0 ));
+    this->_functions.emplace("SET_NAME", make_pair(Parser::setName, 1 ));
+    this->_functions.emplace("PRINT_ROOM", make_pair(Parser::printRoom, 1 ));
+    this->_functions.emplace("MESSAGE", make_pair(Parser::message, 1 ));
 }
 
 void

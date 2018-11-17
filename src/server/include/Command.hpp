@@ -17,7 +17,7 @@ public:
         char *cstr = new char [command.length() + 1];
         strcpy (cstr, command.c_str());
 
-        char *tmp = strtok(cstr, "=");
+        char *tmp = strtok(cstr, " ");
         bool first = true;
         while (tmp) {
             if (first) {
@@ -25,7 +25,7 @@ public:
             } else {
                 this->_args.emplace_back(tmp);
             }
-            tmp = strtok(NULL, "=");
+            tmp = strtok(NULL, " ");
             first = false;
         }
     }
