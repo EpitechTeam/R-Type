@@ -11,3 +11,7 @@ sf::Sprite createSprite(const std::string path)
     texture.loadFromFile(path);
     return sf::Sprite(texture);
 }
+
+void print(std::string string){
+    std::cout << string << std::endl;
+}

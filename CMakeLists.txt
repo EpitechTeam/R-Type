@@ -24,6 +24,14 @@ add_executable(R_Type
         src/client/source/lib/JoinRoom.hpp
         src/client/source/lib/Auth.cpp
         src/client/source/lib/Auth.hpp
+        src/client/source/lib/Game.cpp
+        src/client/source/lib/Game.hpp
+        src/client/source/lib/Starship.cpp
+        src/client/source/lib/Starship.hpp
+        src/client/source/lib/Animation.cpp
+        src/client/source/lib/Animation.hpp
+        src/client/source/lib/Bullet.cpp
+        src/client/source/lib/Bullet.hpp
         src/client/source/lib/utils.cpp
         src/client/source/main.cpp)
 

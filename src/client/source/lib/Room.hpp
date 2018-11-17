@@ -41,19 +41,21 @@ public:
 
     // Print Strings stored in Vector
     for (int i=0; i<colour.size(); i++)
-    cout << colour[i] << "\n";*/
+    cout << colour[i] << "\n";
+*/
 
     float x  = 0;
-    float positionx = 30;
-    float positiony = 560;
+    float positionx = 130;
+    float positiony = 645;
     sf::Sprite tag;
+    int *pointer = new int[2];
 
     Room(){
-        if (!texture.loadFromFile("./src/client/myasset/background.jpg")) {
+        if (!texture.loadFromFile("./src/client/myasset/background.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
         background = sf::Sprite(texture);
-        background.setScale(1.9f, 1.4f);
+       background.setScale(1.5f, 1.5f);
 
         if (!texture2.loadFromFile("./src/client/myasset/rectcut.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
@@ -68,7 +70,7 @@ public:
         }
         starship = sf::Sprite(texture3);
         starship.setPosition(positionx, positiony);
-        starship.setScale(0.3f, 0.3f);
+        starship.setScale(2.0f, 2.0f);
 
 
         if (!texture4.loadFromFile("./src/client/myasset/rect.png")) {
@@ -86,11 +88,11 @@ public:
         text.setFont(font);
         text.setString("Room name:");
         text.setCharacterSize(30);
-        text.setPosition(250, 555);
+        text.setPosition(350, 555);
 
         front_promt.setFont(font);
         front_promt.setCharacterSize(30);
-        front_promt.setPosition(250, 80);
+        front_promt.setPosition(350, 80);
         front_promt.setColor(sf::Color::Black);
 
 
@@ -102,11 +104,15 @@ public:
         exit_room.setString("Exit");
         exit_room.setCharacterSize(70);
         exit_room.setPosition(720+ 150 , 630);
-
         play.setFont(font);
         play.setString("Play");
         play.setCharacterSize(70);
         play.setPosition(200 + 150 , 630);
+
+
+        pointer[0] = 130;
+        pointer[1] = 660;
+        pointer[2] = 545;
 
     };
 
@@ -122,39 +128,70 @@ public:
         this->playername = str;
     }
 
-    void handleTextEntered(sf::Uint32 key) {
+    int backspace = 0;
+    std::string event_to_string(sf::Event event, std::string str){
+        sf::Uint32 key = event.text.unicode;
+
+        std::cout << "key "<< key << "c = " << backspace << std::endl;
         if (key >= 128 || key ==  27 || key == 13)
-            return;
+            return str;
         if (key ==   8) {
-            promt = promt.substr(0, promt.size() != 0 ? promt.size() -1 : 0);
-            return;
+            if(backspace > 0 && backspace != 105)
+                backspace = backspace * -1;
+            return  str.substr(0, str.size() != 0 ? str.size() -1 : 0);
         }
-        promt += static_cast<char>(key);
+        if(backspace < 0 && key == 105) {
+            std::cout << "add " << backspace << std::endl;
+            str += static_cast<char>((backspace * -1));
+            backspace = key;
+        } else
+            backspace = key;
+
+        return str += static_cast<char>(key);
     }
 
-    int event(sf::Event event , sf::RenderWindow *window){
+
+    int index  = 0;
+    int event(sf::Event event , sf::RenderWindow *window) {
 
         if((event.type == sf::Event::TextEntered || event.text.unicode == 8)) {
-            handleTextEntered(event.text.unicode);
+            promt = event_to_string(event, promt);
             text.setString( "Me : " + promt);
         }
 
-        if (event.key.code == sf::Keyboard::Left) {
-            starship.move(-4.f, 0.f);
+        if(starship.getPosition().x == pointer[0])
+        {
+            if (event.key.code == sf::Keyboard::Up) {
+                starship.setPosition(pointer[0] ,pointer[2]);
+            }
+            else if (event.key.code == sf::Keyboard::Down) {
+                starship.setPosition(pointer[0] , positiony);
+            }
         }
-        else if (event.key.code == sf::Keyboard::Right) {
-            starship.move(4.f, 0.f);
+        if(starship.getPosition().y != pointer[2])
+        {
+            if (event.key.code == sf::Keyboard::Left) {
+                index = (index + 1) % 2;
+                std::cout << index << std::endl;
+                starship.setPosition(pointer[index], positiony);
+            }
+            else if (event.key.code == sf::Keyboard::Right) {
+                index = (index + 1) % 2;
+                starship.setPosition(pointer[index], positiony);
+            }
         }
-        else if (event.key.code == sf::Keyboard::Down) {
-            starship.move(0.f, 4.f);
-        }
-        else if (event.key.code == sf::Keyboard::Up) {
-            starship.move(0.f, -4.f);
-        }
+
         if (event.key.code == sf::Keyboard::Return)
         {
-            chat.push_back(playername + " : " + promt);
-            promt = "";
+            print("enter");
+            if(starship.getPosition().x == pointer[0] && starship.getPosition().y == positiony) {
+                print("go map");
+                return MAP;
+            }
+            else if (starship.getPosition().y == pointer[2]){
+                chat.push_back(playername + " : " + promt);
+                promt = "";
+            }
         }
         if (starship.getPosition().y < 550) {
             return ROOM;
@@ -171,6 +208,22 @@ public:
         roomname.setString(str_roomname);
         this->x -= 0.015;
         this->background.setPosition(this->x,0 );
+
+        if(starship.getPosition().x == pointer[0] && starship.getPosition().y != pointer[2]) {
+            play.setColor(sf::Color::Red);
+            play.setCharacterSize(75);
+            exit_room.setColor(sf::Color::White);
+            exit_room.setCharacterSize(70);
+        } else if (starship.getPosition().x == pointer[1]){
+            play.setColor(sf::Color::White);
+            play.setCharacterSize(70);
+            exit_room.setColor(sf::Color::Red);
+            exit_room.setCharacterSize(75);
+        } else if (starship.getPosition().y == pointer[2]) {
+            play.setColor(sf::Color::White);
+            play.setCharacterSize(70);
+        }
+
         window->draw(this->background);
         window->draw(this->play);
         window->draw(this->rect);
@@ -184,9 +237,8 @@ public:
             }
             else
                 point = i;
-            //std::cout <<"size: " << chat.size() << " " << " point: " << point - 1 << " i:" <<  i <<  std::endl;
             front_promt.setString(chat[i - 1]);
-            front_promt.setPosition(250, 80 + (39 * point ));
+            front_promt.setPosition(350, 80 + (39 * point ));
             window->draw(this->front_promt);
         }
         window->draw(this->text);
