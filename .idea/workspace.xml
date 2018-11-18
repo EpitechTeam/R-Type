@@ -11,24 +11,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bbdfa27-fdaf-4912-9987-b6bbb334b655" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/client/source/lib/Mob.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/source/lib/Mob.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/R_Type" beforeDir="false" afterPath="$PROJECT_DIR$/R_Type" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/R_Type.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/R_Type.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/asset/r-typesheet42.gif" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/asset/starship.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/source/includes/client.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/source/includes/client.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/source/lib/Animation.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/source/lib/Animation.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/source/lib/Bullet.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/source/lib/Bullet.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/source/lib/Game.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/source/lib/Game.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/source/lib/Starship.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/source/lib/Starship.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/source/lib/utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/source/lib/utils.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/source/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/source/main.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="4bbdfa27-fdaf-4912-9987-b6bbb334b655" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/CMakeFiles/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,12 +50,12 @@
           <entry key="jpg" value="1" />
           <entry key="png" value="5" />
           <entry key="sh" value="2" />
-          <entry key="txt" value="5" />
+          <entry key="txt" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CMakeLists.txt" value="6" />
+          <entry key="CMakeLists.txt" value="7" />
           <entry key="Image" value="167" />
           <entry key="ObjectiveC" value="73" />
           <entry key="PLAIN_TEXT" value="5" />
@@ -110,14 +93,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/source/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="88" column="4" lean-forward="true" selection-start-line="88" selection-start-column="4" selection-end-line="88" selection-end-column="4" />
+            <state relative-caret-position="75">
+              <caret line="92" column="17" selection-start-line="92" selection-start-column="17" selection-end-line="92" selection-end-column="17" />
               <folding>
                 <element signature="e#1141#1160#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="383">
+              <caret line="46" column="19" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -372,16 +364,15 @@
       <workItem from="1542445388082" duration="23852000" />
       <workItem from="1542489013474" duration="686000" />
       <workItem from="1542495238203" duration="16592000" />
-      <workItem from="1542553903655" duration="764000" />
+      <workItem from="1542553903655" duration="2464000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="134448000" />
+    <option name="totallyTimeSpent" value="136148000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.38295516" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -445,13 +436,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/asset/r-typesheet3.gif">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/source/lib/Bullet.hpp">
       <provider selected="true" editor-type-id="text-editor">
@@ -632,11 +616,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/source/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="88" column="4" lean-forward="true" selection-start-line="88" selection-start-column="4" selection-end-line="88" selection-end-column="4" />
+        <state relative-caret-position="75">
+          <caret line="92" column="17" selection-start-line="92" selection-start-column="17" selection-end-line="92" selection-end-column="17" />
           <folding>
             <element signature="e#1141#1160#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="46" column="19" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
         </state>
       </provider>
     </entry>
