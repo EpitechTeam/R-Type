@@ -1,14 +1,16 @@
 cmake_minimum_required(VERSION 3.10.2)
-project(R_Type)
+project(R-Type)
 
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(src/client/source/includes)
 include_directories(src/client/source/lib)
-include_directories(src/server/includes)
+include_directories(src/server/include)
 
+include_directories(include)
+link_directories(lib)
 
-add_executable(R_Type
+add_executable(R-Type_Client
         src/client/source/includes/client.hpp
         src/client/source/lib/Map.cpp
         src/client/source/lib/Map.hpp
@@ -37,10 +39,25 @@ add_executable(R_Type
         src/client/source/lib/utils.cpp
         src/client/source/main.cpp)
 
+target_link_libraries(R-Type_Client sfml-graphics)
+target_link_libraries(R-Type_Client sfml-window)
+target_link_libraries(R-Type_Client sfml-system )
 
-target_link_libraries(R_Type sfml-graphics)
-target_link_libraries(R_Type sfml-window)
-target_link_libraries(R_Type sfml-system )
+add_executable(R-Type_Server
+        src/server/src/GameCommands.cpp
+        src/server/src/main.cpp
+        src/server/src/Parser.cpp
+        src/server/src/Participant.cpp
+        src/server/src/PreGameCommands.cpp
+        src/server/src/Room.cpp
+        src/server/src/Server.cpp
+        src/server/src/Session.cpp)
+
+target_link_libraries (R-Type_Server boost_thread)
+target_link_libraries (R-Type_Server pthread)
+target_link_libraries (R-Type_Server boost_regex)
+target_link_libraries (R-Type_Server boost_system)
+
 set (CMAKE_CXX_FLAGS "-g3 -Wall -O0")
 
 set(EXECUTABLE_OUTPUT_PATH ./)
