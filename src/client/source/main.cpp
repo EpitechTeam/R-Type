@@ -85,14 +85,14 @@ public:
     int view = 1;
     RType(){
         window = new sf::RenderWindow(sf::VideoMode(1280, 720), "R * TYPE by [ EZTeam feat BABOU'GAMES ] ®");
-        //window->setFramerateLimit(60);
     }
+
     ~RType(){
     }
 
     void  draw(){
         switch(view) {
-            case 0: window->close();;
+            case 0: window->close();
                 break;
             case 1: menu->draw(this->window);
                 break;
@@ -119,7 +119,7 @@ public:
     }
 
     void event(sf::Event event){
-        if (event.type == sf::Event::KeyPressed || event.type == sf::Event::TextEntered)
+        if ((event.type == sf::Event::KeyPressed || event.type == sf::Event::TextEntered) && view != 7)
         {
             //std::cout << this->view << std::endl;
             switch(view) {
@@ -142,6 +142,8 @@ public:
                 default: menu->draw(this->window);
                     break;
             }
+        } else if(view == 7){
+            this->view = game->event(event, window);
         }
     }
 

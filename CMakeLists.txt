@@ -32,6 +32,8 @@ add_executable(R_Type
         src/client/source/lib/Animation.hpp
         src/client/source/lib/Bullet.cpp
         src/client/source/lib/Bullet.hpp
+        src/client/source/lib/Mob.cpp
+        src/client/source/lib/Mob.hpp
         src/client/source/lib/utils.cpp
         src/client/source/main.cpp)
 

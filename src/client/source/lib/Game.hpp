@@ -8,6 +8,7 @@
 #include "client.hpp"
 #include "Starship.hpp"
 #include "Bullet.hpp"
+#include "Mob.hpp"
 class Game {
 
 public:
@@ -21,8 +22,9 @@ public:
     std::string playername = "guest";
     std::vector <std::string> chat;
     std::vector <std::string> player;
-    Starship* starship = new Starship[4];
     std::vector<Bullet*> bullet;
+    std::vector<Mob*> mob;
+    std::vector<Starship*> starship;
 
     float deltaTime = 0.0f;
     sf::Clock clock;
@@ -48,6 +50,8 @@ public:
         front_promt.setCharacterSize(30);
         front_promt.setPosition(10, 250);
         front_promt.setColor(sf::Color::White);
+
+        starship.push_back(new Starship());
     };
 
     ~Game(){
@@ -66,7 +70,7 @@ public:
     std::string event_to_string(sf::Event event, std::string str){
         sf::Uint32 key = event.text.unicode;
 
-        std::cout << "key "<< key << "c = " << backspace << std::endl;
+       // std::cout << "key "<< key << "c = " << backspace << std::endl;
         if (key >= 128 || key ==  27 || key == 13)
             return str;
         if (key ==   8) {
@@ -96,8 +100,8 @@ public:
             promt = "";
         }
 
-        for(int i  = 0; i != 4; i++) {
-            starship[i].event(event,&bullet,window);
+        for (int i = 0;  i != starship.size(); i++) {
+            starship[i]->event(event,&bullet,window);
         }
 
         if (event.key.code == sf::Keyboard::Escape) {
@@ -110,16 +114,28 @@ public:
     void drawPlayer(sf::RenderWindow *window) {
     }
 
-
-    float lastTime = 0;
     float fps = 0;
-
+    sf::Clock r;
+    sf::Time elapsed_time;
 
     void draw(sf::RenderWindow *window){
 
         deltaTime = clock.restart().asSeconds();
-        float fps = 1.f / deltaTime;
-        lastTime = deltaTime;
+        fps = 1.f / deltaTime;
+
+        sf::Time delay = sf::milliseconds(1000);
+        elapsed_time += r.restart();
+
+        // We have enough time to spawn a sprite. ( may be for several ? )
+        while( elapsed_time >= delay ){
+            sf::Vector2f position = starship[0]->starship.getPosition();
+            position.x = 1280;
+
+       mob.emplace_back(new Mob(position, std::to_string((rand() % 3) + 1) + std::to_string(mob.size()), 1280));
+           // mob.emplace_back(new Mob(position, std::to_string(3) + std::to_string(mob.size()), 1280));
+            // Substract the time consumed
+            elapsed_time -= delay;
+        }
 
         this->x -= 0.018;
         this->background.setPosition(this->x,0 );
@@ -137,12 +153,50 @@ public:
             window->draw(this->front_promt);
         }
 
+        for (int i = 0;  i != mob.size(); i++) {
+            if(!mob[i]->draw(window, deltaTime)){
+                mob.erase(mob.begin() + i);
+                i--;
+            } else{
+                for (int j = 0;  j != starship.size(); j++) {
+                    if(starship[j]->starship.getPosition().x -1 <= mob[i]->_rect.getPosition().x  &&
+                       starship[j]->starship.getPosition().x +1 >= mob[i]->_rect.getPosition().x)
+                    {
+                        if(starship[j]->starship.getPosition().y -3 <= mob[i]->_rect.getPosition().y  &&
+                           starship[j]->starship.getPosition().y +30 >= mob[i]->_rect.getPosition().y) {
+                            std::cout << "collision starship: " << j << std::endl;
+                            mob[i]->_rect.setPosition(-100,0);
+                        }
+                    }
+                }
+            }
+        }
+
         for (int i = 0;  i != bullet.size(); i++) {
-            bullet[i]->draw(window, deltaTime);
+            if(!bullet[i]->draw(window, deltaTime)){
+                bullet.erase(bullet.begin() + i);
+                i--;
+            } else{
+                for (int j = 0;  j != mob.size(); j++) {
+                    if(mob[j]->_rect.getPosition().x -1 <= bullet[i]->_rect.getPosition().x  &&
+                       mob[j]->_rect.getPosition().x +1 >= bullet[i]->_rect.getPosition().x)
+                    {
+                        if(mob[j]->_rect.getPosition().y -3 <= bullet[i]->_rect.getPosition().y  &&
+                        mob[j]->_rect.getPosition().y +50 >= bullet[i]->_rect.getPosition().y) {
+                            mob.erase(mob.begin() + j);
+                            j--;
+                            bullet[i]->_rect.setPosition(1280,0);
+                        }
+                    }
+                }
+            }
+
         }
-        for(int i  = 0; i != 4; i++) {
-            starship[i].draw(window);
+
+        for (int i = 0;  i != starship.size(); i++) {
+            starship[i]->draw(window, deltaTime, &bullet);
         }
+
         std::ostringstream ss;
         ss << fps;
         std::string s(ss.str());

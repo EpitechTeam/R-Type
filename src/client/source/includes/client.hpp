@@ -18,3 +18,4 @@
 
 sf::Sprite createSprite(const std::string path);
 void print(std::string string);
+int roll(int min, int max);
