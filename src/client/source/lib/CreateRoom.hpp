@@ -29,14 +29,14 @@ public:
     float positionx = 30;
     float positiony = 442;
 
-
+    int *pointer = new int[3];
 
     CreateRoom(){
-        if (!texture.loadFromFile("./src/client/myasset/background.jpg")) {
+        if (!texture.loadFromFile("./src/client/myasset/background.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
         background = sf::Sprite(texture);
-        background.setScale(1.9f, 1.4f);
+       background.setScale(1.5f, 1.5f);
 
         if (!texture2.loadFromFile("./src/client/myasset/r-type.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
@@ -48,7 +48,7 @@ public:
         }
         starship = sf::Sprite(texture3);
         starship.setPosition(positionx, positiony);
-        starship.setScale(0.3f, 0.3f);
+        starship.setScale(2.0f, 2.0f);
 
         //text
 
@@ -68,7 +68,7 @@ public:
         text2.setFont(font);
         text2.setString("player:");
         text2.setCharacterSize(70);
-        text2.setPosition(250, 520);
+        text2.setPosition(200, 520);
 
         nbplayer.setFont(font);
         nbplayer.setString(std::to_string(int_nbplayer));
@@ -80,51 +80,75 @@ public:
         create.setString("Join Room");
         create.setCharacterSize(70);
         create.setPosition(250, 610);
+
+
+        pointer[0] = 442;
+        pointer[1] = 550;
+        pointer[2] = 620;
     };
 
     ~CreateRoom(){
 
     };
 
-    void handleTextEntered(sf::Uint32 key) {
+
+    int backspace = 0;
+    std::string event_to_string(sf::Event event, std::string str){
+        sf::Uint32 key = event.text.unicode;
+
+        std::cout << "key "<< key << "c = " << backspace << std::endl;
         if (key >= 128 || key ==  27 || key == 13)
-            return;
+            return str;
         if (key ==   8) {
-            str_roomname = str_roomname.substr(0, str_roomname.size() != 0 ? str_roomname.size() -1 : 0);
-            return;
+            if(backspace > 0 && backspace != 105)
+                backspace = backspace * -1;
+            return  str.substr(0, str.size() != 0 ? str.size() -1 : 0);
         }
-        str_roomname += static_cast<char>(key);
+        if(backspace < 0 && key == 105) {
+            std::cout << "add " << backspace << std::endl;
+            str += static_cast<char>((backspace * -1));
+            backspace = key;
+        } else
+            backspace = key;
+
+        return str += static_cast<char>(key);
     }
 
+
+    int index = 0;
     int event(sf::Event event , sf::RenderWindow *window){
 
+
         if((starship.getPosition().y < 550) && (event.type == sf::Event::TextEntered || event.text.unicode == 8)) {
-            handleTextEntered(event.text.unicode);
+            str_roomname = event_to_string(event, str_roomname);
             roomname.setString(str_roomname);
         }
 
-        if (event.key.code == sf::Keyboard::Left) {
-            starship.move(-3.f, 0.f);
-        }
-        else if (event.key.code == sf::Keyboard::Right) {
-            starship.move(3.f, 0.f);
-        }
-        else if (event.key.code == sf::Keyboard::Down) {
-            starship.move(0.f, 3.f);
-        }
-        else if (event.key.code == sf::Keyboard::Up) {
-            starship.move(0.f, -3.f);
-        }
-        if (event.key.code == sf::Keyboard::Return)
+        if (starship.getPosition().y == 550)
         {
-
-            if (starship.getPosition().y > 610) {
-                return ROOM;
-            } else if (starship.getPosition().y > 550) {
+            if (event.key.code == sf::Keyboard::Left) {
+                int_nbplayer = (int_nbplayer - 1);
+                int_nbplayer = int_nbplayer == 0 ? 4 : int_nbplayer;
+                nbplayer.setString(std::to_string(int_nbplayer));
+            } else if (event.key.code == sf::Keyboard::Right) {
                 int_nbplayer = (((int_nbplayer + 1) % 5));
                 int_nbplayer = int_nbplayer == 0 ? 1 : int_nbplayer;
                 nbplayer.setString(std::to_string(int_nbplayer));
-                return CREATEROOM;
+            }
+        }
+
+        if (event.key.code == sf::Keyboard::Up) {
+            index = (index - 1) < 0 ? 2 : (index - 1);
+            starship.setPosition(positionx, pointer[index]);
+        } else if (event.key.code == sf::Keyboard::Down) {
+            index = (index + 1) > 2 ? 0 : (index + 1);
+            starship.setPosition(positionx, pointer[index]);
+        }
+
+        if (event.key.code == sf::Keyboard::Return)
+        {
+            if (starship.getPosition().y > 610) {
+                return ROOM;
             }
         }
         if (starship.getPosition().y < 550) {
@@ -137,13 +161,13 @@ public:
         this->x -= 0.015;
         this->background.setPosition(this->x,0 );
 
-        if (starship.getPosition().y > 610) {
+        if (starship.getPosition().y  == pointer[2]) {
             text2.setColor(sf::Color::White);
             text.setColor(sf::Color::White);
             create.setColor(sf::Color::Red);
             create.setCharacterSize(70);
         }
-        else if (starship.getPosition().y > 550) {
+        else if (starship.getPosition().y == 550) {
             create.setColor(sf::Color::White);
             text2.setColor(sf::Color::Red);
             text2.setCharacterSize(72);
@@ -153,7 +177,7 @@ public:
         } else {
             create.setColor(sf::Color::White);
             text.setColor(sf::Color::Red);
-            roomname.setColor(sf::Color::Red);
+            roomname.setColor(sf::Color::White);
             text.setCharacterSize(35);
             text2.setColor(sf::Color::White);
             text2.setCharacterSize(70);

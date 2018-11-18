@@ -24,11 +24,11 @@ public:
     float positiony = 442;
 
     JoinRoom(){
-        if (!texture.loadFromFile("./src/client/myasset/background.jpg")) {
+        if (!texture.loadFromFile("./src/client/myasset/background.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
         background = sf::Sprite(texture);
-        background.setScale(1.9f, 1.4f);
+       background.setScale(1.5f, 1.5f);
 
         if (!texture2.loadFromFile("./src/client/myasset/r-type.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
@@ -40,7 +40,7 @@ public:
         }
         starship = sf::Sprite(texture3);
         starship.setPosition(positionx, positiony);
-        starship.setScale(0.3f, 0.3f);
+        starship.setScale(2.0f, 2.0f);
 
         //text
 

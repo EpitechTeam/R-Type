@@ -69,6 +69,7 @@ public:
 #include "JoinRoom.hpp"
 #include "Room.hpp"
 #include "Auth.hpp"
+#include "Game.hpp"
 
 class RType {
 public:
@@ -79,17 +80,19 @@ public:
     JoinRoom *joinRoom = new JoinRoom();
     Room *room = new Room();
     Auth *auth = new Auth();
+    Game *game = new Game();
 
     int view = 1;
     RType(){
         window = new sf::RenderWindow(sf::VideoMode(1280, 720), "R * TYPE by [ EZTeam feat BABOU'GAMES ] ®");
     }
+
     ~RType(){
     }
 
     void  draw(){
         switch(view) {
-            case 0: window->close();;
+            case 0: window->close();
                 break;
             case 1: menu->draw(this->window);
                 break;
@@ -108,12 +111,15 @@ public:
                 break;
             case 6: auth->draw(this->window);
                 break;
+            case 7: game->draw(this->window);
+                break;
             default: menu->draw(this->window);
                 break;
         }
     }
+
     void event(sf::Event event){
-        if (event.type == sf::Event::KeyPressed || event.type == sf::Event::TextEntered)
+        if ((event.type == sf::Event::KeyPressed || event.type == sf::Event::TextEntered) && view != 7)
         {
             //std::cout << this->view << std::endl;
             switch(view) {
@@ -131,9 +137,13 @@ public:
                     break;
                 case 6:  this->view = auth->event(event, window);
                     break;
+                case 7:  this->view = game->event(event, window);
+                    break;
                 default: menu->draw(this->window);
                     break;
             }
+        } else if(view == 7){
+            this->view = game->event(event, window);
         }
     }
 

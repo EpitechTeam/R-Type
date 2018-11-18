@@ -22,15 +22,14 @@ public:
     float x  = 0;
     float positionx = 30;
     float positiony = 442;
-
-
+    int *pointer = new int[2];
 
     Menu(){
-        if (!texture.loadFromFile("./src/client/myasset/background.jpg")) {
+        if (!texture.loadFromFile("./src/client/myasset/background.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
         background = sf::Sprite(texture);
-        background.setScale(1.9f, 1.4f);
+       background.setScale(1.5f, 1.5f);
 
         if (!texture2.loadFromFile("./src/client/myasset/r-type.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
@@ -42,7 +41,7 @@ public:
         }
         starship = sf::Sprite(texture3);
         starship.setPosition(positionx, positiony);
-        starship.setScale(0.3f, 0.3f);
+        starship.setScale(2.0f, 2.0f);
 
         //text
 
@@ -52,33 +51,33 @@ public:
         text.setFont(font); // font est un sf::Font
         text.setString("multyplayer");
         text.setCharacterSize(120);
-        text.setPosition(250, 180 + 200);
+        text.setPosition(140, 180 + 200);
         text2.setFont(font);
         text2.setString("Exit");
         text2.setCharacterSize(120);
-        text2.setPosition(360, 350 + 200);
+        text2.setPosition(300, 350 + 200);
+
+
+        pointer[0] = 442;
+        pointer[1] = 600;
     };
 
     ~Menu(){
 
     };
 
-
+    int index = 0;
     int event(sf::Event event , sf::RenderWindow *window){
-        if (event.key.code == sf::Keyboard::Left) {
-            starship.move(-3.f, 0.f);
-        }
-        else if (event.key.code == sf::Keyboard::Right) {
-            starship.move(3.f, 0.f);
+        if (event.key.code == sf::Keyboard::Up) {
+            index = (index + 1) % 2;
+            std::cout << index << std::endl;
+            starship.setPosition(positionx, pointer[index]);
         }
         else if (event.key.code == sf::Keyboard::Down) {
-            starship.move(0.f, 3.f);
+            index = (index + 1) % 2;
+            starship.setPosition(positionx, pointer[index]);
         }
-        else if (event.key.code == sf::Keyboard::Up) {
-            starship.move(0.f, -3.f);
-        }
-        if (event.key.code == sf::Keyboard::Return)
-        {
+        if (event.key.code == sf::Keyboard::Return) {
             if (starship.getPosition().y > 550) {
                 return 0;
             } else {
