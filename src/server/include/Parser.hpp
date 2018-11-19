@@ -21,7 +21,7 @@ struct Response {
 
 typedef std::function<Response(Command &, participant_ptr, Server *)> Function;
 
-typedef std::pair<Function, int> Params;
+typedef std::pair<Function, std::size_t> Params;
 
 
 class Parser {

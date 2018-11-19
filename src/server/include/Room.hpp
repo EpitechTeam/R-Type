@@ -98,10 +98,7 @@ public:
                 return &i;
             }
         }
-    }
-
-    bool containParticipant(participant_ptr participant) {
-
+        return (NULL);
     }
 
     std::string getName() const {

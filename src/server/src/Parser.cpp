@@ -23,7 +23,7 @@ Parser::execCommand(Command &command, participant_ptr participant) {
 
         std::cout << "Command [" << command.getCommand() << "]:";
 
-        for (int i = 0; i < command.argLen(); i++) {
+        for (unsigned int i = 0; i < command.argLen(); i++) {
             std::cout << command.getArg(i) << ":";
         }
 
