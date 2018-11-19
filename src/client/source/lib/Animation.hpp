@@ -4,7 +4,7 @@
 
 #ifndef R_TYPE_ANIMATION_HPP
 #define R_TYPE_ANIMATION_HPP
-#include "client.hpp"
+#include "Client.hpp"
 #include <SFML/System.hpp>
 #include <SFML/Graphics/Texture.hpp>
 

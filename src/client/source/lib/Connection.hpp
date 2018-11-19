@@ -5,7 +5,7 @@
 #ifndef R_TYPE_CONNECTION_HPP
 #define R_TYPE_CONNECTION_HPP
 
-#include "client.hpp"
+#include "Client.hpp"
 
 class Connection {
 

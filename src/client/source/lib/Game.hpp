@@ -5,7 +5,7 @@
 #ifndef R_TYPE_GAME_HPP
 #define R_TYPE_GAME_HPP
 
-#include "client.hpp"
+#include "Client.hpp"
 #include "Starship.hpp"
 #include "Bullet.hpp"
 #include "Mob.hpp"

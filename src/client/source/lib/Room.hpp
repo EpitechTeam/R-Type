@@ -4,7 +4,7 @@
 
 #ifndef R_TYPE_ROOM_HPP
 #define R_TYPE_ROOM_HPP
-#include "client.hpp"
+#include "Client.hpp"
 
 class Room {
 

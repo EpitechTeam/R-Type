@@ -5,7 +5,7 @@
 #ifndef R_TYPE_MENU_HPP
 #define R_TYPE_MENU_HPP
 
-#include "client.hpp"
+#include "Client.hpp"
 
 class Menu {
 

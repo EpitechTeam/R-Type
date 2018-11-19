@@ -4,7 +4,7 @@
 
 #ifndef R_TYPE_MOB_HPP
 #define R_TYPE_MOB_HPP
-#include "client.hpp"
+#include "Client.hpp"
 #include "Animation.hpp"
 #define A_MOB1 new Animation(&_rectTexture, sf::Vector2u(33, 36), 0.2,sf::Vector2u(1,8), 0)
 #define A_MOB2 new Animation(&_rectTexture, sf::Vector2u(33, 34), 0.2,sf::Vector2u(1,3), 0)

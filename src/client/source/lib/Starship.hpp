@@ -4,7 +4,7 @@
 
 #ifndef R_TYPE_STARSHIP_HPP
 #define R_TYPE_STARSHIP_HPP
-#include "client.hpp"
+#include "Client.hpp"
 #include "Bullet.hpp"
 
 class Starship {

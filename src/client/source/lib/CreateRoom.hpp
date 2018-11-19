@@ -5,7 +5,7 @@
 #ifndef R_TYPE_CREATEROOM_HPP
 #define R_TYPE_CREATEROOM_HPP
 
-#include "client.hpp"
+#include "Client.hpp"
 
 class CreateRoom {
 

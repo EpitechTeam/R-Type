@@ -4,7 +4,7 @@
 
 #ifndef R_TYPE_BULLET_HPP
 #define R_TYPE_BULLET_HPP
-#include "client.hpp"
+#include "Client.hpp"
 #include "Animation.hpp"
 
 class Bullet {

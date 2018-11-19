@@ -1,7 +1,7 @@
 //
 // Created by cherkaoui on 10/11/18.
 //
-#include "client.hpp"
+#include "Client.hpp"
 
 
 sf::Sprite createSprite(const std::string path)

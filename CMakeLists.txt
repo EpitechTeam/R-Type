@@ -3,7 +3,7 @@ project(R-Type)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(src/client/source/includes)
+include_directories(src/client/source/include)
 include_directories(src/client/source/lib)
 include_directories(src/server/include)
 
@@ -11,7 +11,7 @@ include_directories(include)
 link_directories(lib)
 
 add_executable(R-Type_Client
-        src/client/source/includes/client.hpp
+        src/client/source/include/Client.hpp
         src/client/source/lib/Map.cpp
         src/client/source/lib/Map.hpp
         src/client/source/lib/Menu.cpp
@@ -42,6 +42,11 @@ add_executable(R-Type_Client
 target_link_libraries(R-Type_Client sfml-graphics)
 target_link_libraries(R-Type_Client sfml-window)
 target_link_libraries(R-Type_Client sfml-system )
+
+target_link_libraries (R-Type_Client boost_thread)
+target_link_libraries (R-Type_Client pthread)
+target_link_libraries (R-Type_Client boost_regex)
+target_link_libraries (R-Type_Client boost_system)
 
 add_executable(R-Type_Server
         src/server/src/GameCommands.cpp

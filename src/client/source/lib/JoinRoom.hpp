@@ -5,7 +5,7 @@
 #ifndef R_TYPE_JOINROOM_HPP
 #define R_TYPE_JOINROOM_HPP
 
-#include "client.hpp"
+#include "Client.hpp"
 
 class JoinRoom {
 
