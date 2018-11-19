@@ -3,6 +3,8 @@
 //
 
 #include <iostream>
+#include <UDPServer.hpp>
+
 #include "UDPServer.hpp"
 
 UDPParser::UDPParser() {
@@ -35,8 +37,8 @@ std::string UDPParser::getCmdToSend() {
     return (_cmdToSend);
 }
 
-UDPServer::UDPServer(boost::asio::io_context& io_context, const udp::endpoint &endpoint)
-        : _socket(io_context, endpoint){
+UDPServer::UDPServer(boost::asio::io_context& io_context, const udp::endpoint &endpoint, Game *game)
+        : _socket(io_context, endpoint), _game(game){
     _players.push_back({0, "player1", 10, 20});
     _players.push_back({1, "player2", 5, 13});
     startReceive();
@@ -44,6 +46,10 @@ UDPServer::UDPServer(boost::asio::io_context& io_context, const udp::endpoint &e
 
 UDPServer::~UDPServer() {
 
+}
+
+void UDPServer::Test() {
+    std::cout << "Testing server\n";
 }
 
 void UDPServer::startReceive() {
@@ -56,7 +62,6 @@ void UDPServer::startReceive() {
 void UDPServer::handleReceive(const boost::system::error_code& error,
                               std::size_t bytes_transferred) {
     if (!error || error == boost::asio::error::message_size) {
-
         std::string command = std::string(_recvBuffer.begin(), _recvBuffer.begin()+bytes_transferred);
         std::string newCmd = command.substr(0, command.length() - 1);
         std::cout << "# command: " << newCmd << "#" << std::endl;

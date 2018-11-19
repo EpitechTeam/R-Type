@@ -61,11 +61,23 @@ void Monster::SetFireCycle(int cycle) {
 }
 
 Game::Game(boost::asio::io_context &io, const udp::endpoint &endpoint)
-    : _cycle(0), _running(true), _udpServer(io, endpoint) {
+    : _cycle(0), _running(true) {
+
+    _udpThread = new std::thread([this, &io, &endpoint]() {
+
+        boost::asio::io_context io_context;
+
+        _udpServer = new UDPServer(io_context, endpoint, this);
+
+        io_context.run();
+    });
+
     this->Init();
 }
 
-Game::~Game() = default;
+Game::~Game() {
+    _udpThread->join();
+}
 
 /*
  * Cette fonction initialize les informations du jeu
@@ -81,9 +93,23 @@ void Game::Init() {
 }
 
 void Game::Start() {
-    /*while (_running) {
-        _cycle++;
-    }*/
+    std::clock_t clock1;
+    std::clock_t clock2;
+    std::clock_t ticks;
+    double delta;
+
+    clock1 = clock();
+    while (_running) {
+        clock2 = clock();
+        ticks = clock2 - clock1;
+        delta = ticks / (double) (CLOCKS_PER_SEC);
+        if (delta >= 0.5) {
+            _udpServer->Test();
+            std::cout << _cycle << std::endl;
+            _cycle++;
+            clock1 = clock2;
+        }
+    }
 }
 
 void Game::Pause() {

@@ -7,7 +7,11 @@
 
 #include <vector>
 #include <string>
+#include <ctime>
 #include "UDPServer.hpp"
+
+class UDPServer;
+using boost::asio::ip::udp;
 
 typedef struct {
     int x;
@@ -74,7 +78,8 @@ private:
     std::vector<Monster> _Monsters;
     std::vector<Player> _Players;
     bool _running;
-    UDPServer _udpServer;
+    UDPServer *_udpServer;
+    std::thread *_udpThread;
 };
 
 #endif //R_TYPE_GAME_H

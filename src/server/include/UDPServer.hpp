@@ -12,6 +12,8 @@
 #include <boost/bind.hpp>
 #include <boost/array.hpp>
 
+class Game;
+
 using boost::asio::ip::udp;
 
 struct TestPlayer {
@@ -46,7 +48,8 @@ private:
 
 class UDPServer {
 public:
-    UDPServer(boost::asio::io_context &, const udp::endpoint &);
+    UDPServer(boost::asio::io_context &, const udp::endpoint &, Game *game);
+
 
     ~UDPServer();
 
@@ -65,7 +68,7 @@ private:
     boost::array<char, 1024> _recvBuffer;
     UDPParser _udpParser;
     std::vector<TestPlayer> _players;
-
+    Game *_game;
 };
 
 #endif //R_TYPE_UDPSERVER_H

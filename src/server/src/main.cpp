@@ -22,9 +22,9 @@ int main(int argc, char *argv[]) {
 
         //UDPServer server(io_context, udpEndpoint);
         Game game(io_context, udpEndpoint);
+//        io_context.run();
+        game.Start();
 
-
-        io_context.run();
 
     }
     catch (std::exception &e) {
