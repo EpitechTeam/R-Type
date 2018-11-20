@@ -1,3 +1,0 @@
-/home/cherkaoui/DELIVERY/R-Type/CMakeFiles/rebuild_cache.dir
-/home/cherkaoui/DELIVERY/R-Type/CMakeFiles/R_Type.dir
-/home/cherkaoui/DELIVERY/R-Type/CMakeFiles/edit_cache.dir
