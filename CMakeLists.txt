@@ -11,32 +11,19 @@ include_directories(include)
 link_directories(lib)
 
 add_executable(R-Type_Client
-        src/client/source/include/Client.hpp
-        src/client/source/lib/Map.cpp
-        src/client/source/lib/Map.hpp
-        src/client/source/lib/Menu.cpp
-        src/client/source/lib/Menu.hpp
-        src/client/source/lib/Connection.cpp
-        src/client/source/lib/Connection.hpp
-        src/client/source/lib/CreateRoom.cpp
-        src/client/source/lib/CreateRoom.hpp
-        src/client/source/lib/Room.cpp
-        src/client/source/lib/Room.hpp
-        src/client/source/lib/JoinRoom.cpp
-        src/client/source/lib/JoinRoom.hpp
-        src/client/source/lib/Auth.cpp
-        src/client/source/lib/Auth.hpp
-        src/client/source/lib/Game.cpp
-        src/client/source/lib/Game.hpp
-        src/client/source/lib/Starship.cpp
-        src/client/source/lib/Starship.hpp
-        src/client/source/lib/Animation.cpp
-        src/client/source/lib/Animation.hpp
-        src/client/source/lib/Bullet.cpp
-        src/client/source/lib/Bullet.hpp
-        src/client/source/lib/Mob.cpp
-        src/client/source/lib/Mob.hpp
         src/client/source/lib/utils.cpp
+        src/client/source/lib/Map.cpp
+        src/client/source/lib/Menu.cpp
+        src/client/source/lib/Connection.cpp
+        src/client/source/lib/CreateRoom.cpp
+        src/client/source/lib/Room.cpp
+        src/client/source/lib/JoinRoom.cpp
+        src/client/source/lib/Auth.cpp
+        src/client/source/lib/Game.cpp
+        src/client/source/lib/Starship.cpp
+        src/client/source/lib/Animation.cpp
+        src/client/source/lib/Bullet.cpp
+        src/client/source/lib/Mob.cpp
         src/client/source/main.cpp)
 
 target_link_libraries(R-Type_Client sfml-graphics)
