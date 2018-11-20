@@ -14,7 +14,8 @@ sf::Sprite createSprite(const std::string path)
 
 void print(std::string string){
     std::cout << string << std::endl;
-}
+};
+
 
 int roll(int min, int max)
 {

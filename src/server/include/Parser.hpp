@@ -44,6 +44,7 @@ private:
     static Response getRoomPlayers(Command &command, participant_ptr participant, Server *server);
     static Response roomState(Command &command, participant_ptr participant, Server *server);
 
+    static void writeResponse(participant_ptr participant, const Response &response);
     static void writeResponse(participant_ptr participant, Response &response);
 
     std::map<Type, std::map<std::string, Params >>_functions;

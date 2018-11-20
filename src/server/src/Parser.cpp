@@ -37,10 +37,15 @@ Parser::execCommand(Command &command, participant_ptr participant) {
         }
     } else {
         std::cout << "Command [" << command.getCommand() << "] not Supported." << std::endl;
+        Parser::writeResponse(participant, { 400, "COMMAND_NOT_SUPPORTED" });
     }
 }
 
 void
-Parser::writeResponse(participant_ptr participant, Response &response) {
+Parser::writeResponse(participant_ptr participant, const Response &response) {
  participant->deliver(Message(std::to_string(response.status) + " " + response.message));
+}
+void
+Parser::writeResponse(participant_ptr participant, Response &response) {
+    participant->deliver(Message(std::to_string(response.status) + " " + response.message));
 }
