@@ -28,7 +28,8 @@ add_executable(R-Type_Client
 
 target_link_libraries(R-Type_Client sfml-graphics)
 target_link_libraries(R-Type_Client sfml-window)
-target_link_libraries(R-Type_Client sfml-system )
+target_link_libraries(R-Type_Client sfml-system)
+target_link_libraries(R-Type_Client sfml-audio)
 
 target_link_libraries (R-Type_Client boost_thread)
 target_link_libraries (R-Type_Client pthread)
@@ -50,7 +51,7 @@ target_link_libraries (R-Type_Server pthread)
 target_link_libraries (R-Type_Server boost_regex)
 target_link_libraries (R-Type_Server boost_system)
 
-set (CMAKE_CXX_FLAGS "-g3 -Wall -O0")
+set (CMAKE_CXX_FLAGS "-g3 -Wall -O0 -std=c++11")
 
 set(EXECUTABLE_OUTPUT_PATH ./)
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
