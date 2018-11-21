@@ -8,7 +8,6 @@
 #ifndef PROJECT_CLIENT_HPP
 #define PROJECT_CLIENT_HPP
 
-
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
@@ -60,18 +59,18 @@ public:
         return (!this->_readMsgs.empty());
     }
 
-    Message *getResponse() {
+    Message getResponse() {
 
         if (!this->_readMsgs.empty()) {
-            Message *tmp = &this->_readMsgs.front();
+            Message tmp = this->_readMsgs.front();
             this->_readMsgs.pop_front();
             return (tmp);
         } else {
-            return NULL;
+            return Message{"404 NO_RESPONSE"};
         }
     }
 
-    Message *waitingForResponse() {
+    Message waitingForResponse() {
         while (!this->responseAvailable());
         return this->getResponse();
     }

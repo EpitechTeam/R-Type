@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
 
         RType rType(client);
 
-        RequestManager http(client);
+        RequestManager http(rType);
 
         std::thread t([&io_context]() { io_context.run(); });
 
@@ -92,7 +92,11 @@ int main(int argc, char **argv) {
                 msg.body_length(std::strlen(line));
                 std::memcpy(msg.body(), line, msg.body_length());
                 msg.encode_header();
-                http.request(msg);
+
+                http.request(msg, [](Command &response) {
+
+                    std::cout << "Response: "<< response.toStr() << std::endl;
+                });
                 // client.write(msg);
             }
         });

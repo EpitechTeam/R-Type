@@ -15,11 +15,7 @@ class RequestManager {
 public:
 
     RequestManager(RType &rType)
-        : _rType(&rType){
-    }
-
-    RequestManager(Client &client)
-            : _client(&client){
+            : _rType(&rType) {
     }
 
     ~RequestManager() {
@@ -28,18 +24,14 @@ public:
         }
     }
 
-    void request(Message &command/*, std::function<void(Command &command)> callback*/) {
-        this->_threads.emplace_back([this, command]() {
-           // this->_client->do_read_header();
-            this->_client->write(command);
-            Message *tmp = this->_client->waitingForResponse();
-            if (tmp && tmp->body() != command.body()) {
-                std::cout << "Response: ";
-                std::cout.write(tmp->body(), tmp->body_length());
-                std::cout << "\n";
-            } else {
-                std::cout << "Error: No Response." << std::endl;
-            }
+    void request(Message &command, std::function<void(Command &command)> callback) {
+        this->_threads.emplace_back([this, command, &callback]() {
+            // this->_client->do_read_header();
+            this->_rType->_client->write(command);
+            Message msg = this->_rType->_client->waitingForResponse();
+            std::string tmp(msg.body());
+            Command cmd(tmp.substr(0, msg.body_length()));
+            callback(cmd);
             //Message msg(this->_client->do_read_header());
             //std::cout <<  "Message = ";
             //std::cout.write(msg.body(), msg.body_length());
@@ -49,7 +41,6 @@ public:
 
 private:
     RType *_rType;
-    Client *_client;
     std::vector<std::thread> _threads;
 };
 
