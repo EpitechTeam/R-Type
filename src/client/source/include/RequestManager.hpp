@@ -1,3 +1,5 @@
+#include <utility>
+
 //
 // Created by kahoul on 19/11/18.
 //
@@ -7,56 +9,87 @@
 
 #include <functional>
 #include <thread>
+#include <mutex>
+#include <deque>
+
 #include "Command.hpp"
 #include "Message.hpp"
 #include "RType.hpp"
 
+class ScopeLock {
+public:
+    explicit ScopeLock(std::mutex &mutex)
+        : mtx(&mutex)
+    {
+        this->mtx->lock();
+    }
+
+    ~ScopeLock() {
+        this->mtx->unlock();
+    }
+
+private:
+    std::mutex *mtx;
+};
+
+struct Request {
+    Message request;
+    std::function<void(Command &command)> callback;
+};
+
 class RequestManager {
+private:
+
+    bool requestExec() {
+        ScopeLock lock(mtx);
+
+        if (!this->_requests.empty()) {
+            Request *request = &this->_requests.front();
+
+            this->_rType->_client->write(request->request);
+
+            Message msg = this->_rType->_client->waitingForResponse();
+            std::string tmp(msg.body());
+            Command cmd(tmp.substr(0, msg.body_length()));
+            request->callback(cmd);
+
+            this->_requests.pop_front();
+        }
+        return true;
+    }
+
 public:
 
     RequestManager(RType &rType)
             : _rType(&rType) {
-    }
-
-    ~RequestManager() {
-        for (auto &it : this->_threads) {
-            it.join();
-        }
-    }
-
-    void request(const Message &command, std::function<void(Command &command)> callback) {
-        this->_threads.emplace_back([this, command, &callback]() {
-            // this->_client->do_read_header();
-            this->_rType->_client->write(command);
-            Message msg = this->_rType->_client->waitingForResponse();
-            std::string tmp(msg.body());
-            Command cmd(tmp.substr(0, msg.body_length()));
-            callback(cmd);
-            //Message msg(this->_client->do_read_header());
-            //std::cout <<  "Message = ";
-            //std::cout.write(msg.body(), msg.body_length());
-            //std::cout << "\n";
+        this->_thread = new std::thread([this]() {
+            while (this->requestExec());
         });
     }
 
-        void request(const std::string &command, std::function<void(Command &command)> callback) {
-            this->_threads.emplace_back([this, command, &callback]() {
-                // this->_client->do_read_header();
-                this->_rType->_client->write(Message{command});
-                Message msg = this->_rType->_client->waitingForResponse();
-                std::string tmp(msg.body());
-                Command cmd(tmp.substr(0, msg.body_length()));
-                callback(cmd);
-                //Message msg(this->_client->do_read_header());
-                //std::cout <<  "Message = ";
-                //std::cout.write(msg.body(), msg.body_length());
-                //std::cout << "\n";
-            });
+    ~RequestManager() {
+        if (this->_thread) {
+            this->_thread->join();
+        }
+    }
+
+    void request(const std::string &request, std::function<void(Command &command)> callback) {
+        ScopeLock lock(this->mtx);
+
+        this->_requests.push_back({Message{request}, std::move(callback)});
+    }
+
+    void request(Message &request, std::function<void(Command &command)> callback) {
+        ScopeLock lock(this->mtx);
+
+        this->_requests.push_back({request, std::move(callback)});
     }
 
 private:
+    std::thread *_thread;
     RType *_rType;
-    std::vector<std::thread> _threads;
+    std::deque<Request> _requests;
+    std::mutex mtx;
 };
 
 #endif //R_TYPE_REQUEST_HPP
