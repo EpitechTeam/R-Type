@@ -7,14 +7,14 @@
 
 void Parser::initPreGameCommands() {
 
-    this->_functions[PreGameObj].emplace("CREATE_ROOM", make_pair(Parser::createRoom , 2 ));
-    this->_functions[PreGameObj].emplace("JOIN_ROOM", make_pair(Parser::joinRoom, 1 ));
-    this->_functions[PreGameObj].emplace("LEAVE_ROOM", make_pair(Parser::leaveRoom, 0 ));
-    this->_functions[PreGameObj].emplace("SET_NAME", make_pair(Parser::setName, 1 ));
-    this->_functions[PreGameObj].emplace("MESSAGE", make_pair(Parser::message, 1 ));
-    this->_functions[PreGameObj].emplace("GET_ROOMS", make_pair(Parser::getRooms, 0 ));
-    this->_functions[PreGameObj].emplace("GET_ROOM_PLAYERS", make_pair(Parser::getRoomPlayers, 1 ));
-    this->_functions[PreGameObj].emplace("ROOM_STATE", make_pair(Parser::roomState, 1 ));
+    this->_functions.emplace("CREATE_ROOM", make_pair(Parser::createRoom , 2 ));
+    this->_functions.emplace("JOIN_ROOM", make_pair(Parser::joinRoom, 1 ));
+    this->_functions.emplace("LEAVE_ROOM", make_pair(Parser::leaveRoom, 0 ));
+    this->_functions.emplace("SET_NAME", make_pair(Parser::setName, 1 ));
+    this->_functions.emplace("MESSAGE", make_pair(Parser::message, 1 ));
+    this->_functions.emplace("GET_ROOMS", make_pair(Parser::getRooms, 0 ));
+    this->_functions.emplace("GET_ROOM_PLAYERS", make_pair(Parser::getRoomPlayers, 1 ));
+    this->_functions.emplace("ROOM_STATE", make_pair(Parser::roomState, 1 ));
 }
 
 Response

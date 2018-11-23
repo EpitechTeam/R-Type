@@ -24,7 +24,7 @@ public:
         }
     }
 
-    void request(Message &command, std::function<void(Command &command)> callback) {
+    void request(const Message &command, std::function<void(Command &command)> callback) {
         this->_threads.emplace_back([this, command, &callback]() {
             // this->_client->do_read_header();
             this->_rType->_client->write(command);
@@ -37,6 +37,21 @@ public:
             //std::cout.write(msg.body(), msg.body_length());
             //std::cout << "\n";
         });
+    }
+
+        void request(const std::string &command, std::function<void(Command &command)> callback) {
+            this->_threads.emplace_back([this, command, &callback]() {
+                // this->_client->do_read_header();
+                this->_rType->_client->write(Message{command});
+                Message msg = this->_rType->_client->waitingForResponse();
+                std::string tmp(msg.body());
+                Command cmd(tmp.substr(0, msg.body_length()));
+                callback(cmd);
+                //Message msg(this->_client->do_read_header());
+                //std::cout <<  "Message = ";
+                //std::cout.write(msg.body(), msg.body_length());
+                //std::cout << "\n";
+            });
     }
 
 private:

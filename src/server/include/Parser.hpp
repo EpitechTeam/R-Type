@@ -30,8 +30,6 @@ public:
 
     void initPreGameCommands();
 
-    void initGameCommands();
-
     void execCommand(Command &command, participant_ptr participant);
 
 private:
@@ -47,7 +45,7 @@ private:
     static void writeResponse(participant_ptr participant, const Response &response);
     static void writeResponse(participant_ptr participant, Response &response);
 
-    std::map<Type, std::map<std::string, Params >>_functions;
+    std::map<std::string, Params > _functions;
     Server *_server;
 };
 

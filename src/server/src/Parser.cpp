@@ -9,17 +9,15 @@ Parser::Parser(Server *server)
         : _server(server) {
 
     this->initPreGameCommands();
-    this->initGameCommands();
+    // this->initGameCommands();
 }
 
 void
 Parser::execCommand(Command &command, participant_ptr participant) {
 
-    const Type type = participant->getType();
+    auto function = this->_functions.find(command.getCommand());
 
-    auto function = this->_functions[type].find(command.getCommand());
-
-    if (function != this->_functions[type].end()) {
+    if (function != this->_functions.end()) {
 
         std::cout << "Command [" << command.getCommand() << "]:";
 

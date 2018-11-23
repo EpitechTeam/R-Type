@@ -37,7 +37,6 @@ target_link_libraries (R-Type_Client boost_regex)
 target_link_libraries (R-Type_Client boost_system)
 
 add_executable(R-Type_Server
-        src/server/src/GameCommands.cpp
         src/server/src/main.cpp
         src/server/src/Parser.cpp
         src/server/src/Participant.cpp

@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
 
                 http.request(msg, [](Command &response) {
 
-                    std::cout << "Response: "<< response.toStr() << std::endl;
+                    std::cout << "Response: " << response.toStr() << std::endl;
                 });
                 // client.write(msg);
             }
@@ -108,12 +108,16 @@ int main(int argc, char **argv) {
                     rType.window->close();
                 rType.event(event);
             }
+            /*http.request("GET_ROOMS", [](Command &response) {
+
+                std::cout << "Response: "<< response.toStr() << std::endl;
+            });*/
             rType.window->clear();
             rType.draw();
             rType.window->display();
         }
 
-        inputT.join();
+        //inputT.join();
         client.close();
         t.join();
     }
