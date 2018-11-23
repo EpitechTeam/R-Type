@@ -24,6 +24,8 @@
 #include "Auth.hpp"
 #include "Game.hpp"
 
+class RequestManager;
+
 class RType {
 public:
     sf::RenderWindow *window = 0;
@@ -35,14 +37,10 @@ public:
     Auth *auth = new Auth();
     Game *game = new Game();
     Client *_client;
-
+    RequestManager *network;
     int view = 1;
 
-    RType(Client &client)
-            : _client(&client)
-    {
-        window = new sf::RenderWindow(sf::VideoMode(1280, 720), "R * TYPE by [ EZTeam feat BABOU'GAMES ] ®");
-    }
+    RType(Client &client);
 
     ~RType() {
     }

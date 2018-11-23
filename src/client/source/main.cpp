@@ -9,6 +9,13 @@
 #include "RequestManager.hpp"
 #include "Client.hpp"
 
+RType::RType(Client &client)
+    :_client(&client)
+{
+    this->network = new RequestManager(*this);
+    window = new sf::RenderWindow(sf::VideoMode(1280, 720), "R * TYPE by [ EZTeam feat BABOU'GAMES ] ®");
+}
+
 class IObject {
 public:
     virtual std::string getObjectName() const = 0;
@@ -81,11 +88,9 @@ int main(int argc, char **argv) {
 
         RType rType(client);
 
-        RequestManager http(rType);
-
         std::thread t([&io_context]() { io_context.run(); });
 
-        std::thread inputT([&http]() {
+        std::thread inputT([&rType]() {
             char line[Message::max_body_length + 1];
             while (std::cin.getline(line, Message::max_body_length + 1)) {
                 Message msg;
@@ -93,7 +98,7 @@ int main(int argc, char **argv) {
                 std::memcpy(msg.body(), line, msg.body_length());
                 msg.encode_header();
 
-                http.request(msg, [](Command &response) {
+                rType.network->request(msg, [](Command &response) {
 
                     std::cout << "Response: " << response.toStr() << std::endl;
                 });
