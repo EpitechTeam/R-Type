@@ -7,61 +7,10 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-
-Entity::Entity() = default;
-
-Entity::~Entity() = default;
-
-
-int Entity::GetLife() {
-    return (_life);
-}
-
-void Entity::SetLife(int life) {
-    _life = life;
-}
-
-Position Entity::GetPosition() {
-    return (_position);
-}
-
-void Entity::SetPosition(Position pos) {
-    _position = pos;
-}
-
-const std::string& Monster::GetType() {
-    return (_type);
-}
-void Monster::SetType(const std::string& type) {
-    _type = type;
-}
-
-Monster::Monster() {
-
-}
-
-Monster::~Monster() {
-
-}
-
-int Monster::GetSpawnCycle() {
-    return (_spawnCycle);
-}
-
-void Monster::SetSpawnCycle(int cycle) {
-    _spawnCycle = cycle;
-}
-
-int Monster::GetFireCycle() {
-    return (_fireCycle);
-}
-
-void Monster::SetFireCycle(int cycle) {
-    _fireCycle = cycle;
-}
+#include "UDPServer.hpp"
 
 Game::Game(boost::asio::io_context &io, const udp::endpoint &endpoint)
-    : _cycle(0), _running(true) {
+    : _cycle(0), _running(true), _numberOfPlayers(0), _gameStarted(false) {
 
     _udpThread = new std::thread([this, &io, &endpoint]() {
 
@@ -85,13 +34,11 @@ Game::~Game() {
  */
 void Game::Init() {
     this->ParseMonsterFile();
-    for (auto monster : _Monsters) {
-        std::cout << monster.GetType() << " " << monster.GetSpawnCycle() << " ";
-        std::cout << monster.GetFireCycle() << " " << monster.GetLife() << " ";
-        std::cout << monster.GetPosition().x << "," << monster.GetPosition().y << std::endl;
-    }
 }
 
+/*
+ * Main Game loop
+ */
 void Game::Start() {
     std::clock_t clock1;
     std::clock_t clock2;
@@ -100,12 +47,11 @@ void Game::Start() {
 
     clock1 = clock();
     while (_running) {
+        CheckAllReady();
         clock2 = clock();
         ticks = clock2 - clock1;
         delta = ticks / (double) (CLOCKS_PER_SEC);
         if (delta >= 0.5) {
-            _udpServer->Test();
-            std::cout << _cycle << std::endl;
             _cycle++;
             clock1 = clock2;
         }
@@ -119,15 +65,40 @@ void Game::Pause() {
 void Game::End() {
 }
 
-void Game::AddPlayer() {
+/*
+ * Added automatically by UDPServer
+ */
+void Game::AddPlayer(std::string id) {
     Player player;
+    Position pos;
+    double y = 20;
+    static int i = 0;
 
-    player.SetLife(100);
-    player.SetPosition({10,20});
+    _numberOfPlayers++;
+    player.SetLife(MAX_LIFE_POINTS);
+    switch (_numberOfPlayers) {
+        case 1:
+            pos = {720 / 2, 20};
+        break;
+        case 2:
+            pos = {720 / 3 + _Players[0].GetPosition().y, y};
+        break;
+        case 3:
+            pos = {720 / 4 + _Players[1].GetPosition().y, y};
+        break;
+        case 4:
+            pos = {720 / 5 + _Players[2].GetPosition().y, 20};
+        break;
+    }
+    player.SetPosition(pos);
+    player.SetId(id);
+    player.SetScore(0);
+    player.SetAsset("spaceship" + std::to_string(i) + ".png");
+    i++;
     _Players.push_back(player);
 }
 
-std::vector<std::string> split(std::string phrase, std::string delimiter){
+std::vector<std::string> split(std::string phrase, std::string delimiter) {
     std::vector<std::string> list;
     std::string s = std::string(phrase);
     size_t pos = 0;
@@ -148,6 +119,7 @@ void Game::ParseMonsterFile() {
     std::string tmp_string;
     int val;
     Position pos;
+    int i = 0;
 
     File.open("monsters");
     if (!File) {
@@ -159,17 +131,63 @@ void Game::ParseMonsterFile() {
             std::istringstream is(line);
             is >> tmp_string; // Type
             monster.SetType(tmp_string);
-            is >> val; // SpawnCycle
-            monster.SetSpawnCycle(val);
-            is >> tmp_string; // Position
-            std::vector<std::string> positions = split(tmp_string, ",");
-            pos.x = std::stoi(positions[0]);
-            pos.y = std::stoi(positions[1]);
-            monster.SetPosition(pos);
-            is >> val; // FireCycle
-            monster.SetFireCycle(val);
+            if (monster.GetType() == "normal") {
+                is >> val; // SpawnCycle
+                monster.SetSpawnCycle(val);
+                is >> tmp_string; // Position
+                std::vector<std::string> positions = split(tmp_string, ",");
+                pos.x = std::stoi(positions[0]);
+                pos.y = std::stoi(positions[1]);
+                monster.SetPosition(pos);
+                is >> val; // FireCycle
+                monster.SetFireCycle(val);
+                monster.SetSpeed(Monster::GetSpeedFromType(monster.GetType()));
+            }
             monster.SetLife(100);
+            monster.SetId(std::to_string(i));
             _Monsters.push_back(monster);
+            i++;
+        }
+    }
+}
+
+std::vector<Player> &Game::GetPlayers() {
+    return _Players;
+}
+
+std::vector<Monster> &Game::GetMonsters() {
+    return _Monsters;
+}
+
+std::vector<Bullet> &Game::GetBullets() {
+    return _Bullets;
+}
+
+Game::Game() = default;
+
+void Game::CreateBullet(double x, double y, int speed) {
+    static int i = 0;
+    Bullet bullet;
+
+    bullet.SetId(std::to_string(i));
+    bullet.SetPosition({x, y});
+    bullet.SetSpeed(speed);
+    _Bullets.push_back(bullet);
+    std::cout << "Bullet " << i << " created." << std::endl;
+    i++;
+}
+
+void Game::CheckAllReady() {
+    int readyNumber = 0;
+
+    if (_Players.size() > 0 && !_gameStarted) {
+        for (auto player : _Players) {
+            if (player.IsReady())
+                readyNumber++;
+        }
+        if (readyNumber == _Players.size()) {
+            _udpServer->SendToAll("GAME_START\n");
+            _gameStarted = true;
         }
     }
 }

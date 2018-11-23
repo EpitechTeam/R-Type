@@ -9,55 +9,10 @@
 #include <string>
 #include <ctime>
 #include "UDPServer.hpp"
+#include "Entities.hpp"
 
 class UDPServer;
 using boost::asio::ip::udp;
-
-typedef struct {
-    int x;
-    int y;
-} Position;
-
-class Entity {
-public:
-    Entity();
-    virtual ~Entity();
-
-    int GetLife();
-    void SetLife(int life);
-
-    Position GetPosition();
-    void SetPosition(Position pos);
-
-private:
-    int _life;
-    Position _position;
-};
-
-class Monster : public Entity {
-public:
-    Monster();
-    ~Monster();
-
-    const std::string& GetType();
-    void SetType(const std::string &);
-
-    int GetSpawnCycle();
-    void SetSpawnCycle(int);
-
-    int GetFireCycle();
-    void SetFireCycle(int);
-private:
-    std::string _type;
-    int _spawnCycle;
-    int _fireCycle;
-};
-
-class Player : public Entity {
-public:
-
-private:
-};
 
 class Game {
 public:
@@ -70,16 +25,27 @@ public:
     void Pause();
     void End();
 
-    void AddPlayer();
+    void AddPlayer(std::string name);
     void ParseMonsterFile();
+
+    std::vector<Player> &GetPlayers();
+    std::vector<Monster> &GetMonsters();
+    std::vector<Bullet> &GetBullets();
+
+    void CreateBullet(double x, double y, int speed);
+
+    void CheckAllReady();
 
 private:
     int _cycle;
     std::vector<Monster> _Monsters;
     std::vector<Player> _Players;
+    std::vector<Bullet> _Bullets;
     bool _running;
     UDPServer *_udpServer;
     std::thread *_udpThread;
+    int _numberOfPlayers;
+    bool _gameStarted;
 };
 
 #endif //R_TYPE_GAME_H
