@@ -81,7 +81,7 @@ public:
 
     Player *GetPlayerByClient(Client& client);
 
-    void NewBullet();
+    void NewBullet(double x, double y, double speed);
 
 private:
 

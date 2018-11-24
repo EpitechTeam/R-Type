@@ -51,13 +51,21 @@ public:
     int GetFireCycle();
     void SetFireCycle(int);
 
+    int GetWaitingCycle();
+    void SetWaitingCycle(int waitingCycle);
+
     int GetSpeed();
     void SetSpeed(int);
+
+    int GetStyle();
+    void SetStyle(int style);
 private:
     std::string _type;
+    int _style;
     int _spawnCycle;
     int _fireCycle;
     int _speed;
+    int _waitingCycle;
 };
 
 class Player : public Entity {

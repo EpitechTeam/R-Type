@@ -52,10 +52,10 @@ void Game::Start() {
         ticks = clock2 - clock1;
         delta = ticks / (double) (CLOCKS_PER_SEC);
         if (delta >= 0.5) {
+            CheckAllMonsters();
             _cycle++;
             clock1 = clock2;
         }
-        CheckMonsters();
     }
 }
 
@@ -72,29 +72,28 @@ void Game::End() {
 void Game::AddPlayer(std::string id) {
     Player player;
     Position pos;
-    double y = 20;
     static int i = 0;
 
     _numberOfPlayers++;
     player.SetLife(MAX_LIFE_POINTS);
     switch (_numberOfPlayers) {
         case 1:
-            pos = {720 / 2, 20};
+            pos = {SCREEN_HEIGHT / 2, PLAYER_START_Y};
         break;
         case 2:
-            pos = {720 / 3 + _Players[0].GetPosition().y, y};
+            pos = {SCREEN_HEIGHT / 3 + _Players[0].GetPosition().y, PLAYER_START_Y};
         break;
         case 3:
-            pos = {720 / 4 + _Players[1].GetPosition().y, y};
+            pos = {SCREEN_HEIGHT / 4 + _Players[1].GetPosition().y, PLAYER_START_Y};
         break;
         case 4:
-            pos = {720 / 5 + _Players[2].GetPosition().y, 20};
+            pos = {SCREEN_HEIGHT / 5 + _Players[2].GetPosition().y, PLAYER_START_Y};
         break;
     }
     player.SetPosition(pos);
     player.SetId(id);
     player.SetScore(0);
-    player.SetAsset("spaceship" + std::to_string(i) + ".png");
+    player.SetAsset(std::to_string(i));
     i++;
     _Players.push_back(player);
 }
@@ -193,6 +192,20 @@ void Game::CheckAllReady() {
     }
 }
 
-void Game::NewBullet() {
-    int old_cycle = _cycle;
+void Game::CheckAllMonsters() {
+    Bullet bullet;
+
+    for (auto &monster : _Monsters) {
+        if (monster.GetWaitingCycle() <= monster.GetFireCycle()) {
+            if (monster.GetWaitingCycle() == monster.GetFireCycle()) {
+                bullet.SetPosition({monster.GetPosition().x, monster.GetPosition().y});
+                bullet.SetSpeed(monster.GetSpeedFromType(monster.GetType()));
+                _udpServer->NewBullet(bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetSpeed());
+            }
+            monster.SetWaitingCycle(monster.GetWaitingCycle() + 1);
+        }
+        else {
+            monster.SetWaitingCycle(0);
+        }
+    }
 }

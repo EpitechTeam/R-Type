@@ -33,8 +33,8 @@ std::string UDPParser::getAllPositions(Game *game, UDPServer *server) {
             continue;
         ss << player.GetPosition().x << ":" << player.GetPosition().y << ":1:";
         ss << "0:" << player.GetId() << ":-1:" << player.GetAsset();
+        ss << " ";
     }
-    ss << " ";
     for(auto monster: (game->GetMonsters())) {
         if (monster.GetLife() == 0)
             continue;
@@ -98,7 +98,7 @@ std::string UDPParser::movePlayer(Game *game, UDPServer *server) {
     Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
     Player *player = server->GetPlayerByClient(client);
 
-    player->SetPosition({std::stoi(server->GetCommand().at(1)), std::stoi(server->GetCommand().at(2))})
+    player->SetPosition({std::stod(server->GetCommand()->at(1)), std::stod(server->GetCommand()->at(2))});
     return ("200\n");
 }
 
@@ -255,5 +255,9 @@ void UDPServer::SendToAll(std::string msg) {
  */
 ClientList &UDPServer::GetClients() {
     return (_clients);
+}
+
+void UDPServer::NewBullet(double x, double y, double speed) {
+    SendToAll("NEW_BULLET " + std::to_string(x) + " " + std::to_string(y) + " " + std::to_string(speed) + "\n");
 }
 

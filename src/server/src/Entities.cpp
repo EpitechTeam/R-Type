@@ -32,7 +32,10 @@ void Entity::SetId(std::string id) {
     _id = id;
 }
 
-Monster::Monster() = default;
+Monster::Monster()
+        : _waitingCycle(0){
+
+};
 
 Monster::~Monster() = default;
 
@@ -69,9 +72,25 @@ void Monster::SetSpeed(int speed) {
 
 int Monster::GetSpeedFromType(const std::string& type) {
     if (type == "normal") {
-        return (1);
+        return (2);
     }
     return (0);
+}
+
+int Monster::GetWaitingCycle() {
+    return (_waitingCycle);
+}
+
+void Monster::SetWaitingCycle(int waiting) {
+    _waitingCycle = waiting;
+}
+
+int Monster::GetStyle() {
+    return (_style);
+}
+
+void Monster::SetStyle(int style) {
+    _style = style;
 }
 
 std::string Player::GetAsset() {
