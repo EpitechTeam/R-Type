@@ -24,8 +24,11 @@
 #include <deque>
 #include <iostream>
 #include <thread>
+#include <mutex>
 #include <boost/asio.hpp>
+
 #include "Message.hpp"
+#include "ScopeLock.hpp"
 
 using boost::asio::ip::tcp;
 
@@ -63,7 +66,9 @@ public:
 
         if (!this->_readMsgs.empty()) {
             Message tmp = this->_readMsgs.front();
+            this->mtx.lock();
             this->_readMsgs.pop_front();
+            this->mtx.unlock();
             return (tmp);
         } else {
             return Message{"404 NO_RESPONSE"};
@@ -104,7 +109,9 @@ private:
                                 boost::asio::buffer(_readMsg.body(), _readMsg.body_length()),
                                 [this](boost::system::error_code ec, std::size_t /*length*/) {
                                     if (!ec) {
+                                        this->mtx.lock();
                                         this->_readMsgs.emplace_back(this->_readMsg);
+                                        this->mtx.unlock();
                                         do_read_header();
                                     } else {
                                         std::cout << "ERROR: Socket close." << std::endl;
@@ -136,6 +143,7 @@ private:
     Message _readMsg;
     MessageQueue _readMsgs;
     MessageQueue _writeMsgs;
+    std::mutex mtx;
 };
 
 sf::Sprite createSprite(const std::string path);

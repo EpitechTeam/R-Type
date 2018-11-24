@@ -16,21 +16,7 @@
 #include "Message.hpp"
 #include "RType.hpp"
 
-class ScopeLock {
-public:
-    explicit ScopeLock(std::mutex &mutex)
-        : mtx(&mutex)
-    {
-        this->mtx->lock();
-    }
-
-    ~ScopeLock() {
-        this->mtx->unlock();
-    }
-
-private:
-    std::mutex *mtx;
-};
+#include "ScopeLock.hpp"
 
 struct Request {
     Message request;
@@ -41,9 +27,8 @@ class RequestManager {
 private:
 
     bool requestExec() {
-        ScopeLock lock(mtx);
-
         if (!this->_requests.empty()) {
+            ScopeLock lock(mtx);
             Request *request = &this->_requests.front();
 
             this->_rType->_client->write(request->request);
@@ -73,16 +58,38 @@ public:
         }
     }
 
+    bool isDuplicate(Message request) {
+        for (auto it : this->_requests) {
+            if (it.request.body_length() == request.body_length() && !strcmp(it.request.body(), request.body()))
+                return true;
+        }
+        return false;
+    }
+
+    void printRequests() {
+        std::cout << "Requests: " << std::endl;
+        for (auto it : this->_requests) {
+            std::cout.write(it.request.body(), it.request.body_length());
+            std::cout << std::endl;
+        }
+    }
+
     void request(const std::string &request, std::function<void(Command &command)> callback) {
         ScopeLock lock(this->mtx);
 
-        this->_requests.push_back({Message{request}, std::move(callback)});
+        Message msg(request);
+
+        if (!this->isDuplicate(msg)) {
+            this->_requests.push_back({Message{request}, std::move(callback)});
+        }
     }
 
     void request(Message &request, std::function<void(Command &command)> callback) {
         ScopeLock lock(this->mtx);
 
-        this->_requests.push_back({request, std::move(callback)});
+        if (!this->isDuplicate(request)) {
+            this->_requests.push_back({request, std::move(callback)});
+        }
     }
 
 private:
