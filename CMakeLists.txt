@@ -21,6 +21,7 @@ add_executable(R-Type_Client
         src/client/source/lib/Auth.cpp
         src/client/source/lib/Game.cpp
         src/client/source/lib/Starship.cpp
+        src/client/source/lib/RType.cpp
         src/client/source/lib/Animation.cpp
         src/client/source/lib/Bullet.cpp
         src/client/source/lib/Mob.cpp
