@@ -1,0 +1,117 @@
+//
+// Created by David Zakrzewski on 23/11/2018.
+//
+
+#include "Entities.hpp"
+
+Entity::Entity() = default;
+
+Entity::~Entity() = default;
+
+int Entity::GetLife() {
+    return (_life);
+}
+
+void Entity::SetLife(int life) {
+    _life = life;
+}
+
+Position Entity::GetPosition() {
+    return (_position);
+}
+
+void Entity::SetPosition(Position pos) {
+    _position = pos;
+}
+
+std::string Entity::GetId() {
+    return (_id);
+}
+
+void Entity::SetId(std::string id) {
+    _id = id;
+}
+
+Monster::Monster() = default;
+
+Monster::~Monster() = default;
+
+const std::string& Monster::GetType() {
+    return (_type);
+}
+void Monster::SetType(const std::string& type) {
+    _type = type;
+}
+
+int Monster::GetSpawnCycle() {
+    return (_spawnCycle);
+}
+
+void Monster::SetSpawnCycle(int cycle) {
+    _spawnCycle = cycle;
+}
+
+int Monster::GetFireCycle() {
+    return (_fireCycle);
+}
+
+void Monster::SetFireCycle(int cycle) {
+    _fireCycle = cycle;
+}
+
+int Monster::GetSpeed() {
+    return (_speed);
+}
+
+void Monster::SetSpeed(int speed) {
+    _speed = speed;
+}
+
+int Monster::GetSpeedFromType(const std::string& type) {
+    if (type == "normal") {
+        return (1);
+    }
+    return (0);
+}
+
+std::string Player::GetAsset() {
+    return (_asset);
+}
+
+Player::Player()
+        : _score(0), _asset(""), _isReady(false){
+}
+
+Player::~Player() = default;
+
+void Player::SetAsset(std::string asset) {
+    _asset = asset;
+}
+
+bool Player::IsReady() {
+    return (_isReady);
+}
+
+void Player::SetReady(bool ready) {
+    _isReady = ready;
+}
+
+int Player::GetScore() {
+    return (_score);
+}
+
+void Player::SetScore(int score) {
+    _score = score;
+}
+
+Bullet::Bullet() = default;
+
+Bullet::~Bullet() = default;
+
+int Bullet::GetSpeed() {
+    return (_speed);
+}
+
+void Bullet::SetSpeed(int speed) {
+    _speed = speed;
+}

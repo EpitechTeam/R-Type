@@ -35,7 +35,10 @@ public:
     }
 
     std::string getArg(int pos = 0) {
-        return (this->_args.at(pos));
+        if (pos < this->_args.size()) {
+            return (this->_args.at(pos));
+        }
+        return ("");
     }
 
     std::size_t argLen(void) const {
