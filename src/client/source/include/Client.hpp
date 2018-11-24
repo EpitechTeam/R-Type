@@ -18,7 +18,9 @@
 #define  JOINROOM 4
 #define  ROOM 5
 #define AUTH 6
+#define AUTH_CONNECT 61
 #define  MAP 7
+
 
 #include <cstdlib>
 #include <deque>
@@ -36,10 +38,10 @@ typedef std::deque<Message> MessageQueue;
 
 class Client {
 public:
-    Client(boost::asio::io_context &ioContext,
+    Client(boost::asio::io_context *ioContext,
            const tcp::resolver::results_type &endpoints)
             : _ioContext(ioContext),
-              _socket(ioContext) {
+              _socket(*ioContext) {
         do_connect(endpoints);
     }
 
@@ -55,7 +57,7 @@ public:
     }
 
     void close() {
-        boost::asio::post(_ioContext, [this]() { _socket.close(); });
+        boost::asio::post(*_ioContext, [this]() { _socket.close(); });
     }
 
     bool responseAvailable() {
@@ -86,7 +88,11 @@ private:
         boost::asio::async_connect(_socket, endpoints,
                                    [this](boost::system::error_code ec, tcp::endpoint) {
                                        if (!ec) {
+                                           std::cout << "Client Connected." << std::endl;
                                            do_read_header();
+                                       } else {
+                                           std::cout << "Connection error"
+                                                        "" << std::endl;
                                        }
                                    });
     }
@@ -121,15 +127,19 @@ private:
     }
 
     void do_write() {
+        std::cout << "Holla" << std::endl;
         boost::asio::async_write(_socket,
                                  boost::asio::buffer(_writeMsgs.front().data(),
                                                      _writeMsgs.front().length()),
                                  [this](boost::system::error_code ec, std::size_t /*length*/) {
                                      if (!ec) {
+                                         std::cout << "Holla" << std::endl;
                                          _writeMsgs.pop_front();
+                                         std::cout << "Holla" << std::endl;
                                          if (!_writeMsgs.empty()) {
                                              do_write();
                                          }
+                                         std::cout << "Holla" << std::endl;
                                      } else {
                                          std::cout << "ERROR: Socket close." << std::endl;
                                          _socket.close();
@@ -138,7 +148,7 @@ private:
     }
 
 private:
-    boost::asio::io_context &_ioContext;
+    boost::asio::io_context *_ioContext;
     tcp::socket _socket;
     Message _readMsg;
     MessageQueue _readMsgs;
@@ -149,6 +159,8 @@ private:
 sf::Sprite createSprite(const std::string path);
 
 void print(std::string string);
+
+bool check_ip(std::string serverip);
 
 int roll(int min, int max);
 

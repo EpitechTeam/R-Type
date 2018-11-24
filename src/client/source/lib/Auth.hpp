@@ -133,12 +133,10 @@ public:
             starship.setPosition(positionx, pointer[index]);
         }
 
-
-        if (event.key.code == sf::Keyboard::Return)
-        {
+        if (event.key.code == sf::Keyboard::Return) {
 
             if (starship.getPosition().y > 575) {
-                return LOBBY;
+                return AUTH_CONNECT;
             }
         }
         if (starship.getPosition().y < 530) {

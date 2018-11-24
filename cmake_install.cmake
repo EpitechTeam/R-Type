@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # Install script for directory: /home/cherkaoui/DELIVERY/R-Type
-=======
-# Install script for directory: /home/kahoul/epitech-tek3/R-Type
->>>>>>> d393e531fe89554e6776468682e68fd1182c83ab
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -16,11 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-<<<<<<< HEAD
     set(CMAKE_INSTALL_CONFIG_NAME "Debug")
-=======
-    set(CMAKE_INSTALL_CONFIG_NAME "")
->>>>>>> d393e531fe89554e6776468682e68fd1182c83ab
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -53,9 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-<<<<<<< HEAD
 file(WRITE "/home/cherkaoui/DELIVERY/R-Type/${CMAKE_INSTALL_MANIFEST}"
-=======
-file(WRITE "/home/kahoul/epitech-tek3/R-Type/${CMAKE_INSTALL_MANIFEST}"
->>>>>>> d393e531fe89554e6776468682e68fd1182c83ab
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -29,6 +29,7 @@ private:
     bool requestExec() {
         if (!this->_requests.empty()) {
             ScopeLock lock(mtx);
+
             Request *request = &this->_requests.front();
 
             this->_rType->_client->write(request->request);
@@ -45,8 +46,8 @@ private:
 
 public:
 
-    RequestManager(RType &rType)
-            : _rType(&rType) {
+    RequestManager(RType *rType)
+            : _rType(rType) {
         this->_thread = new std::thread([this]() {
             while (this->requestExec());
         });
