@@ -27,11 +27,22 @@ Room::leave(participant_ptr participant) {
 void
 Room::deliver(const Message &msg) {
     _recent_msgs.push_back(msg);
-    while (_recent_msgs.size() > max_recent_msgs)
+   /* while (_recent_msgs.size() > max_recent_msgs)
         _recent_msgs.pop_front();
 
     for (auto participant: _participants)
-        participant->deliver(msg);
+        participant->deliver(msg);*/
+}
+
+std::string
+Room::getMessages() {
+    std::string tmp;
+
+    for (auto it : this->_recent_msgs) {
+        tmp.append(it.body(), it.body_length());
+        tmp.push_back('|');
+    }
+    return tmp;
 }
 
 UDPParser::UDPParser() {

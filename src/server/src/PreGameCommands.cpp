@@ -14,7 +14,8 @@ void Parser::initPreGameCommands() {
     this->_functions.emplace("MESSAGE", make_pair(Parser::message, 1 ));
     this->_functions.emplace("GET_ROOMS", make_pair(Parser::getRooms, 0 ));
     this->_functions.emplace("GET_ROOM_PLAYERS", make_pair(Parser::getRoomPlayers, 1 ));
-    this->_functions.emplace("ROOM_STATE", make_pair(Parser::roomState, 1 ));
+    this->_functions.emplace("GET_MESSAGES", make_pair(Parser::getMessages, 0 ));
+//    this->_functions.emplace("ROOM_STATE", make_pair(Parser::roomState, 1 ));
 }
 
 Response
@@ -67,7 +68,12 @@ Parser::setName(Command &command, participant_ptr participant, Server *server) {
 
 Response
 Parser::message(Command &command, participant_ptr participant, Server *server) {
-    std::string message(command.getArg(0));
+    std::string message;
+
+    for (std::size_t i = 0; i < command.argLen(); i++ ) {
+        message.append(command.getArg(i));
+        message.push_back(' ');
+    }
 
     if (participant->_currentRoom) {
 
@@ -113,6 +119,16 @@ Parser::getRoomPlayers(Command &command, participant_ptr participant, Server *se
             response += it->getName() + " ";
         }
         return { 200, response };
+    }
+}
+
+Response
+Parser::getMessages(Command &command, participant_ptr participant, Server *server) {
+
+    if (participant->_currentRoom) {
+        return { 200, participant->_currentRoom->getMessages() };
+    } else {
+        return { 400, "NOT_IN_ROOM" };
     }
 }
 

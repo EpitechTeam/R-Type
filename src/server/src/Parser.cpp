@@ -26,12 +26,14 @@ Parser::execCommand(Command &command, participant_ptr participant) {
         }
 
         std::cout << " Executed." << std::endl;
-        if (command.argLen() == function->second.second) {
+        if (command.getCommand() == "MESSAGE" || command.argLen() == function->second.second) {
             Response response = function->second.first(command, participant, this->_server);
             Parser::writeResponse(participant, response);
         } else {
             std::cout << "Bad arguments nb: expects "<< function->second.second << " arguments, " << command.argLen()
             << " provided." << std::endl;
+            Parser::writeResponse(participant, { 400, "BAD_ARGUMENTS_NUMBERS" });
+
         }
     } else {
         std::cout << "Command [" << command.getCommand() << "] not Supported." << std::endl;

@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
 
         std::thread t([&io_context]() { io_context.run(); });
 
-       /* std::thread inputT([&rType]() {
+       std::thread inputT([&rType]() {
             char line[Message::max_body_length + 1];
             while (std::cin.getline(line, Message::max_body_length + 1)) {
                 Message msg;
@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
                 });
                 // client.write(msg);
             }
-        });*/
+        });
 
         while (rType.window->isOpen()) {
             sf::Event event;

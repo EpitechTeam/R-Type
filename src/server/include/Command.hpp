@@ -34,7 +34,7 @@ public:
         return this->_command;
     }
 
-    std::string getArg(int pos = 0) {
+    std::string getArg(std::size_t pos = 0) {
         if (pos < this->_args.size()) {
             return (this->_args.at(pos));
         }

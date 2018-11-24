@@ -40,6 +40,7 @@ private:
     static Response message(Command &command, participant_ptr participant, Server *server);
     static Response getRooms(Command &command, participant_ptr participant, Server *server);
     static Response getRoomPlayers(Command &command, participant_ptr participant, Server *server);
+    static Response getMessages(Command &command, participant_ptr participant, Server *server);
     static Response roomState(Command &command, participant_ptr participant, Server *server);
 
     static void writeResponse(participant_ptr participant, const Response &response);

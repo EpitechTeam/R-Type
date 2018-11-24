@@ -111,6 +111,8 @@ public:
 
     void deliver(const Message &msg);
 
+    std::string getMessages();
+
     std::set <participant_ptr> _participants;
 private:
     enum {
