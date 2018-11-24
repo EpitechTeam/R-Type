@@ -17,6 +17,8 @@ UDPParser::UDPParser() {
     _playerFncs["GET_SCORE"] = UDPParser::getScore;
     _playerFncs["MSG"] = UDPParser::sendMessageToAll; // Todo handle messages with spaces
     _playerFncs["READY"] = UDPParser::playerReady;
+    _playerFncs["MOVE_PLAYER"] = UDPParser::movePlayer;
+    _playerFncs["COLLISION"] = UDPParser::collision;
 
 }
 UDPParser::~UDPParser() = default;
@@ -89,6 +91,23 @@ std::string UDPParser::playerReady(Game *game, UDPServer *server) {
     Player *player = server->GetPlayerByClient(client);
 
     player->SetReady(std::stoi(server->GetCommand()->at(1)));
+    return ("200\n");
+}
+
+std::string UDPParser::movePlayer(Game *game, UDPServer *server) {
+    Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
+    Player *player = server->GetPlayerByClient(client);
+
+    player->SetPosition({std::stoi(server->GetCommand().at(1)), std::stoi(server->GetCommand().at(2))})
+    return ("200\n");
+}
+
+std::string UDPParser::collision(Game *game, UDPServer *server) {
+    Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
+    Player *player = server->GetPlayerByClient(client);
+
+    if (player->GetLife() > 0)
+        player->SetLife(player->GetLife() - 1);
     return ("200\n");
 }
 

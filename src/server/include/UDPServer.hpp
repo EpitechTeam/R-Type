@@ -47,6 +47,8 @@ private:
     static std::string getScore(Game *game, UDPServer *server);
     static std::string sendMessageToAll(Game *game, UDPServer *server);
     static std::string playerReady(Game *game, UDPServer *server);
+    static std::string movePlayer(Game *game, UDPServer *server);
+    static std::string collision(Game *game, UDPServer *server);
 
 private:
     std::string _cmdToSend;
@@ -78,6 +80,9 @@ public:
     std::pair<std::string, udp::endpoint> GetClientByRemotepoint(udp::endpoint ep);
 
     Player *GetPlayerByClient(Client& client);
+
+    void NewBullet();
+
 private:
 
     void startReceive();

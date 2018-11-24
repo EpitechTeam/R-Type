@@ -55,6 +55,7 @@ void Game::Start() {
             _cycle++;
             clock1 = clock2;
         }
+        CheckMonsters();
     }
 }
 
@@ -190,4 +191,8 @@ void Game::CheckAllReady() {
             _gameStarted = true;
         }
     }
+}
+
+void Game::NewBullet() {
+    int old_cycle = _cycle;
 }

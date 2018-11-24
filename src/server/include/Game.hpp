@@ -35,6 +35,7 @@ public:
     void CreateBullet(double x, double y, int speed);
 
     void CheckAllReady();
+    void CheckAllMonsters();
 
 private:
     int _cycle;
