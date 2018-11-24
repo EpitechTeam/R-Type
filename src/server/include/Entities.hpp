@@ -98,7 +98,6 @@ public:
 
 private:
     int _speed;
-    std::string _owner; // Todo add owner to bullet?
 };
 
 #endif //R_TYPE_ENTITIES_H
