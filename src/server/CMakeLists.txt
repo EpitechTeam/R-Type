@@ -5,10 +5,12 @@ set(CMAKE_CXX_STANDARD 14)
 
 message(STATUS "start running Server cmake...")
 
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ../../)
+
 if (APPLE)
     message(STATUS "OSX")
 
-    include_directories(src/server/include)
+    include_directories(include)
 
     find_package(Boost 1.68.0 COMPONENTS system filesystem REQUIRED)
 
@@ -23,7 +25,7 @@ if (APPLE)
     endif ()
 
 
-    file(GLOB SOURCES "src/server/src/*.cpp")
+    file(GLOB SOURCES "src/*.cpp")
 
     add_executable(R-Type_Server ${SOURCES})
 
@@ -35,15 +37,13 @@ if (APPLE)
 
 endif ()
 
-if (UNIX)
+if (UNIX AND LINUX)
     message(STATUS "LINUX")
 
     include_directories(include)
 
     include_directories(../../include)
     link_directories(../../lib)
-
-    set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ../../)
 
     add_executable(R-Type_Server
             src/Entities.cpp
