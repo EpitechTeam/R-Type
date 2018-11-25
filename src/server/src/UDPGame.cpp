@@ -50,13 +50,15 @@ void UDPGame::Start() {
     clock1 = clock();
     while (_running) {
         CheckAllReady();
-        clock2 = clock();
-        ticks = clock2 - clock1;
-        delta = ticks / (double) (CLOCKS_PER_SEC);
-        if (delta >= 0.5) {
-            CheckAllMonsters();
-            _cycle++;
-            clock1 = clock2;
+        if (_gameStarted) {
+            clock2 = clock();
+            ticks = clock2 - clock1;
+            delta = ticks / (double) (CLOCKS_PER_SEC);
+            if (delta >= 0.5) {
+                CheckAllMonsters();
+                _cycle++;
+                clock1 = clock2;
+            }
         }
     }
 }
