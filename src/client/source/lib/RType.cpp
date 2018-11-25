@@ -11,30 +11,26 @@ RType::RType() {
 }
 
 void RType::connect(const std::string host, const std::string port) {
-    try {
-        std::cout << "host: " << host << " port: " << port << std::endl;
-        this->resolver = new tcp::resolver(io_context);
-        // tcp::resolver resolver(io_context);
-        std::cout << "host: " << host << " port: " << port << std::endl;
-        auto endpoints = this->resolver->resolve(host, port);
-        std::cout << "host: " << host << " port: " << port << std::endl;
-        client = new Client(io_context, endpoints);
 
-        std::cout << "PASSED:" << __LINE__ << std::endl;
+    std::cout << "host: " << host << " port: " << port << std::endl;
+    this->resolver = new tcp::resolver(io_context);
+    // tcp::resolver resolver(io_context);
+    std::cout << "host: " << host << " port: " << port << std::endl;
+    this->endpoints = this->resolver->resolve(host, port);
+    std::cout << "host: " << host << " port: " << port << std::endl;
+    client = new Client(&io_context, endpoints);
 
-        this->t = new std::thread([this]() {
-            try {
-                this->view = LOBBY;
-                std::cout << "change room" << std::endl;
-                this->io_context.run();
-            }
-            catch (std::exception &e) {
-                std::cerr << "Exception: " << e.what() << "\n";
-            }
-        });
+    std::cout << "PASSED:" << __LINE__ << std::endl;
 
-        this->inputT = new std::thread([this]() {
+    this->t = new std::thread([this]() {
+        this->io_context.run();
+    });
 
+    this->view = LOBBY;
+
+    this->inputT = new std::thread([this]() {
+
+        if (this->client->isConnected()) {
             char line[Message::max_body_length + 1];
             while (std::cin.getline(line, Message::max_body_length + 1)) {
 
@@ -43,21 +39,14 @@ void RType::connect(const std::string host, const std::string port) {
                 std::memcpy(msg.body(), line, msg.body_length());
                 msg.encode_header();
 
-                 if (this->network) {
+                if (this->network) {
                     this->network->request(msg, [](Command &command) {
                         std::cout << "Response: " << command.toStr() << std::endl;
                     });
                 }
             }
-
-        });
-
-        std::cout << "PASSED:" << __LINE__ << std::endl;
-    }
-    catch (std::exception &e) {
-        std::cerr << "Exception: " << e.what() << "\n";
-    }
-    std::cout << "PASSED:" << __LINE__ << std::endl;
+        }
+    });
 }
 
 void RType::draw() {

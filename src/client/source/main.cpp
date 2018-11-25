@@ -11,18 +11,18 @@
 
 int main(int argc, char **argv) {
 
-        RType rType;
+    RType rType;
 
-        while (rType.window->isOpen()) {
-            sf::Event event;
-            while (rType.window->pollEvent(event)) {
-                if (event.type == sf::Event::Closed)
-                    rType.window->close();
-                rType.event(event);
-            }
-            rType.window->clear();
-            rType.draw();
-            rType.window->display();
+    while (rType.window->isOpen()) {
+        sf::Event event;
+        while (rType.window->pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                rType.window->close();
+            rType.event(event);
         }
+        rType.window->clear();
+        rType.draw();
+        rType.window->display();
+    }
     return 0;
 }

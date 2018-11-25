@@ -97,10 +97,9 @@ CreateRoom::event(sf::Event event , sf::RenderWindow *window){
     if (event.key.code == sf::Keyboard::Return)
     {
         if (starship.getPosition().y > 610) {
-            std::cout << "CREATE_ROOM" << std::endl;
-        /*  this->rType->network->request("CREATE_ROOM " + str_roomname + " " + std::to_string(int_nbplayer), [](Command &response) {
+        this->rType->network->request("CREATE_ROOM " + str_roomname + " " + std::to_string(int_nbplayer), [](Command &response) {
                 std::cout << "Response: "<< response.toStr() << std::endl;
-            });*/
+            });
             return ROOM;
         }
     }

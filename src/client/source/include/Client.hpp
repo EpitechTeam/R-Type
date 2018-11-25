@@ -46,7 +46,7 @@ public:
     }
 
     void write(const Message &msg) {
-        boost::asio::post(_ioContext,
+        boost::asio::post(*_ioContext,
                           [this, msg]() {
                               bool write_in_progress = !_writeMsgs.empty();
                               _writeMsgs.push_back(msg);
@@ -57,7 +57,11 @@ public:
     }
 
     void close() {
-        boost::asio::post(*_ioContext, [this]() { _socket.close(); });
+        boost::asio::post(*_ioContext, [this]() {
+            this->connected = false;
+            std::cout << "ERROR: Socket close." << std::endl;
+            _socket.close();
+        });
     }
 
     bool responseAvailable() {
@@ -82,6 +86,10 @@ public:
         return this->getResponse();
     }
 
+    bool isConnected() {
+        return this->connected;
+    }
+
 private:
 
     void do_connect(const tcp::resolver::results_type &endpoints) {
@@ -90,9 +98,11 @@ private:
                                        if (!ec) {
                                            std::cout << "Client Connected." << std::endl;
                                            do_read_header();
+                                           this->connected = true;
                                        } else {
                                            std::cout << "Connection error"
                                                         "" << std::endl;
+                                           this->connected = false;
                                        }
                                    });
     }
@@ -104,8 +114,7 @@ private:
                                     if (!ec && _readMsg.decode_header()) {
                                         do_read_body();
                                     } else {
-                                        std::cout << "ERROR: Socket close." << std::endl;
-                                        _socket.close();
+                                        this->close();
                                     }
                                 });
     }
@@ -120,29 +129,23 @@ private:
                                         this->mtx.unlock();
                                         do_read_header();
                                     } else {
-                                        std::cout << "ERROR: Socket close." << std::endl;
-                                        _socket.close();
+                                        this->close();
                                     }
                                 });
     }
 
     void do_write() {
-        std::cout << "Holla" << std::endl;
         boost::asio::async_write(_socket,
                                  boost::asio::buffer(_writeMsgs.front().data(),
                                                      _writeMsgs.front().length()),
                                  [this](boost::system::error_code ec, std::size_t /*length*/) {
                                      if (!ec) {
-                                         std::cout << "Holla" << std::endl;
                                          _writeMsgs.pop_front();
-                                         std::cout << "Holla" << std::endl;
                                          if (!_writeMsgs.empty()) {
                                              do_write();
                                          }
-                                         std::cout << "Holla" << std::endl;
                                      } else {
-                                         std::cout << "ERROR: Socket close." << std::endl;
-                                         _socket.close();
+                                         this->close();
                                      }
                                  });
     }
@@ -154,6 +157,7 @@ private:
     MessageQueue _readMsgs;
     MessageQueue _writeMsgs;
     std::mutex mtx;
+    bool connected = false;
 };
 
 sf::Sprite createSprite(const std::string path);

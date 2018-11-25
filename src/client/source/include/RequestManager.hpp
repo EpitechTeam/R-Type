@@ -32,9 +32,9 @@ private:
 
             Request *request = &this->_requests.front();
 
-            this->_rType->_client->write(request->request);
+            this->_rType->client->write(request->request);
 
-            Message msg = this->_rType->_client->waitingForResponse();
+            Message msg = this->_rType->client->waitingForResponse();
             std::string tmp(msg.body());
             Command cmd(tmp.substr(0, msg.body_length()));
             request->callback(cmd);
@@ -81,7 +81,7 @@ public:
         Message msg(request);
 
         if (!this->isDuplicate(msg)) {
-            this->_requests.push_back({Message{request}, std::move(callback)});
+            this->_requests.push_back({Message{request}, callback});
         }
     }
 
@@ -89,7 +89,7 @@ public:
         ScopeLock lock(this->mtx);
 
         if (!this->isDuplicate(request)) {
-            this->_requests.push_back({request, std::move(callback)});
+            this->_requests.push_back({request, callback});
         }
     }
 

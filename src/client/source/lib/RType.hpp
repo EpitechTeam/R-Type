@@ -36,16 +36,17 @@ public:
     Room *room = new Room();
     Auth *auth = new Auth();
     Game *game = new Game();
-    Client *_client;
     RequestManager *network;
     std::string ip = "127.0.0.1";
     std::string port = "4242";
     int view = 1;
-    boost::asio::io_context *io_context;
+    boost::asio::io_context io_context;
     Client *client;
     tcp::resolver *resolver;
     std::thread *t;
     std::thread *inputT;
+    tcp::resolver::results_type endpoints;
+    bool connected = false;
 
     RType();
 

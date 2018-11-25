@@ -14,7 +14,6 @@ include_directories(include)
 link_directories(lib)
 
 add_executable(R-Type_Client
-        src/client/source/lib/RType.cpp
         src/client/source/lib/utils.cpp
         src/client/source/lib/Map.cpp
         src/client/source/lib/Menu.cpp
@@ -28,6 +27,7 @@ add_executable(R-Type_Client
         src/client/source/lib/Animation.cpp
         src/client/source/lib/Bullet.cpp
         src/client/source/lib/Mob.cpp
+        src/client/source/lib/RType.cpp
         src/client/source/main.cpp)
 
 target_link_libraries(R-Type_Client sfml-graphics)
