@@ -6,7 +6,7 @@
 #include <string>
 #include <UDPServer.hpp>
 
-#include "Game.hpp"
+#include "UDPGame.hpp"
 
 UDPParser::UDPParser() {
     _playerFncs["GET_POSITIONS"] = UDPParser::getAllPositions;
@@ -24,7 +24,7 @@ UDPParser::UDPParser() {
 UDPParser::~UDPParser() = default;
 
 // ######################    ROUTES   ###########################
-std::string UDPParser::getAllPositions(Game *game, UDPServer *server) {
+std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
     std::ostringstream ss;
 
     ss << "200 ";
@@ -51,64 +51,64 @@ std::string UDPParser::getAllPositions(Game *game, UDPServer *server) {
     return (ss.str());
 }
 
-std::string UDPParser::killEntity(Game *game, UDPServer *server) {
+std::string UDPParser::killEntity(UDPGame *game, UDPServer *server) {
 
-    return ("200\n");
+    return ("200");
 }
 
-std::string UDPParser::fireBullet(Game *game, UDPServer *server) {
+std::string UDPParser::fireBullet(UDPGame *game, UDPServer *server) {
     game->CreateBullet(std::stoi(server->GetCommand()->at(1)), std::stoi(server->GetCommand()->at(2)), std::stoi(server->GetCommand()->at(3)));
-    return ("200\n");
+    return ("200");
 }
 
-std::string UDPParser::initPlayer(Game *game, UDPServer *server) {
+std::string UDPParser::initPlayer(UDPGame *game, UDPServer *server) {
     server->AddClient(server->GetCommand()->at(1), server->GetRemoteEndpoint());
-    return ("200\n");
+    return ("200");
 }
 
-std::string UDPParser::updateScore(Game *game, UDPServer *server) {
+std::string UDPParser::updateScore(UDPGame *game, UDPServer *server) {
     Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
     Player *player = server->GetPlayerByClient(client);
     player->SetScore(std::stoi(server->GetCommand()->at(1)));
-    return ("200\n");
+    return ("200");
 }
 
-std::string UDPParser::getScore(Game *game, UDPServer *server) {
+std::string UDPParser::getScore(UDPGame *game, UDPServer *server) {
     int score = 0;
     Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
     Player *player = server->GetPlayerByClient(client);
     score = player->GetScore();
-    return ("200 " + std::to_string(score) + "\n");
+    return ("200 " + std::to_string(score));
 }
 
-std::string UDPParser::sendMessageToAll(Game *game, UDPServer *server) {
+std::string UDPParser::sendMessageToAll(UDPGame *game, UDPServer *server) {
     server->SendToAll(server->GetCommand()->at(1));
-    return ("200\n");
+    return ("200");
 }
 
-std::string UDPParser::playerReady(Game *game, UDPServer *server) {
+std::string UDPParser::playerReady(UDPGame *game, UDPServer *server) {
     Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
     Player *player = server->GetPlayerByClient(client);
 
     player->SetReady(std::stoi(server->GetCommand()->at(1)));
-    return ("200\n");
+    return ("200");
 }
 
-std::string UDPParser::movePlayer(Game *game, UDPServer *server) {
+std::string UDPParser::movePlayer(UDPGame *game, UDPServer *server) {
     Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
     Player *player = server->GetPlayerByClient(client);
 
     player->SetPosition({std::stod(server->GetCommand()->at(1)), std::stod(server->GetCommand()->at(2))});
-    return ("200\n");
+    return ("200");
 }
 
-std::string UDPParser::collision(Game *game, UDPServer *server) {
+std::string UDPParser::collision(UDPGame *game, UDPServer *server) {
     Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
     Player *player = server->GetPlayerByClient(client);
 
     if (player->GetLife() > 0)
         player->SetLife(player->GetLife() - 1);
-    return ("200\n");
+    return ("200");
 }
 
 // #####################################################################
@@ -136,15 +136,15 @@ std::pair<std::string, udp::endpoint> UDPServer::GetClientByRemotepoint(udp::end
     return (pair);
 }
 
-void UDPParser::parseCommand(Game *game, UDPServer *server) {
+void UDPParser::parseCommand(UDPGame *game, UDPServer *server) {
     if (server->GetCommand()->size() == 0) {
-        _cmdToSend = "404\n";
+        _cmdToSend = "404";
         return;
     }
     std::string cmd = server->GetCommand()->at(0);
     std::cout << cmd + "\n";
     if (_playerFncs.count(cmd) == 0) {
-        _cmdToSend = "404\n";
+        _cmdToSend = "404";
         return;
     }
     _cmdToSend = _playerFncs[cmd](game, server);
@@ -154,7 +154,7 @@ std::string UDPParser::getCmdToSend() {
     return (_cmdToSend);
 }
 
-UDPServer::UDPServer(boost::asio::io_context& io_context, const udp::endpoint &endpoint, Game *game)
+UDPServer::UDPServer(boost::asio::io_context& io_context, const udp::endpoint &endpoint, UDPGame *game)
         : _socket(io_context, endpoint), _game(game){
 
     startReceive();
@@ -174,9 +174,9 @@ void UDPServer::handleReceive(const boost::system::error_code& error,
     if (!error || error == boost::asio::error::message_size) {
 
         std::string command = std::string(_recvBuffer.begin(), _recvBuffer.begin()+bytes_transferred);
-        std::string newCmd = command.substr(0, command.length() - 1);
+        //std::string newCmd = command.substr(0, command.length() - 1);
 
-        _command = new UDPCommand(split(newCmd, " "));
+        _command = new UDPCommand(split(command, " "));
 
         _udpParser.parseCommand(_game, this);
 
@@ -231,7 +231,7 @@ void UDPServer::AddClient(std::string name, udp::endpoint endpoint) {
         std::cout << name + " joined the game\n";
     }
     else
-        std::cout << name + " already exists" << std::endl;
+        std::cout << name + " already exists\n";
 }
 
 /*
@@ -258,6 +258,6 @@ ClientList &UDPServer::GetClients() {
 }
 
 void UDPServer::NewBullet(double x, double y, double speed) {
-    SendToAll("NEW_BULLET " + std::to_string(x) + " " + std::to_string(y) + " " + std::to_string(speed) + "\n");
+    SendToAll("NEW_BULLET " + std::to_string(x) + " " + std::to_string(y) + " " + std::to_string(speed));
 }
 

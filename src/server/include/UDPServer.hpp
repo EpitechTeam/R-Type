@@ -14,7 +14,7 @@
 #include "Command.hpp"
 #include "Entities.hpp"
 
-class Game;
+class UDPGame;
 class UDPServer;
 using boost::asio::ip::udp;
 
@@ -27,28 +27,28 @@ struct TestPlayer {
     int posY;
 };
 
-typedef std::string (*FncPtr)(Game *game, UDPServer *server);
+typedef std::string (*FncPtr)(UDPGame *game, UDPServer *server);
 
 class UDPParser {
 public:
     UDPParser();
     ~UDPParser();
 
-    void parseCommand(Game *game, UDPServer *server);
+    void parseCommand(UDPGame *game, UDPServer *server);
 
     std::string getCmdToSend();
 
 private:
-    static std::string getAllPositions(Game *game, UDPServer *server);
-    static std::string killEntity(Game *game, UDPServer *server);
-    static std::string fireBullet(Game *game, UDPServer *server);
-    static std::string initPlayer(Game *game, UDPServer *server);
-    static std::string updateScore(Game *game, UDPServer *server);
-    static std::string getScore(Game *game, UDPServer *server);
-    static std::string sendMessageToAll(Game *game, UDPServer *server);
-    static std::string playerReady(Game *game, UDPServer *server);
-    static std::string movePlayer(Game *game, UDPServer *server);
-    static std::string collision(Game *game, UDPServer *server);
+    static std::string getAllPositions(UDPGame *game, UDPServer *server);
+    static std::string killEntity(UDPGame *game, UDPServer *server);
+    static std::string fireBullet(UDPGame *game, UDPServer *server);
+    static std::string initPlayer(UDPGame *game, UDPServer *server);
+    static std::string updateScore(UDPGame *game, UDPServer *server);
+    static std::string getScore(UDPGame *game, UDPServer *server);
+    static std::string sendMessageToAll(UDPGame *game, UDPServer *server);
+    static std::string playerReady(UDPGame *game, UDPServer *server);
+    static std::string movePlayer(UDPGame *game, UDPServer *server);
+    static std::string collision(UDPGame *game, UDPServer *server);
 
 private:
     std::string _cmdToSend;
@@ -64,7 +64,7 @@ typedef std::vector<std::string> UDPCommand;
 
 class UDPServer {
 public:
-    UDPServer(boost::asio::io_context &, const udp::endpoint &, Game *game);
+    UDPServer(boost::asio::io_context &, const udp::endpoint &, UDPGame *game);
     ~UDPServer();
 
     void SendTo(std::string msg, udp::endpoint ep);
@@ -103,7 +103,7 @@ private:
     UDPParser _udpParser;
     ClientList _clients;
     UDPCommand *_command;
-    Game *_game;
+    UDPGame *_game;
 };
 
 #endif //R_TYPE_UDPSERVER_H

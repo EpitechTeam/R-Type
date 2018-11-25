@@ -20,7 +20,7 @@
 
 #include "Message.hpp"
 #include "Participant.hpp"
-#include "Game.hpp"
+#include "UDPGame.hpp"
 
 using boost::asio::ip::tcp;
 using boost::asio::ip::udp;
@@ -65,7 +65,7 @@ private:
     MessageQueue _recent_msgs;
     std::string _name;
     int _maxSlots;
-    Game _game;
+    UDPGame _game;
 };
 
 

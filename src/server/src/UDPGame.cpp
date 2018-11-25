@@ -2,14 +2,14 @@
 // Created by David Zakrzewski on 17/11/2018.
 //
 
-#include <Game.hpp>
+#include <UDPGame.hpp>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <sstream>
 #include "UDPServer.hpp"
 
-Game::Game(boost::asio::io_context &io, const udp::endpoint &endpoint)
+UDPGame::UDPGame(boost::asio::io_context &io, const udp::endpoint &endpoint)
     : _cycle(0), _running(true), _numberOfPlayers(0), _gameStarted(false) {
 
     _udpThread = new std::thread([this, &io, &endpoint]() {
@@ -24,7 +24,7 @@ Game::Game(boost::asio::io_context &io, const udp::endpoint &endpoint)
     this->Init();
 }
 
-Game::~Game() {
+UDPGame::~UDPGame() {
     _udpThread->join();
 }
 
@@ -32,14 +32,14 @@ Game::~Game() {
  * Cette fonction initialize les informations du jeu
  * --> Position des monstres au spawn
  */
-void Game::Init() {
+void UDPGame::Init() {
     this->ParseMonsterFile();
 }
 
 /*
- * Main Game loop
+ * Main UDPGame loop
  */
-void Game::Start() {
+void UDPGame::Start() {
     std::clock_t clock1;
     std::clock_t clock2;
     std::clock_t ticks;
@@ -59,17 +59,17 @@ void Game::Start() {
     }
 }
 
-void Game::Pause() {
+void UDPGame::Pause() {
     _running = false;
 }
 
-void Game::End() {
+void UDPGame::End() {
 }
 
 /*
  * Added automatically by UDPServer
  */
-void Game::AddPlayer(std::string id) {
+void UDPGame::AddPlayer(std::string id) {
     Player player;
     Position pos;
     static int i = 0;
@@ -112,7 +112,7 @@ std::vector<std::string> split(std::string phrase, std::string delimiter) {
     return list;
 }
 
-void Game::ParseMonsterFile() {
+void UDPGame::ParseMonsterFile() {
     std::ifstream File;
     std::string line;
     Monster monster;
@@ -151,21 +151,21 @@ void Game::ParseMonsterFile() {
     }
 }
 
-std::vector<Player> &Game::GetPlayers() {
+std::vector<Player> &UDPGame::GetPlayers() {
     return _Players;
 }
 
-std::vector<Monster> &Game::GetMonsters() {
+std::vector<Monster> &UDPGame::GetMonsters() {
     return _Monsters;
 }
 
-std::vector<Bullet> &Game::GetBullets() {
+std::vector<Bullet> &UDPGame::GetBullets() {
     return _Bullets;
 }
 
-Game::Game() = default;
+UDPGame::UDPGame() = default;
 
-void Game::CreateBullet(double x, double y, int speed) {
+void UDPGame::CreateBullet(double x, double y, int speed) {
     static int i = 0;
     Bullet bullet;
 
@@ -177,7 +177,7 @@ void Game::CreateBullet(double x, double y, int speed) {
     i++;
 }
 
-void Game::CheckAllReady() {
+void UDPGame::CheckAllReady() {
     int readyNumber = 0;
 
     if (_Players.size() > 0 && !_gameStarted) {
@@ -192,7 +192,7 @@ void Game::CheckAllReady() {
     }
 }
 
-void Game::CheckAllMonsters() {
+void UDPGame::CheckAllMonsters() {
     Bullet bullet;
 
     for (auto &monster : _Monsters) {

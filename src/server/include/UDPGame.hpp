@@ -17,11 +17,11 @@
 class UDPServer;
 using boost::asio::ip::udp;
 
-class Game {
+class UDPGame {
 public:
-    Game();
-    Game(boost::asio::io_context &io, const udp::endpoint &endpoint);
-    ~Game();
+    UDPGame();
+    UDPGame(boost::asio::io_context &io, const udp::endpoint &endpoint);
+    ~UDPGame();
 
     void Init();
     void Start();
