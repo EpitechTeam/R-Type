@@ -11,6 +11,9 @@
 #include "UDPServer.hpp"
 #include "Entities.hpp"
 
+#define SCREEN_HEIGHT 720
+#define PLAYER_START_Y 20
+
 class UDPServer;
 using boost::asio::ip::udp;
 
@@ -35,6 +38,7 @@ public:
     void CreateBullet(double x, double y, int speed);
 
     void CheckAllReady();
+    void CheckAllMonsters();
 
 private:
     int _cycle;

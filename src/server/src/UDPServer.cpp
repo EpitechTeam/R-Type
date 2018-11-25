@@ -17,6 +17,8 @@ UDPParser::UDPParser() {
     _playerFncs["GET_SCORE"] = UDPParser::getScore;
     _playerFncs["MSG"] = UDPParser::sendMessageToAll; // Todo handle messages with spaces
     _playerFncs["READY"] = UDPParser::playerReady;
+    _playerFncs["MOVE_PLAYER"] = UDPParser::movePlayer;
+    _playerFncs["COLLISION"] = UDPParser::collision;
 
 }
 UDPParser::~UDPParser() = default;
@@ -30,21 +32,20 @@ std::string UDPParser::getAllPositions(Game *game, UDPServer *server) {
         if (player.GetLife() == 0)
             continue;
         ss << player.GetPosition().x << ":" << player.GetPosition().y << ":1:";
-        ss << "0:" << player.GetId() << ":-1:" << player.GetAsset();
+        ss << player.GetId() << ":-1:" << player.GetAsset();
+        ss << " ";
     }
-    ss << " ";
     for(auto monster: (game->GetMonsters())) {
         if (monster.GetLife() == 0)
             continue;
         ss << monster.GetPosition().x << ":" << monster.GetPosition().y << ":-1:";
-        ss << "0:" << "-1:" << monster.GetId() << ":lool.png";
+        ss << "-1:" << monster.GetId() << ":" << monster.GetStyle();
     }
-
-    ss << " ";
+    /*ss << " ";
     for(auto bullet: (game->GetBullets())) {
-        ss << bullet.GetPosition().x << ":" << bullet.GetPosition().y << ":-1:"; // Todo: change this "-1"
+        ss << bullet.GetPosition().x << ":" << bullet.GetPosition().y << ":-1:";
         ss << "1:" << "-1:" << "-1:" << "lool.png";
-    }
+    }*/
     ss << std::endl;
     return (ss.str());
 }
@@ -80,7 +81,18 @@ std::string UDPParser::getScore(Game *game, UDPServer *server) {
 }
 
 std::string UDPParser::sendMessageToAll(Game *game, UDPServer *server) {
-    server->SendToAll(server->GetCommand()->at(1));
+    std::ostringstream ss;
+    UDPCommand command = *server->GetCommand();
+
+    for (auto it = command.begin(); it != command.end(); ++it) {
+        if (it == command.begin())
+            continue;
+        ss << *it;
+        if (it != command.end())
+            ss << " ";
+    };
+    ss << "\n";
+    server->SendToAll(ss.str());
     return ("200\n");
 }
 
@@ -89,6 +101,23 @@ std::string UDPParser::playerReady(Game *game, UDPServer *server) {
     Player *player = server->GetPlayerByClient(client);
 
     player->SetReady(std::stoi(server->GetCommand()->at(1)));
+    return ("200\n");
+}
+
+std::string UDPParser::movePlayer(Game *game, UDPServer *server) {
+    Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
+    Player *player = server->GetPlayerByClient(client);
+
+    player->SetPosition({std::stod(server->GetCommand()->at(1)), std::stod(server->GetCommand()->at(2))});
+    return ("200\n");
+}
+
+std::string UDPParser::collision(Game *game, UDPServer *server) {
+    Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
+    Player *player = server->GetPlayerByClient(client);
+
+    if (player->GetLife() > 0)
+        player->SetLife(player->GetLife() - 1);
     return ("200\n");
 }
 
@@ -236,5 +265,9 @@ void UDPServer::SendToAll(std::string msg) {
  */
 ClientList &UDPServer::GetClients() {
     return (_clients);
+}
+
+void UDPServer::NewBullet(double x, double y, double speed) {
+    SendToAll("NEW_BULLET " + std::to_string(x) + " " + std::to_string(y) + " " + std::to_string(speed) + "\n");
 }
 
