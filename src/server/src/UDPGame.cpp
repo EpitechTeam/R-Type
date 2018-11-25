@@ -26,6 +26,8 @@ UDPGame::UDPGame(boost::asio::io_context &io, const udp::endpoint &endpoint)
 
 UDPGame::~UDPGame() {
     _udpThread->join();
+    delete(_udpServer);
+    delete(_udpThread);
 }
 
 /*
@@ -162,8 +164,6 @@ std::vector<Monster> &UDPGame::GetMonsters() {
 std::vector<Bullet> &UDPGame::GetBullets() {
     return _Bullets;
 }
-
-UDPGame::UDPGame() = default;
 
 void UDPGame::CreateBullet(double x, double y, int speed) {
     static int i = 0;

@@ -19,7 +19,6 @@ using boost::asio::ip::udp;
 
 class UDPGame {
 public:
-    UDPGame();
     UDPGame(boost::asio::io_context &io, const udp::endpoint &endpoint);
     ~UDPGame();
 

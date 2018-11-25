@@ -160,7 +160,10 @@ UDPServer::UDPServer(boost::asio::io_context& io_context, const udp::endpoint &e
     startReceive();
 }
 
-UDPServer::~UDPServer() = default;
+UDPServer::~UDPServer() {
+    delete(_command);
+    delete(_game);
+};
 
 void UDPServer::startReceive() {
     _socket.async_receive_from(boost::asio::buffer(_recvBuffer),
