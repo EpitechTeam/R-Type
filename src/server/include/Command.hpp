@@ -4,6 +4,11 @@
 
 #ifndef R_TYPE_COMMAND_HPP
 #define R_TYPE_COMMAND_HPP
+#include <iostream>
+#include <list>
+#include <vector>
+#include <stdio.h>
+#include <string.h>
 
 #include <iostream>
 #include <list>
@@ -11,9 +16,45 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "Message.hpp"
+
 class Command {
 public:
-    Command(std::string command) {
+    Command(std::string command)
+            : _str(command)
+    {
+        this->init(command);
+    }
+
+    Command(Message &msg) {
+
+        char *cstr = new char [msg.body_length() + 1];
+        strncpy (cstr, msg.body(), msg.body_length());
+
+        this->_str = std::string(cstr);
+        std::cout << "STR: " << this->_str << std::endl;
+        this->init(this->_str);
+    }
+
+    std::string getCommand(void) const {
+        return this->_command;
+    }
+
+    std::string getArg(int pos = 0) {
+        return (this->_args.at(pos));
+    }
+
+    std::size_t argLen(void) const {
+        return this->_args.size();
+    }
+
+    std::string toStr() const {
+        return std::string(this->_str);
+    }
+
+private:
+    void init(std::string command) {
+
         char *cstr = new char [command.length() + 1];
         strcpy (cstr, command.c_str());
 
@@ -30,24 +71,9 @@ public:
         }
     }
 
-    std::string getCommand(void) const {
-        return this->_command;
-    }
-
-    std::string getArg(std::size_t pos = 0) {
-        if (pos < this->_args.size()) {
-            return (this->_args.at(pos));
-        }
-        return ("");
-    }
-
-    std::size_t argLen(void) const {
-        return this->_args.size();
-    }
-
 private:
     std::string _command;
     std::vector <std::string> _args;
+    std::string _str;
 };
-
 #endif //R_TYPE_COMMAND_HPP
