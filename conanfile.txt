@@ -1,5 +1,13 @@
  [requires]
  boost/1.68.0@conan/stable
+ sfml/2.5.1@bincrafters/stable
+
+ [options]
+ boost:shared=False
+
+ sfml:shared=False
+ sfml:graphics=True
+ sfml:window=True
 
  [generators]
  cmake
