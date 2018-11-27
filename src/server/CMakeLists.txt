@@ -47,7 +47,7 @@ if (UNIX AND LINUX)
 
     add_executable(R-Type_Server
             src/Entities.cpp
-            src/Game.cpp
+            src/UDPGame.cpp
             src/main.cpp
             src/Parser.cpp
             src/Participant.cpp
