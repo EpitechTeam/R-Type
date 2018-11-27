@@ -7,8 +7,16 @@ message(STATUS "start running Server cmake...")
 
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY .)
 
+if (UNIX AND NOT APPLE)
+    set(LINUX TRUE)
+endif()
+
 if (APPLE)
     message(STATUS "OSX")
+
+    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+
+    conan_basic_setup()
 
     include_directories(src/server/include)
 
@@ -37,7 +45,7 @@ if (APPLE)
 
 endif ()
 
-if (UNIX)
+if (LINUX)
     message(STATUS "LINUX")
 
     message(binaryDIR: ${CMAKE_BINARY_DIR})
