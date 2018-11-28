@@ -55,6 +55,8 @@ public:
 
     void deliver(const Message &msg);
 
+    bool isAllPlayerReady() const ;
+
     std::string getMessages();
 
     std::set <participant_ptr> _participants;

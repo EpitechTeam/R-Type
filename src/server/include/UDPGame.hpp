@@ -39,6 +39,12 @@ public:
     void CheckAllReady();
     void CheckAllMonsters();
 
+    bool isGameStarted() const;
+
+    void startGame() {
+        this->_gameStarted = true;
+    }
+
 private:
     int _cycle;
     std::vector<Monster> _Monsters;

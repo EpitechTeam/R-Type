@@ -44,3 +44,12 @@ Room::getMessages() {
     }
     return tmp;
 }
+
+bool Room::isAllPlayerReady() const {
+    for (auto it : this->_participants) {
+        if (!it->getReady()) {
+            return false;
+        }
+    }
+    return true;
+}

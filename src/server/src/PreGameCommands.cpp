@@ -37,6 +37,8 @@ Parser::joinRoom(Command &command, participant_ptr participant, Server *server) 
     if (tmp == NULL) {
         std::cout << "Unknown room" << std::endl;
         return { 400,  "UNKNOWN_ROOM"};
+    } else if (tmp->_game.isGameStarted()) {
+        return { 400,  "GAME_ALREADY_STARTED"};
     } else {
         tmp->join(participant);
         std::cout << participant->getName() << " enter the room " << tmp->getName() << "." << std::endl;
@@ -138,6 +140,16 @@ Parser::setReady(Command &command, participant_ptr participant, Server *server) 
 
     if (participant->_currentRoom) {
         participant->setReady();
+
+        if (participant->_currentRoom->isAllPlayerReady()) {
+            std::cout << "GAME READY" << std::endl;
+            
+            // ToDo: Start the Game
+            // Fake the game start
+            participant->_currentRoom->_game.startGame();
+
+            // participant->_currentRoom->_game->start();
+        }
         return { 200, participant->getReady() ? " True" : "False" };
     } else {
         return { 400, "NOT_IN_ROOM" };
