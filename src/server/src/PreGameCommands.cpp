@@ -15,7 +15,8 @@ void Parser::initPreGameCommands() {
     this->_functions.emplace("GET_ROOMS", make_pair(Parser::getRooms, 0 ));
     this->_functions.emplace("GET_ROOM_PLAYERS", make_pair(Parser::getRoomPlayers, 1 ));
     this->_functions.emplace("GET_MESSAGES", make_pair(Parser::getMessages, 0 ));
-//    this->_functions.emplace("ROOM_STATE", make_pair(Parser::roomState, 1 ));
+    this->_functions.emplace("SET_READY", make_pair(Parser::setReady, 0 ));
+    this->_functions.emplace("GET_READY", make_pair(Parser::getReady, 0 ));
 }
 
 Response
@@ -39,7 +40,7 @@ Parser::joinRoom(Command &command, participant_ptr participant, Server *server) 
     } else {
         tmp->join(participant);
         std::cout << participant->getName() << " enter the room " << tmp->getName() << "." << std::endl;
-        return { 200, "ROOM_JOINED" };
+        return { 200, std::to_string(tmp->_maxSlots) };
     }
 }
 
@@ -133,16 +134,27 @@ Parser::getMessages(Command &command, participant_ptr participant, Server *serve
 }
 
 Response
-Parser::roomState(Command &command, participant_ptr participant, Server *server) {
-    std::string roomName(command.getArg(0));
+Parser::setReady(Command &command, participant_ptr participant, Server *server) {
 
-    auto tmp = Room::find(server->_rooms, roomName);
-    if (tmp == NULL) {
-        std::cout << "Unknown room" << std::endl;
-        return { 404 ,"ROOM_NOT_FOUND" };
-    } else if (tmp->_participants.empty()) {
-        return { 400, "NO_PLAYERS" };
+    if (participant->_currentRoom) {
+        participant->setReady();
+        return { 200, participant->getReady() ? " True" : "False" };
     } else {
-        return { 200, "WAITING" };
+        return { 400, "NOT_IN_ROOM" };
+    }
+}
+
+Response
+Parser::getReady(Command &command, participant_ptr participant, Server *server) {
+    std::string response;
+
+    if (participant->_currentRoom) {
+
+        for (auto &it : participant->_currentRoom->_participants) {
+            response += it->getName() + (it->getReady() ?  ": READY" : ": NOT READY") + "|";
+        }
+        return { 200, response };
+    } else {
+        return { 400, "NOT_IN_ROOM" };
     }
 }

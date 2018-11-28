@@ -58,7 +58,8 @@ public:
     std::string getMessages();
 
     std::set <participant_ptr> _participants;
-private:
+
+public:
     enum {
         max_recent_msgs = 100
     };

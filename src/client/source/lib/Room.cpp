@@ -83,9 +83,11 @@ int Room::event(sf::Event event , sf::RenderWindow *window) {
         }
     }
     if (event.key.code == sf::Keyboard::Return) {
-        if(starship.getPosition().x == pointer[0] && starship.getPosition().y == positiony)
-            return MAP;
-        else if (starship.getPosition().y == pointer[2]){
+        if(starship.getPosition().x == pointer[0] && starship.getPosition().y == positiony) {
+            this->rType->network->request("SET_READY", [this](Command &response) {
+                std::cout << "Response msg: "<< response.toStr() << std::endl;
+            });
+        } else if (starship.getPosition().y == pointer[2]){
             std::string onemsg = playername + " : " + promt;
             promt = "";
             print("send message:" + onemsg);
@@ -133,6 +135,27 @@ void Room::draw(sf::RenderWindow *window) {
             }
             this->chat = subArray;
         });
+        this->rType->network->request("GET_READY", [this](Command &response) {
+            std::cout << "Response READY: "<< response.toStr() << std::endl;
+            std::string line = response.toStr();
+            line = line.substr(3, line.size());
+            int len = line.length();
+            std::vector<std::string> subArray;
+
+            for (int j = 0, k = 0; j < len; j++) {
+                if (line[j] == '|') {
+                    std::string ch = line.substr(k, j - k);
+                    k = j+1;
+                    subArray.push_back(ch);
+                }
+                if (j == len - 1) {
+                    std::string ch = line.substr(k, j - k+1);
+                    subArray.push_back(ch);
+                }
+            }
+            this->player = subArray;
+        });
+
         elapsed_time -= delay;
     }
 
@@ -177,7 +200,7 @@ void Room::draw(sf::RenderWindow *window) {
     for(int i = 0; nb_player != i; i++) {
         tag.setPosition(1290, 100 + (i * 60));
         window->draw(tag);
-        front_promt.setString("player"+ std::to_string(i + 1) + ": " + playername);
+        front_promt.setString( i < this->player.size() ? this->player.at(i) : "");
         front_promt.setPosition(900, 115 + (i * 60));
         window->draw(this->front_promt);
     }
