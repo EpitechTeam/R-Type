@@ -28,23 +28,17 @@ public:
     sf::Text roomname;
     sf::Text create;
     std::string str_roomname = "my_room";
+    std::string response_create_room = "400";
+    std::string response_join_room = "400" ;
     int int_nbplayer = 4;
-
     float x = 0;
     float positionx = 30;
     float positiony = 442;
-
     int *pointer = new int[3];
-
     RType *rType;
-
     CreateRoom(RType *rType);
-
     ~CreateRoom() {
-
     };
-
-
     int backspace = 0;
 
     std::string event_to_string(sf::Event event, std::string str) {

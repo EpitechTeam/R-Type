@@ -157,6 +157,7 @@ private:
     MessageQueue _readMsgs;
     MessageQueue _writeMsgs;
     std::mutex mtx;
+public:
     bool connected = false;
 };
 

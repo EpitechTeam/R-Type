@@ -24,21 +24,18 @@ void RType::connect(const std::string host, const std::string port) {
 
     this->t = new std::thread([this]() {
         this->io_context.run();
+        this->auth->create.setString("Retry");
+        this->view = AUTH;
     });
 
-    this->view = LOBBY;
-
     this->inputT = new std::thread([this]() {
-
         if (this->client->isConnected()) {
             char line[Message::max_body_length + 1];
             while (std::cin.getline(line, Message::max_body_length + 1)) {
-
                 Message msg;
                 msg.body_length(std::strlen(line));
                 std::memcpy(msg.body(), line, msg.body_length());
                 msg.encode_header();
-
                 if (this->network) {
                     this->network->request(msg, [](Command &command) {
                         std::cout << "Response: " << command.toStr() << std::endl;
@@ -68,23 +65,35 @@ void RType::draw() {
             break;
         case 5: {
             room->draw(this->window);
-            room->playername = auth->str_roomname;
+            room->playername = auth->playername;
             room->str_roomname = createRoom->str_roomname;
             room->nb_player = createRoom->int_nbplayer;
             break;
         }
-        case 6:
+        case 6: {
+            if(client && this->client->connected) {
+                std::cout << "cleint => " << "connected" << std::endl;
+
+                std::cout << "connection oklm " << std::endl;
+                this->network->request("SET_NAME " + auth->playername, [this](Command &response) {
+                    print("set name: " + response.toStr());
+                    this->view = LOBBY;;
+                });
+            } else
+                std::cout << "cleint => " <<  "not connected" << std::endl;
+
             auth->draw(this->window);
             break;
+        }
         case 61: {
             std::cout << "lets go" << std::endl;
-
             std::string delimiter = ":";
             this->ip = this->auth->server_ip.substr(0, this->auth->server_ip.find(delimiter));
             this->port = this->auth->server_ip.substr(this->auth->server_ip.find(delimiter) + 1,
                                                       this->auth->server_ip.length());
             this->connect(ip, port);
-            this->view = LOBBY;;
+            this->auth->create.setString("Wait");
+            this->view = AUTH;
             break;
         }
         case 62:
