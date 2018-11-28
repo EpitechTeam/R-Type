@@ -25,18 +25,18 @@ public:
     int *pointer = new int[2];
 
     Connection(){
-        if (!texture.loadFromFile("./src/client/myasset/background.png")) {
+        if (!texture.loadFromFile("myasset/background.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
         background = sf::Sprite(texture);
        background.setScale(1.5f, 1.5f);
 
-        if (!texture2.loadFromFile("./src/client/myasset/r-type.png")) {
+        if (!texture2.loadFromFile("myasset/r-type.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
         logo = sf::Sprite(texture2);
         logo.setPosition(60, 70);
-        if (!texture3.loadFromFile("./src/client/myasset/starship.png")) {
+        if (!texture3.loadFromFile("myasset/starship.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
         starship = sf::Sprite(texture3);
@@ -45,7 +45,7 @@ public:
 
         //text
 
-        if (!font.loadFromFile("./src/client/myasset/space font.ttf")) {
+        if (!font.loadFromFile("myasset/space font.ttf")) {
             std::cout << "ERROR FONT" << std::endl;
         }
         text.setFont(font); // font est un sf::Font

@@ -31,13 +31,13 @@ public:
     float x  = 0;
 
     Game(){
-        if (!texture.loadFromFile("./src/client/myasset/background.png")) {
+        if (!texture.loadFromFile("myasset/background.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
         background = sf::Sprite(texture);
        background.setScale(1.5f, 1.5f);
 
-        if (!font.loadFromFile("./src/client/myasset/old.ttf")) {
+        if (!font.loadFromFile("myasset/old.ttf")) {
             std::cout << "ERROR FONT" << std::endl;
         }
         text.setFont(font);

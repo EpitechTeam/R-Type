@@ -7,31 +7,31 @@
 #include "RType.hpp"
 
 Room::Room(RType *rType) : rType(rType) {
-    if (!texture.loadFromFile("./src/client/myasset/background.png")) {
+    if (!texture.loadFromFile("myasset/background.png")) {
         std::cout << "ERROR TEXTURE" << std::endl;
     }
     background = sf::Sprite(texture);
     background.setScale(1.5f, 1.5f);
-    if (!texture2.loadFromFile("./src/client/myasset/rectcut.png")) {
+    if (!texture2.loadFromFile("myasset/rectcut.png")) {
         std::cout << "ERROR TEXTURE" << std::endl;
     }
     rect = sf::Sprite(texture2);
     rect.setPosition(0, -10);
     tag = sf::Sprite(texture2);
     tag.setScale(-1.0f, 0.5f);
-    if (!texture3.loadFromFile("./src/client/myasset/starship.png")) {
+    if (!texture3.loadFromFile("myasset/starship.png")) {
         std::cout << "ERROR TEXTURE" << std::endl;
     }
     starship = sf::Sprite(texture3);
     starship.setPosition(positionx, positiony);
     starship.setScale(2.0f, 2.0f);
-    if (!texture4.loadFromFile("./src/client/myasset/rect.png")) {
+    if (!texture4.loadFromFile("myasset/rect.png")) {
         std::cout << "ERROR TEXTURE" << std::endl;
     }
     bigrect = sf::Sprite(texture4);
     bigrect.setPosition(-70, 30);
     bigrect.setScale(1.4f, 0.9f);
-    if (!font.loadFromFile("./src/client/myasset/space font.ttf")) {
+    if (!font.loadFromFile("myasset/space font.ttf")) {
         std::cout << "ERROR FONT" << std::endl;
     }
     text.setFont(font);

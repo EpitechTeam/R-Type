@@ -28,7 +28,7 @@ public:
         switch(id[0]) {
             case '2':  _rect = sf::RectangleShape(sf::Vector2f(33 * 2, 34 * 2));
                 _rect.setPosition(0, 0.f);
-                if (!_rectTexture.loadFromFile("./src/client/asset/mob2.png")) {
+                if (!_rectTexture.loadFromFile("asset/mob2.png")) {
                     std::cout << "ERROR TEXTURE" << std::endl;
                 }
                 _rect.setTexture(&_rectTexture);
@@ -37,7 +37,7 @@ public:
                 break;
             case '3':  _rect = sf::RectangleShape(sf::Vector2f(50 * 2, 50 * 2));
                 _rect.setPosition(0, 0.f);
-                if (!_rectTexture.loadFromFile("./src/client/asset/mob3.png")) {
+                if (!_rectTexture.loadFromFile("asset/mob3.png")) {
                     std::cout << "ERROR TEXTURE" << std::endl;
                 }
                 _rect.setTexture(&_rectTexture);
@@ -46,7 +46,7 @@ public:
                 break;
             default:_rect = sf::RectangleShape(sf::Vector2f(33 * 2, 36 * 2));
                 _rect.setPosition(0, 0.f);
-                if (!_rectTexture.loadFromFile("./src/client/asset/mob1.png")) {
+                if (!_rectTexture.loadFromFile("asset/mob1.png")) {
                     std::cout << "ERROR TEXTURE" << std::endl;
                 }
                 _rect.setTexture(&_rectTexture);

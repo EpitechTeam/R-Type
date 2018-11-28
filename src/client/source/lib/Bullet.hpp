@@ -22,7 +22,7 @@ public:
 
 
     Bullet(sf::Vector2f position, std::string id, float range) {
-        if (!texture.loadFromFile("./src/client/myasset/shoot.png")) {
+        if (!texture.loadFromFile("myasset/shoot.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
         this->range = range;
@@ -37,7 +37,7 @@ public:
 
         _rect = sf::RectangleShape(sf::Vector2f(32, 32));
         _rect.setPosition(0, 0.f);
-        if (!_rectTexture.loadFromFile("./src/client/asset/r-typesheet2.png")) {
+        if (!_rectTexture.loadFromFile("asset/r-typesheet2.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
         _rect.setTexture(&_rectTexture);

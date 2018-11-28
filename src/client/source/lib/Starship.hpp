@@ -17,7 +17,7 @@ public:
     float speed = 350.f;
 
     Starship(){
-        if (!texture3.loadFromFile("./src/client/myasset/starship.png")) {
+        if (!texture3.loadFromFile("myasset/starship.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
         starship = sf::Sprite(texture3);

@@ -48,13 +48,20 @@ endif ()
 if (LINUX)
     message(STATUS "LINUX")
 
-    message(binaryDIR: ${CMAKE_BINARY_DIR})
-
     include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 
     conan_basic_setup()
 
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+    file(COPY src/client/asset
+            DESTINATION ${CMAKE_BINARY_DIR})
+
+    file(COPY src/client/myasset
+            DESTINATION ${CMAKE_BINARY_DIR})
+
+    file(COPY monsters
+            DESTINATION ${CMAKE_BINARY_DIR})
 
     include_directories(src/server/include)
 

@@ -3,8 +3,7 @@
 //
 
 #ifndef R_TYPE_ROOM_HPP
-#define R_TYPE_ROOM_HPPERROR: Failed requirement 'sfml/2.5.1@bincrafters/stable' from 'PROJECT'
-ERROR: Unable to find 'sfml/2.5.1@bincrafters/stable' in remotes
+#define R_TYPE_ROOM_HPP
 
 
 class RequestManager;
