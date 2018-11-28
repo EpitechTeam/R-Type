@@ -85,6 +85,9 @@ public:
                 return CREATEROOM;
             }
         }
+        if (event.key.code == sf::Keyboard::Escape) {
+            return MENU;
+        }
         return LOBBY;
     }
 

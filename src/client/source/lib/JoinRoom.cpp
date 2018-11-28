@@ -89,7 +89,9 @@ JoinRoom::event(sf::Event event , sf::RenderWindow *window) {
             });
             return JOINROOM;
         }
-    }
-    else
+    } else if (event.key.code == sf::Keyboard::Escape) {
+        return LOBBY;
+    } else {
         return JOINROOM;
+    }
 }

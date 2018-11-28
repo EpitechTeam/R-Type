@@ -99,6 +99,12 @@ int Room::event(sf::Event event , sf::RenderWindow *window) {
     } else if (starship.getPosition().y < 550) {
         return ROOM;
     }
+    if (event.key.code == sf::Keyboard::Escape) {
+        this->rType->network->request("LEAVE_ROOM", [this](Command &response) {
+            std::cout << "Response msg: "<< response.toStr() << std::endl;
+        });
+        return LOBBY;
+    }
     return ROOM;
 }
 

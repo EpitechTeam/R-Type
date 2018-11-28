@@ -113,6 +113,9 @@ CreateRoom::event(sf::Event event , sf::RenderWindow *window){
             return CREATEROOM;
         }
     }
+    if (event.key.code == sf::Keyboard::Escape) {
+        return LOBBY;
+    }
     std::cout << "Res join: "<< this->response_create_room << std::endl;
     if (this->response_create_room == "200 ROOM_JOINED") {
         this->response_create_room = "404";
