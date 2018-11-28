@@ -102,10 +102,12 @@ CreateRoom::event(sf::Event event , sf::RenderWindow *window){
             this->rType->network->request("JOIN_ROOM " + str_roomname, [this](Command &response) {
                 std::cout << "Response join: "<< response.toStr() << std::endl;
 
-                if (response.getCommand() != "200") {
-                    this->create.setString("Retry");
-                } else {
+                if (response.getCommand() == "200") {
+                    std::cout << "Go to Room" << std::endl;
                     this->rType->view = ROOM;
+                } else {
+                    std::cout << "Retry Room" << std::endl;
+                    this->create.setString("Retry");
                 }
             });
             return CREATEROOM;

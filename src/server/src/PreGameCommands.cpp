@@ -36,7 +36,7 @@ Parser::joinRoom(Command &command, participant_ptr participant, Server *server) 
     auto tmp = Room::find(server->_rooms, roomName);
     if (tmp == NULL) {
         std::cout << "Unknown room" << std::endl;
-        return { 200,  "UNKNOWN_ROOM"};
+        return { 400,  "UNKNOWN_ROOM"};
     } else {
         tmp->join(participant);
         std::cout << participant->getName() << " enter the room " << tmp->getName() << "." << std::endl;
