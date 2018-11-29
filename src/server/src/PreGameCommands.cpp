@@ -24,8 +24,14 @@ Parser::createRoom(Command &command, participant_ptr participant, Server *server
     std::string name(command.getArg(0));
     std::string slots(command.getArg(1));
 
-    server->_rooms.emplace_back(server->getIo_context(), name, std::stoi(slots), server->getUdpEndpoint());
-    return { 200,  "ROOM_CREATED"};
+    auto tmp = Room::find(server->_rooms, name);
+
+    if (tmp == NULL) {
+        server->_rooms.emplace_back(server->getIo_context(), name, std::stoi(slots), server->getUdpEndpoint());
+        return { 200,  "ROOM_CREATED"};
+    } else {
+        return { 400,  "ROOM_ALREADY_EXIST"};
+    }
 }
 
 Response
@@ -143,7 +149,7 @@ Parser::setReady(Command &command, participant_ptr participant, Server *server) 
 
         if (participant->_currentRoom->isAllPlayerReady()) {
             std::cout << "GAME READY" << std::endl;
-            
+
             // ToDo: Start the Game
             // Fake the game start
             participant->_currentRoom->_game.startGame();
