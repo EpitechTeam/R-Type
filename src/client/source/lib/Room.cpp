@@ -137,7 +137,7 @@ void Room::draw(sf::RenderWindow *window) {
     deltaTime = clock.restart().asSeconds();
     fps = 1.f / deltaTime;
 
-    sf::Time delay = sf::milliseconds(1200);
+    sf::Time delay = sf::milliseconds(200);
     elapsed_time += r.restart();
 
     // We have enough time to spawn a sprite. ( may be for several ? )
@@ -193,8 +193,8 @@ void Room::draw(sf::RenderWindow *window) {
                 std::cout << "Error: " << response.toStr() << std::endl;
             }
         });
-        std::cout << "check_start_game()" << std::endl;
         check_start_game();
+        std::cout << "check_start_game()" << std::endl;
         elapsed_time -= delay;
     }
 
