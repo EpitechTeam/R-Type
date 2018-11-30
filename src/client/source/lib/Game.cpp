@@ -30,9 +30,12 @@ Game::Game(RType *rType) : rType(rType) {
     starship.push_back(new Starship());
 };
 
-void Game::init_udp() {
-    client = new UDPClient(this->rType->io_context, this->rType->ip);
-    client->request("INIT_PLAYER " + this->rType->auth->playername, [this](std::string cmd) {
-        std::cout << "init udp :" << cmd << std::endl;
+void Game::init_udp()
+{
+    client = new UDPClient(rType->io_context, rType->ip, this);
+
+    client->request("INIT_PLAYER " + rType->auth->playername, [this](std::string cmd) {
+        std::cout << cmd << std::endl;
     });
 }
+
