@@ -17,4 +17,13 @@ if [ "$unameOut" = "Linux" ]; then
     make
 elif [ "$unameOut" = "Darwin" ]; then
     echo "MAC OS"
+    brew install python3
+    pip3 install conan
+    conan remote add r-Type https://api.bintray.com/conan/bincrafters/public-conan
+
+    mkdir build
+    cd build
+    conan install .. --build=missing
+    cmake .. -G "Unix Makefiles"
+    make
 fi

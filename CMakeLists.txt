@@ -14,34 +14,55 @@ endif()
 if (APPLE)
     message(STATUS "OSX")
 
-    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+#    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+#    conan_basic_setup()
 
-    conan_basic_setup()
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+    file(COPY src/client/asset
+            DESTINATION ${CMAKE_BINARY_DIR})
+
+    file(COPY src/client/myasset
+            DESTINATION ${CMAKE_BINARY_DIR})
+
+    file(COPY monsters
+            DESTINATION ${CMAKE_BINARY_DIR})
+
 
     include_directories(src/server/include)
 
     find_package(Boost 1.68.0 COMPONENTS system filesystem REQUIRED)
-
-    if (Boost_FOUND)
-
+    if(Boost_FOUND)
         message(STATUS "Boost_INCLUDE_DIRS: ${Boost_INCLUDE_DIRS}")
         message(STATUS "Boost_LIBRARIES: ${Boost_LIBRARIES}")
         message(STATUS "Boost_VERSION: ${Boost_VERSION}")
 
         include_directories(${Boost_INCLUDE_DIRS})
-
-    endif ()
+    endif()
 
 
     file(GLOB SOURCES "src/server/src/*.cpp")
+    add_executable(R_Type ${SOURCES})
 
-    add_executable(R-Type_Server ${SOURCES})
 
-    if (Boost_FOUND)
+    include_directories(src/client/source/include)
+    include_directories(src/client/source/lib)
+    file(GLOB CLIENTSOURCES "src/client/source/lib/*.cpp")
 
-        target_link_libraries(R-Type_Server ${Boost_LIBRARIES})
+    add_executable(R_Type_Client ${CLIENTSOURCES})
 
-    endif ()
+    if(Boost_FOUND)
+        target_link_libraries(R_Type ${Boost_LIBRARIES})
+    endif()
+
+#    target_link_libraries(R-Type_Client sfml-graphics)
+#    target_link_libraries(R-Type_Client sfml-window)
+#    target_link_libraries(R-Type_Client sfml-system)
+#    target_link_libraries(R-Type_Client sfml-audio)
+
+#    target_link_libraries(R-Type_Client ${CONAN_LIBS})
+
+    set(CMAKE_CXX_FLAGS "-g3 -Wall -O0 -std=c++11")
 
 endif ()
 

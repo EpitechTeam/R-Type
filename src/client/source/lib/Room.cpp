@@ -83,8 +83,10 @@ int Room::event(sf::Event event , sf::RenderWindow *window) {
         }
     }
     if (event.key.code == sf::Keyboard::Return) {
-        if(starship.getPosition().x == pointer[0] && starship.getPosition().y == positiony)
+        if(starship.getPosition().x == pointer[0] && starship.getPosition().y == positiony) {
+            rType->game->init_udp();
             return MAP;
+        }
         else if (starship.getPosition().y == pointer[2]){
             std::string onemsg = playername + " : " + promt;
             promt = "";
