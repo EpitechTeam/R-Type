@@ -16,7 +16,6 @@ class RType;
 #include "Bullet.hpp"
 #include "Mob.hpp"
 #include "UDPClient.hpp"
-#include "RType.hpp"
 
 class Game {
 
