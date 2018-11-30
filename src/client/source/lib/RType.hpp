@@ -33,7 +33,7 @@ public:
     JoinRoom *joinRoom = new JoinRoom(this);
     Room *room = new Room(this);
     Auth *auth = new Auth(this);
-    Game *game = new Game();
+    Game *game = new Game(this);
     RequestManager *network;
     std::string ip = "127.0.0.1";
     std::string port = "4242";

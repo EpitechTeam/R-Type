@@ -74,6 +74,7 @@ public:
     void setPlayerName(std::string str) {
         this->playername = str;
     }
+    void check_start_game();
 
     int backspace = 0;
     std::string event_to_string(sf::Event event, std::string str){
