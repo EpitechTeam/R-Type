@@ -111,7 +111,7 @@ int Room::event(sf::Event event , sf::RenderWindow *window) {
 }
 
 void Room::check_start_game(){
-    std::string str2 ("READY");
+    std::string str2 (": READY");
     int count_player = 0;
 
     for(unsigned int i = 0; this->rType->room->player.size() != i; i++) {
@@ -121,11 +121,12 @@ void Room::check_start_game(){
             count_player++;
         }
     }
+    std::cout << "nb_players ready: "  << count_player << "/" <<this->rType->room->nb_player << std::endl;
     if(count_player == this->rType->room->nb_player) {
         std::cout << "init UDP" <<  std::endl;
         //this->rType->game->init_udp();
         std::cout << "end init UDP" <<  std::endl;
-   //     this->rType->view = MAP;
+        this->rType->view = MAP;
         std::cout << "switch view" <<  std::endl;
     }
 }
@@ -142,7 +143,6 @@ void Room::draw(sf::RenderWindow *window) {
     // We have enough time to spawn a sprite. ( may be for several ? )
     while( elapsed_time >= delay ){
         print(std::to_string(fps));
-    //    check_start_game();
         this->rType->network->request("GET_MESSAGES", [this](Command &response) {
             if (response.getCommand() == "200") {
                 std::cout << "Response msg: "<< response.toStr() << std::endl;
@@ -193,7 +193,8 @@ void Room::draw(sf::RenderWindow *window) {
                 std::cout << "Error: " << response.toStr() << std::endl;
             }
         });
-
+        std::cout << "check_start_game()" << std::endl;
+        check_start_game();
         elapsed_time -= delay;
     }
 
@@ -235,10 +236,10 @@ void Room::draw(sf::RenderWindow *window) {
     window->draw(this->exit_room);
     window->draw(this->starship);
     front_promt.setColor(sf::Color::White);
-    for(int i = 0; nb_player != i; i++) {
+    for(int i = 0; this->player.size() != i; i++) {
         tag.setPosition(1290, 100 + (i * 60));
         window->draw(tag);
-        front_promt.setString("player"+ std::to_string(i + 1) + ": " + playername);
+        front_promt.setString("player"+ std::to_string(i + 1) + ": " + player[i]);
         front_promt.setPosition(900, 115 + (i * 60));
         window->draw(this->front_promt);
     }
