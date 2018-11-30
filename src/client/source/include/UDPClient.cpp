@@ -20,7 +20,7 @@ UDPClient::~UDPClient() {
 
 void UDPClient::startListener()
 {
-	_type = 0;
+	/*_type = 0;
 	_updListenenerThread = new std::thread([this]() {
 		while (true) {
 			_socket->async_receive_from(boost::asio::buffer(_listenerRecvBuffer), _listenerSenderEndpoint,
@@ -28,7 +28,7 @@ void UDPClient::startListener()
 								boost::asio::placeholders::error,
 								boost::asio::placeholders::bytes_transferred));
 		}
-	});
+	});*/
 }
 
 void UDPClient::request(std::string msg, std::function<void(std::string)> callback) {

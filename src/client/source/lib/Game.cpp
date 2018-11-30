@@ -32,7 +32,7 @@ Game::Game(RType *rType) : rType(rType) {
 
 void Game::init_udp()
 {
-    client = new UDPClient(rType->io_context, rType->ip, this);
+    client = new UDPClient(rType->io_context, rType->ip, std::stoi(rType->port), this);
 
     client->request("INIT_PLAYER " + rType->auth->playername, [this](std::string cmd) {
         std::cout << cmd << std::endl;
