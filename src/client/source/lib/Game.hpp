@@ -46,6 +46,10 @@ public:
 
     };
 
+    void updateView(std::string command) {
+
+    }
+
     void setRoomName(std::string str) {
         this->str_roomname = str;
     }
@@ -54,7 +58,7 @@ public:
         this->playername = str;
     }
     void init_udp() {
-        client = new UDPClient(rType->io_context, rType->ip);
+        client = new UDPClient(rType->io_context, rType->ip, this);
 
         client->request("INIT_PLAYER " + rType->auth->playername, [this](std::string cmd) {
             std::cout << cmd << std::endl;
