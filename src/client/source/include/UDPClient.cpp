@@ -8,6 +8,7 @@ UDPClient::UDPClient(boost::asio::io_context &io_context, const std::string &ip,
 	_receiverEndpoint = new udp::endpoint(address::from_string(ip), port);
 	_socket = new udp::socket(io_context);
 	_socket->open(udp::v4());
+	startListener();
 }
 
 UDPClient::~UDPClient() {

@@ -123,7 +123,7 @@ void Room::check_start_game(){
     }
     if(count_player == this->rType->room->nb_player) {
         std::cout << "init UDP" <<  std::endl;
-        this->rType->game->init_udp();
+        //this->rType->game->init_udp();
         std::cout << "end init UDP" <<  std::endl;
    //     this->rType->view = MAP;
         std::cout << "switch view" <<  std::endl;
@@ -136,13 +136,13 @@ void Room::draw(sf::RenderWindow *window) {
     deltaTime = clock.restart().asSeconds();
     fps = 1.f / deltaTime;
 
-    sf::Time delay = sf::milliseconds(500);
+    sf::Time delay = sf::milliseconds(1200);
     elapsed_time += r.restart();
 
     // We have enough time to spawn a sprite. ( may be for several ? )
     while( elapsed_time >= delay ){
         print(std::to_string(fps));
-        check_start_game();
+    //    check_start_game();
         this->rType->network->request("GET_MESSAGES", [this](Command &response) {
             if (response.getCommand() == "200") {
                 std::cout << "Response msg: "<< response.toStr() << std::endl;
@@ -179,10 +179,12 @@ void Room::draw(sf::RenderWindow *window) {
                     if (line[j] == '|') {
                         std::string ch = line.substr(k, j - k);
                         k = j + 1;
+                        std::cout << "player: " << ch << std::endl;
                         subArray.push_back(ch);
                     }
                     if (j == len - 1) {
                         std::string ch = line.substr(k, j - k + 1);
+                        std::cout << "player: " << ch << std::endl;
                         subArray.push_back(ch);
                     }
                 }
