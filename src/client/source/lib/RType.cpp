@@ -72,7 +72,7 @@ void RType::draw() {
         }
         case 6: {
             if(client && this->client->connected) {
-                std::cout << "cleint => " << "connected" << std::endl;
+                std::cout << "client => " << "connected" << std::endl;
 
                 std::cout << "connection oklm " << std::endl;
                 this->network->request("SET_NAME " + auth->playername, [this](Command &response) {
@@ -80,7 +80,7 @@ void RType::draw() {
                     this->view = LOBBY;;
                 });
             } else
-                std::cout << "cleint => " <<  "not connected" << std::endl;
+                std::cout << "client => " <<  "not connected" << std::endl;
 
             auth->draw(this->window);
             break;

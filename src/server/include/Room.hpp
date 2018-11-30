@@ -69,6 +69,7 @@ public:
     std::string _name;
     int _maxSlots;
     UDPGame _game;
+    clock_t _timeout = 0;
 };
 
 

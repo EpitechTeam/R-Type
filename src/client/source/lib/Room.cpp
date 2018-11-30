@@ -87,6 +87,7 @@ int Room::event(sf::Event event , sf::RenderWindow *window) {
             this->rType->network->request("SET_READY", [this](Command &response) {
                 std::cout << "Response msg: "<< response.toStr() << std::endl;
             });
+           // return MAP;
         } else if (starship.getPosition().y == pointer[2]){
             std::string onemsg = playername + " : " + promt;
             promt = "";

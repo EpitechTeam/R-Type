@@ -84,6 +84,9 @@ public:
                 return AUTH;
             }
         }
+        if (event.key.code == sf::Keyboard::Escape) {
+            return 0;
+        }
         return MENU;
     }
 

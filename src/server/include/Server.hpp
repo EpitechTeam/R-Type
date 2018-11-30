@@ -17,12 +17,15 @@ public:
     Server(boost::asio::io_context &io_context,
            const tcp::endpoint &endpoint, const udp::endpoint& udpEndpoint);
 
+    ~Server();
+
     void deliver(const Message &msg, participant_ptr participant);
 
     udp::endpoint &getUdpEndpoint();
     boost::asio::io_context &getIo_context();
+    void deleteEmptyRooms();
 
-    std::list<Room> _rooms;
+        std::list<Room> _rooms;
 private:
     void doAccept();
 
@@ -33,6 +36,7 @@ private:
 
 private:
     udp::endpoint _udpEndPoint;
+    std::thread *_updateT = NULL;
 };
 
 #endif //PROJECT_Server_HPP

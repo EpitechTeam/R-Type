@@ -4,20 +4,46 @@
 
 #include "../include/Server.hpp"
 
+const int NUM_SECONDS = 5;
+
 Server::Server
-(boost::asio::io_context &io_context, const tcp::endpoint &endpoint, const udp::endpoint& udpEndpoint)
+        (boost::asio::io_context &io_context, const tcp::endpoint &endpoint, const udp::endpoint &udpEndpoint)
         : _acceptor(io_context, endpoint), _parser(new Parser(this)),
           _udpEndPoint(udpEndpoint) {
+    this->_updateT = new std::thread([this]() {
+
+        while (true) {
+            this->deleteEmptyRooms();
+        }
+    });
     doAccept();
+}
+
+Server::~Server() {
+    if (this->_updateT) {
+        this->_updateT->join();
+    }
+}
+
+void Server::deleteEmptyRooms() {
+    for (auto it = this->_rooms.begin(); it != this->_rooms.end(); ++it) {
+        if (!it->_participants.empty()) {
+            it->_timeout = 0;
+        } else if (it->_timeout == 0) {
+            it->_timeout = clock();
+        }
+        if (it->_timeout != 0 && (double) (clock() - it->_timeout) >= (double) (NUM_SECONDS * CLOCKS_PER_SEC)) {
+            std::cout << "Room " << it->getName() << " removed for inactivity." << std::endl;
+            this->_rooms.erase(it);
+        }
+    }
 }
 
 void
 Server::doAccept() {
     this->_acceptor.async_accept(
-            [this](boost::system::error_code ec, tcp::socket socket)
-            {
-                if (!ec)
-                {
+            [this](boost::system::error_code ec, tcp::socket socket) {
+                if (!ec) {
                     std::make_shared<Session>(std::move(socket), this)->start();
                 } else {
                     std::cout << ec << std::endl;

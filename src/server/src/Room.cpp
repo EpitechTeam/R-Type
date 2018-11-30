@@ -13,6 +13,7 @@ void
 Room::join(participant_ptr participant) {
     _participants.insert(participant);
     participant->setRoom(this);
+    std::cout << participant->getName() << " enter the room " << this->getName() << "." << std::endl;
     for (auto msg: _recent_msgs)
         participant->deliver(msg);
 }

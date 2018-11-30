@@ -47,7 +47,6 @@ Parser::joinRoom(Command &command, participant_ptr participant, Server *server) 
         return { 400,  "GAME_ALREADY_STARTED"};
     } else {
         tmp->join(participant);
-        std::cout << participant->getName() << " enter the room " << tmp->getName() << "." << std::endl;
         return { 200, std::to_string(tmp->_maxSlots) };
     }
 }
@@ -57,7 +56,6 @@ Parser::leaveRoom(Command &command, participant_ptr participant, Server *server)
 
     if (participant->_currentRoom) {
 
-        std::cout << participant->getName() << " leave the room " << participant->_currentRoom->getName() << "." << std::endl;
         participant->_currentRoom->leave(participant);
         participant->_currentRoom = NULL;
         return { 200, "ROOM_LEAVE" };
