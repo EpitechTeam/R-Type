@@ -79,7 +79,6 @@ public:
     int backspace = 0;
     std::string event_to_string(sf::Event event, std::string str){
         sf::Uint32 key = event.text.unicode;
-
         std::cout << "key "<< key << "c = " << backspace << std::endl;
         if (key >= 128 || key ==  27 || key == 13)
             return str;
