@@ -101,14 +101,20 @@ CreateRoom::event(sf::Event event , sf::RenderWindow *window){
             });
             this->rType->network->request("JOIN_ROOM " + str_roomname, [this](Command &response) {
                 std::cout << "Response join: "<< response.toStr() << std::endl;
-                this->response_create_room = response.toStr();
-                if (this->response_create_room != "200 ROOM_JOINED") {
-                    this->create.setString("Retry");
-                } else
+
+                if (response.getCommand() == "200") {
+                    std::cout << "Go to Room" << std::endl;
                     this->rType->view = ROOM;
+                } else {
+                    std::cout << "Retry Room" << std::endl;
+                    this->create.setString("Retry");
+                }
             });
             return CREATEROOM;
         }
+    }
+    if (event.key.code == sf::Keyboard::Escape) {
+        return LOBBY;
     }
     std::cout << "Res join: "<< this->response_create_room << std::endl;
     if (this->response_create_room == "200 ROOM_JOINED") {

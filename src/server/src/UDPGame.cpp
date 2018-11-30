@@ -211,3 +211,7 @@ void UDPGame::CheckAllMonsters() {
         }
     }
 }
+
+bool UDPGame::isGameStarted() const {
+    return this->_gameStarted;
+}

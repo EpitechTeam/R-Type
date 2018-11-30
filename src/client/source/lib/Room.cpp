@@ -84,10 +84,11 @@ int Room::event(sf::Event event , sf::RenderWindow *window) {
     }
     if (event.key.code == sf::Keyboard::Return) {
         if(starship.getPosition().x == pointer[0] && starship.getPosition().y == positiony) {
-            rType->game->init_udp();
-            return MAP;
-        }
-        else if (starship.getPosition().y == pointer[2]){
+            this->rType->network->request("SET_READY", [this](Command &response) {
+                std::cout << "Response msg: "<< response.toStr() << std::endl;
+            });
+           // return MAP;
+        } else if (starship.getPosition().y == pointer[2]){
             std::string onemsg = playername + " : " + promt;
             promt = "";
             print("send message:" + onemsg);
@@ -98,6 +99,12 @@ int Room::event(sf::Event event , sf::RenderWindow *window) {
         }
     } else if (starship.getPosition().y < 550) {
         return ROOM;
+    }
+    if (event.key.code == sf::Keyboard::Escape) {
+        this->rType->network->request("LEAVE_ROOM", [this](Command &response) {
+            std::cout << "Response msg: "<< response.toStr() << std::endl;
+        });
+        return LOBBY;
     }
     return ROOM;
 }
@@ -116,25 +123,54 @@ void Room::draw(sf::RenderWindow *window) {
     while( elapsed_time >= delay ){
         print(std::to_string(fps));
         this->rType->network->request("GET_MESSAGES", [this](Command &response) {
-            std::cout << "Response msg: "<< response.toStr() << std::endl;
-            std::string line = response.toStr();
-            line = line.substr(3, line.size());
-            int len = line.length();
-            std::vector<std::string> subArray;
+            if (response.getCommand() == "200") {
+                std::cout << "Response msg: "<< response.toStr() << std::endl;
+                std::string line = response.toStr();
+                line = line.substr(3, line.size());
+                int len = line.length();
+                std::vector<std::string> subArray;
 
-            for (int j = 0, k = 0; j < len; j++) {
-                if (line[j] == '|') {
-                    std::string ch = line.substr(k, j - k);
-                    k = j+1;
-                    subArray.push_back(ch);
+                for (int j = 0, k = 0; j < len; j++) {
+                    if (line[j] == '|') {
+                        std::string ch = line.substr(k, j - k);
+                        k = j+1;
+                        subArray.push_back(ch);
+                    }
+                    if (j == len - 1) {
+                        std::string ch = line.substr(k, j - k+1);
+                        subArray.push_back(ch);
+                    }
                 }
-                if (j == len - 1) {
-                    std::string ch = line.substr(k, j - k+1);
-                    subArray.push_back(ch);
-                }
+                this->chat = subArray;
+            } else {
+                std::cout << "Error: " << response.toStr() << std::endl;
             }
-            this->chat = subArray;
         });
+        this->rType->network->request("GET_READY", [this](Command &response) {
+            if (response.getCommand() == "200") {
+                std::cout << "Response READY: " << response.toStr() << std::endl;
+                std::string line = response.toStr();
+                line = line.substr(3, line.size());
+                int len = line.length();
+                std::vector <std::string> subArray;
+
+                for (int j = 0, k = 0; j < len; j++) {
+                    if (line[j] == '|') {
+                        std::string ch = line.substr(k, j - k);
+                        k = j + 1;
+                        subArray.push_back(ch);
+                    }
+                    if (j == len - 1) {
+                        std::string ch = line.substr(k, j - k + 1);
+                        subArray.push_back(ch);
+                    }
+                }
+                this->player = subArray;
+            } else {
+                std::cout << "Error: " << response.toStr() << std::endl;
+            }
+        });
+
         elapsed_time -= delay;
     }
 

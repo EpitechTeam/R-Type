@@ -39,11 +39,23 @@ public:
 
     Type getType(void) const;
 
+    void setReady() {
+
+        if (_currentRoom) {
+            this->_ready = !this->_ready;
+        }
+    }
+
+    bool getReady() const {
+        return this->_ready;
+    }
+
     Room *_currentRoom = NULL;
     Type _type;
 
 private:
     std::string _name;
+    bool _ready = false;
 
 };
 

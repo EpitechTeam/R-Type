@@ -14,7 +14,7 @@ if [ "$unameOut" = "Linux" ]; then
 
     conan install .. --build=missing
     cmake .. -G "Unix Makefiles"
-    make
+    cmake --build .
 elif [ "$unameOut" = "Darwin" ]; then
     echo "MAC OS"
     brew install python3

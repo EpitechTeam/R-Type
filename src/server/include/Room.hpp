@@ -55,10 +55,13 @@ public:
 
     void deliver(const Message &msg);
 
+    bool isAllPlayerReady() const ;
+
     std::string getMessages();
 
     std::set <participant_ptr> _participants;
-private:
+
+public:
     enum {
         max_recent_msgs = 100
     };
@@ -66,6 +69,7 @@ private:
     std::string _name;
     int _maxSlots;
     UDPGame _game;
+    clock_t _timeout = 0;
 };
 
 

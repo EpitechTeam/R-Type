@@ -24,8 +24,6 @@ int main(int argc, char *argv[]) {
         //Game game(io_context, udpEndpoint);
         io_context.run();
         //game.Start();
-
-
     }
     catch (std::exception &e) {
         std::cerr << "Exception: " << e.what() << "\n";

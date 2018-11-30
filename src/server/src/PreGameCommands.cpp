@@ -15,7 +15,8 @@ void Parser::initPreGameCommands() {
     this->_functions.emplace("GET_ROOMS", make_pair(Parser::getRooms, 0 ));
     this->_functions.emplace("GET_ROOM_PLAYERS", make_pair(Parser::getRoomPlayers, 1 ));
     this->_functions.emplace("GET_MESSAGES", make_pair(Parser::getMessages, 0 ));
-//    this->_functions.emplace("ROOM_STATE", make_pair(Parser::roomState, 1 ));
+    this->_functions.emplace("SET_READY", make_pair(Parser::setReady, 0 ));
+    this->_functions.emplace("GET_READY", make_pair(Parser::getReady, 0 ));
 }
 
 Response
@@ -23,8 +24,14 @@ Parser::createRoom(Command &command, participant_ptr participant, Server *server
     std::string name(command.getArg(0));
     std::string slots(command.getArg(1));
 
-    server->_rooms.emplace_back(server->getIo_context(), name, std::stoi(slots), server->getUdpEndpoint());
-    return { 200,  "ROOM_CREATED"};
+    auto tmp = Room::find(server->_rooms, name);
+
+    if (tmp == NULL) {
+        server->_rooms.emplace_back(server->getIo_context(), name, std::stoi(slots), server->getUdpEndpoint());
+        return { 200,  "ROOM_CREATED"};
+    } else {
+        return { 400,  "ROOM_ALREADY_EXIST"};
+    }
 }
 
 Response
@@ -35,11 +42,12 @@ Parser::joinRoom(Command &command, participant_ptr participant, Server *server) 
     auto tmp = Room::find(server->_rooms, roomName);
     if (tmp == NULL) {
         std::cout << "Unknown room" << std::endl;
-        return { 200,  "UNKNOWN_ROOM"};
+        return { 400,  "UNKNOWN_ROOM"};
+    } else if (tmp->_game.isGameStarted()) {
+        return { 400,  "GAME_ALREADY_STARTED"};
     } else {
         tmp->join(participant);
-        std::cout << participant->getName() << " enter the room " << tmp->getName() << "." << std::endl;
-        return { 200, "ROOM_JOINED" };
+        return { 200, std::to_string(tmp->_maxSlots) };
     }
 }
 
@@ -48,7 +56,6 @@ Parser::leaveRoom(Command &command, participant_ptr participant, Server *server)
 
     if (participant->_currentRoom) {
 
-        std::cout << participant->getName() << " leave the room " << participant->_currentRoom->getName() << "." << std::endl;
         participant->_currentRoom->leave(participant);
         participant->_currentRoom = NULL;
         return { 200, "ROOM_LEAVE" };
@@ -133,16 +140,37 @@ Parser::getMessages(Command &command, participant_ptr participant, Server *serve
 }
 
 Response
-Parser::roomState(Command &command, participant_ptr participant, Server *server) {
-    std::string roomName(command.getArg(0));
+Parser::setReady(Command &command, participant_ptr participant, Server *server) {
 
-    auto tmp = Room::find(server->_rooms, roomName);
-    if (tmp == NULL) {
-        std::cout << "Unknown room" << std::endl;
-        return { 404 ,"ROOM_NOT_FOUND" };
-    } else if (tmp->_participants.empty()) {
-        return { 400, "NO_PLAYERS" };
+    if (participant->_currentRoom) {
+        participant->setReady();
+
+        if (participant->_currentRoom->isAllPlayerReady()) {
+            std::cout << "GAME READY" << std::endl;
+
+            // ToDo: Start the Game
+            // Fake the game start
+            participant->_currentRoom->_game.startGame();
+
+            // participant->_currentRoom->_game->start();
+        }
+        return { 200, participant->getReady() ? " True" : "False" };
     } else {
-        return { 200, "WAITING" };
+        return { 400, "NOT_IN_ROOM" };
+    }
+}
+
+Response
+Parser::getReady(Command &command, participant_ptr participant, Server *server) {
+    std::string response;
+
+    if (participant->_currentRoom) {
+
+        for (auto &it : participant->_currentRoom->_participants) {
+            response += it->getName() + (it->getReady() ?  ": READY" : ": NOT READY") + "|";
+        }
+        return { 200, response };
+    } else {
+        return { 400, "NOT_IN_ROOM" };
     }
 }
