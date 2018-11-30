@@ -42,25 +42,26 @@ void UDPGame::Init() {
  * Main UDPGame loop
  */
 void UDPGame::Start() {
-    std::clock_t clock1;
-    std::clock_t clock2;
-    std::clock_t ticks;
-    double delta;
+    _gameThread = new std::thread([this]() {
+        std::clock_t clock1;
+        std::clock_t clock2;
+        std::clock_t ticks;
+        double delta;
 
-    clock1 = clock();
-    while (_running) {
-        CheckAllReady();
-        if (_gameStarted) {
-            clock2 = clock();
-            ticks = clock2 - clock1;
-            delta = ticks / (double) (CLOCKS_PER_SEC);
-            if (delta >= 0.5) {
-                CheckAllMonsters();
-                _cycle++;
-                clock1 = clock2;
+        clock1 = clock();
+        while (_running) {
+            if (_gameStarted) {
+                clock2 = clock();
+                ticks = clock2 - clock1;
+                delta = ticks / (double) (CLOCKS_PER_SEC);
+                if (delta >= 0.5) {
+                    CheckAllMonsters();
+                    _cycle++;
+                    clock1 = clock2;
+                }
             }
         }
-    }
+    });
 }
 
 void UDPGame::Pause() {
@@ -68,6 +69,8 @@ void UDPGame::Pause() {
 }
 
 void UDPGame::End() {
+    _gameThread->join();
+    std::cout << "UDPGame::End() called : _gameThread->join() done" << std::endl;
 }
 
 /*

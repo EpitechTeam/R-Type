@@ -53,6 +53,7 @@ private:
     bool _running;
     UDPServer *_udpServer;
     std::thread *_udpThread;
+    std::thread *_gameThread;
     int _numberOfPlayers;
     bool _gameStarted;
 };

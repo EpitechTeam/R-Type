@@ -151,6 +151,8 @@ Parser::setReady(Command &command, participant_ptr participant, Server *server) 
             // ToDo: Start the Game
             // Fake the game start
             participant->_currentRoom->_game.startGame();
+            // Game loop
+            participant->_currentRoom->_game.Start();
 
             // participant->_currentRoom->_game->start();
         }
