@@ -124,7 +124,7 @@ void Room::check_start_game(){
     std::cout << "nb_players ready: "  << count_player << "/" <<this->rType->room->nb_player << std::endl;
     if(count_player == this->rType->room->nb_player) {
         std::cout << "init UDP" <<  std::endl;
-        //this->rType->game->init_udp();
+        this->rType->game->init_udp();
         std::cout << "end init UDP" <<  std::endl;
         this->rType->view = MAP;
         std::cout << "switch view" <<  std::endl;

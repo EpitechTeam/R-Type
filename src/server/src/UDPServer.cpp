@@ -62,6 +62,7 @@ std::string UDPParser::fireBullet(UDPGame *game, UDPServer *server) {
 }
 
 std::string UDPParser::initPlayer(UDPGame *game, UDPServer *server) {
+    std::cout << "INIT PLAYER\n";
     server->AddClient(server->GetCommand()->at(1), server->GetRemoteEndpoint());
     return ("200");
 }

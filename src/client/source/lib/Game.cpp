@@ -34,8 +34,12 @@ void Game::init_udp()
 {
     client = new UDPClient(rType->io_context, rType->ip, std::stoi(rType->port), this);
 
+    udpclientIoThread = new std::thread([this]() {
+        rType->io_context.run();
+    });
+
     client->request("INIT_PLAYER " + rType->auth->playername, [this](std::string cmd) {
-        std::cout << cmd << std::endl;
+        std::cout << "connection udp: "<< cmd << std::endl;
     });
 }
 

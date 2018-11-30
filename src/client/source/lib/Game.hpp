@@ -34,6 +34,7 @@ public:
     std::vector<Mob*> mob;
     std::vector<Starship*> starship;
     UDPClient *client;
+    std::thread *udpclientIoThread;
 
     float deltaTime = 0.0f;
     sf::Clock clock;
@@ -42,11 +43,11 @@ public:
 
     Game(RType *rType);
     ~Game(){
-
+        udpclientIoThread->join();
     };
 
     void updateView(std::string command) {
-
+        std::cout << "udp receive: " <<  command << std::endl;
     }
 
     void setRoomName(std::string str) {
