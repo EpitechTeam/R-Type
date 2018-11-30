@@ -26,6 +26,7 @@ UDPGame::UDPGame(boost::asio::io_context &io, const udp::endpoint &endpoint)
 
 UDPGame::~UDPGame() {
     _udpThread->join();
+    _gameThread->join();
     delete(_udpServer);
     delete(_udpThread);
 }
@@ -69,8 +70,6 @@ void UDPGame::Pause() {
 }
 
 void UDPGame::End() {
-    _gameThread->join();
-    std::cout << "UDPGame::End() called : _gameThread->join() done" << std::endl;
 }
 
 /*
