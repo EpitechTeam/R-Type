@@ -14,7 +14,7 @@ class Game;
 
 class UDPClient {
 public:
-	UDPClient(boost::asio::io_context &, const std::string& ip, Game *game);
+	UDPClient(boost::asio::io_context &, const std::string& ip, int port, Game *game);
 	~UDPClient();
 
 	void request(std::string message, std::function<void(std::string)> callback);

@@ -2,10 +2,10 @@
 #include "UDPClient.hpp"
 #include "Game.hpp"
 
-UDPClient::UDPClient(boost::asio::io_context &io_context, const std::string &ip, Game *game)
+UDPClient::UDPClient(boost::asio::io_context &io_context, const std::string &ip, int port, Game *game)
 			:	_type(0) {
 	_game = game;
-	_receiverEndpoint = new udp::endpoint(address::from_string(ip), 4242);
+	_receiverEndpoint = new udp::endpoint(address::from_string(ip), port);
 	_socket = new udp::socket(io_context);
 	_socket->open(udp::v4());
 }
