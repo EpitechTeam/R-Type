@@ -16,6 +16,7 @@ class RType;
 #include "Bullet.hpp"
 #include "Mob.hpp"
 #include "UDPClient.hpp"
+#include "RType.hpp"
 
 class Game {
 
@@ -45,6 +46,10 @@ public:
 
     };
 
+    void updateView(std::string command) {
+
+    }
+
     void setRoomName(std::string str) {
         this->str_roomname = str;
     }
@@ -52,7 +57,13 @@ public:
     void setPlayerName(std::string str) {
         this->playername = str;
     }
-    void init_udp();
+    void init_udp() {
+        client = new UDPClient(rType->io_context, rType->ip, this);
+
+        client->request("INIT_PLAYER " + rType->auth->playername, [this](std::string cmd) {
+            std::cout << cmd << std::endl;
+        });
+    }
 
     int backspace = 0;
     std::string event_to_string(sf::Event event, std::string str){
