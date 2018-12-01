@@ -9,15 +9,16 @@
 
 int main(int argc, char *argv[]) {
     try {
-        if (argc != 2) {
-            std::cerr << "Usage: server <port>\n";
-            return 1;
-        }
+		int port = 4242;
+
+        if (argc >= 2) {
+			port = std::atoi(argv[1]);
+		}
 
         boost::asio::io_context io_context;
 
-        tcp::endpoint endpoint(tcp::v4(), std::atoi(argv[1]));
-        udp::endpoint udpEndpoint(udp::v4(), std::atoi(argv[1]));
+        tcp::endpoint endpoint(tcp::v4(), port);
+        udp::endpoint udpEndpoint(udp::v4(), port);
         Server server(io_context, endpoint, udpEndpoint);
 
         //UDPServer server(io_context, udpEndpoint);

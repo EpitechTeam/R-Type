@@ -11,3 +11,4 @@
 
  [generators]
  cmake
+ visual_studio
