@@ -68,12 +68,9 @@ int JoinRoom::event(sf::Event event , sf::RenderWindow *window) {
                     this->rType->view = ROOM;
                 }
             });
-            return JOINROOM;
         }
     } else if (event.key.code == sf::Keyboard::Escape) {
         return LOBBY;
-    } else {
-        return JOINROOM;
     }
     return JOINROOM;
 };
