@@ -221,6 +221,7 @@ void UDPGame::CheckAllMonsters() {
 
         if (_cycle == monster.GetSpawnCycle() && monster.isSpawned() == false) {
             monster.Spawn();
+            std::cout << "Spawned new monster" << std::endl;
         }
 
         if (monster.isSpawned() && monster.GetWaitingCycle() <= monster.GetFireCycle()) {

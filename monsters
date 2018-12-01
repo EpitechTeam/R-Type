@@ -1,4 +1,17 @@
 #TYPE        SPAWNCYCLE      POSITION        FIRECYCLE
-normal      5              1200,360           2
-runner      10              1200,200           2
-normal      15              1200,560           2
+normal      10              1200,360           2
+normal      10              1200,200           2
+normal      10              1200,560           2
+
+runner      20              1200,360           2
+runner      20              1200,200           2
+runner      20              1200,560           2
+
+normal      30              1200,360           2
+normal      30              1200,200           2
+normal      30              1200,560           2
+
+normal      40              1200,360           2
+normal      40              1200,200           2
+normal      40              1200,560           2
+
