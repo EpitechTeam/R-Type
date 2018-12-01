@@ -52,12 +52,10 @@ void UDPClient::handleReceive(const boost::system::error_code& error,
 	if (!error || error == boost::asio::error::message_size) {
 		if (_type == 0) {
             std::cout << "Receive some packets.... == 0\n";
-			_game->updateView("PACKET : " + std::string(_listenerRecvBuffer.data()));
+			_game->updateView(std::string(_listenerRecvBuffer.data()));
 		}
 		else {
-            std::cout << "Receive some packets.... != 0\n";
-            _game->updateView("PACKET : " + std::string(_listenerRecvBuffer.data()));
-		//	std::cout << _recvBuffer.data() << std::endl;
+		std::cout << "response: " << _recvBuffer.data() << std::endl;
 		}
 	}
 }

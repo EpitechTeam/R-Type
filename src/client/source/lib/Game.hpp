@@ -104,6 +104,24 @@ public:
         return MAP;
     }
 
+    std::vector<std::string> slice(const std::vector<std::string> &v, int start=0, int end=-1) {
+        int oldlen = v.size();
+        int newlen;
+
+        if (end == -1 or end >= oldlen){
+            newlen = oldlen-start;
+        } else {
+            newlen = end-start;
+        }
+
+        std::vector<std::string> nv(newlen);
+
+        for (int i=0; i<newlen; i++) {
+            nv[i] = v[start+i];
+        }
+        return nv;
+    }
+
 
     void drawPlayer(sf::RenderWindow *window) {
     }
@@ -136,6 +154,11 @@ public:
         window->draw(this->background);
         int point = 0;
         front_promt.setFillColor(sf::Color(sf::Color::White));
+
+
+        if(chat.size() > 30){
+             chat = this->slice(chat,chat.size() - 20, chat.size());
+        }
         for (unsigned int i = chat.size();  i != 0 && (chat.size() - 10) != i ; i--) {
             if(chat.size() > 10) {
                 point = i - ( chat.size()  - 10 );
