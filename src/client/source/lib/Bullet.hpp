@@ -60,10 +60,14 @@ public:
         _rect.move(1 * this->dir, 0);
         animation->Update(0, deltatime);
         _rect.setTextureRect(animation->uvRect);
-        if( (_rect.getPosition().x -  _position.x) <= range){
+        if(dir == 1 && (_rect.getPosition().x -  _position.x) <= range) {
+            window->draw(_rect);
+            return true;
+        } else if (dir == -1 && (_position.x - _rect.getPosition().x) <= range) {
             window->draw(_rect);
             return true;
         }
+
         return false;
     }
 };

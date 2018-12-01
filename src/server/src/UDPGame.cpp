@@ -182,7 +182,7 @@ void UDPGame::CreateBullet(double x, double y, int speed) {
 }
 
 void UDPGame::CheckAllReady() {
-    int readyNumber = 0;
+    unsigned int readyNumber = 0;
 
     if (_Players.size() > 0 && !_gameStarted) {
         for (auto player : _Players) {

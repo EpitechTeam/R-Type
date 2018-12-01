@@ -26,7 +26,7 @@
 
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/utils/lazy_ostream.hpp>
-#include <boost/test/utils/setcolor.hpp>
+#include <boost/test/utils/setFillColor.hpp>
 
 
 // Boost
@@ -95,7 +95,7 @@ compiler_log_formatter::log_build_info( std::ostream& output )
 void
 compiler_log_formatter::test_unit_start( std::ostream& output, test_unit const& tu )
 {
-    BOOST_TEST_SCOPE_SETCOLOR( m_color_output, output, term_attr::BRIGHT, term_color::BLUE );
+    BOOST_TEST_SCOPE_setFillColor( m_color_output, output, term_attr::BRIGHT, term_color::BLUE );
 
     print_prefix( output, tu.p_file_name, tu.p_line_num );
 

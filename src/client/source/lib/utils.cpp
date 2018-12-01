@@ -18,19 +18,15 @@ void print(std::string string){
 };
 
 
-int roll(int min, int max)
-{
-    double x = rand()/static_cast<double>(RAND_MAX+1);
-    int that = min + static_cast<int>( x * (max - min));
-
-    return that;
+int roll(int min, int max) {
+    return 4;
 }
 
 
 bool check_ip(std::string serverip) {
     int points = 0;
     int doublepoints = 0;
-    int i = 0;
+    unsigned int i = 0;
     int number = 0;
     while(i != serverip.size())
     {

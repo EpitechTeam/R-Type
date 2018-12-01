@@ -42,7 +42,7 @@ Room::Room(RType *rType) : rType(rType) {
     front_promt.setFont(font);
     front_promt.setCharacterSize(30);
     front_promt.setPosition(350, 80);
-    front_promt.setColor(sf::Color::Black);
+    front_promt.setFillColor(sf::Color::Black);
     roomname.setFont(font);
     roomname.setCharacterSize(50);
     roomname.setPosition(10, 5);
@@ -202,17 +202,17 @@ void Room::draw(sf::RenderWindow *window) {
     this->x -= 0.015;
     this->background.setPosition(this->x,0);
     if(starship.getPosition().x == pointer[0] && starship.getPosition().y != pointer[2]) {
-        play.setColor(sf::Color::Red);
+        play.setFillColor(sf::Color::Red);
         play.setCharacterSize(75);
-        exit_room.setColor(sf::Color::White);
+        exit_room.setFillColor(sf::Color::White);
         exit_room.setCharacterSize(70);
     } else if (starship.getPosition().x == pointer[1]){
-        play.setColor(sf::Color::White);
+        play.setFillColor(sf::Color::White);
         play.setCharacterSize(70);
-        exit_room.setColor(sf::Color::Red);
+        exit_room.setFillColor(sf::Color::Red);
         exit_room.setCharacterSize(75);
     } else if (starship.getPosition().y == pointer[2]) {
-        play.setColor(sf::Color::White);
+        play.setFillColor(sf::Color::White);
         play.setCharacterSize(70);
     }
     window->draw(this->background);
@@ -221,8 +221,8 @@ void Room::draw(sf::RenderWindow *window) {
     window->draw(this->roomname);
     window->draw(this->bigrect);
     int point = 0;
-    front_promt.setColor(sf::Color::Black);
-    for (int i = chat.size();  i != 0 && (chat.size() - 10) != i ; i--) {
+    front_promt.setFillColor(sf::Color::Black);
+    for (unsigned int i = chat.size();  i != 0 && (chat.size() - 10) != i ; i--) {
         if(chat.size() > 10) {
             point = i - ( chat.size()  - 10 );
         }
@@ -235,8 +235,8 @@ void Room::draw(sf::RenderWindow *window) {
     window->draw(this->text);
     window->draw(this->exit_room);
     window->draw(this->starship);
-    front_promt.setColor(sf::Color::White);
-    for(int i = 0; this->player.size() != i; i++) {
+    front_promt.setFillColor(sf::Color::White);
+    for(unsigned int i = 0; this->player.size() != i; i++) {
         tag.setPosition(1290, 100 + (i * 60));
         window->draw(tag);
         front_promt.setString("player"+ std::to_string(i + 1) + ": " + player[i]);

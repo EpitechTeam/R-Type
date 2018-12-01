@@ -84,24 +84,24 @@ void Auth::draw(sf::RenderWindow *window){
     this->x -= 0.015;
     this->background.setPosition(this->x,0 );
     if (starship.getPosition().y > 575) {
-        text2.setColor(sf::Color::White);
-        text.setColor(sf::Color::White);
-        create.setColor(sf::Color::Red);
+        text2.setFillColor(sf::Color::White);
+        text.setFillColor(sf::Color::White);
+        create.setFillColor(sf::Color::Red);
         create.setCharacterSize(80);
     }
     else if (starship.getPosition().y > 530) {
         create.setCharacterSize(60);
-        create.setColor(sf::Color::White);
-        text2.setColor(sf::Color::Red);
+        create.setFillColor(sf::Color::White);
+        text2.setFillColor(sf::Color::Red);
         text2.setCharacterSize(42);
-        text.setColor(sf::Color::White);
+        text.setFillColor(sf::Color::White);
         text.setCharacterSize(30);
     } else {
         create.setCharacterSize(60);
-        create.setColor(sf::Color::White);
-        text.setColor(sf::Color::Red);
+        create.setFillColor(sf::Color::White);
+        text.setFillColor(sf::Color::Red);
         text.setCharacterSize(35);
-        text2.setColor(sf::Color::White);
+        text2.setFillColor(sf::Color::White);
         text2.setCharacterSize(40);
     }
     window->draw(this->background);

@@ -69,23 +69,23 @@ public:
         this->background.setPosition(this->x, 0);
 
         if (starship.getPosition().y == pointer[2]) {
-            text2.setColor(sf::Color::White);
-            text.setColor(sf::Color::White);
-            create.setColor(sf::Color::Red);
+            text2.setFillColor(sf::Color(sf::Color::White));
+            text.setFillColor(sf::Color::White);
+            create.setFillColor(sf::Color::Red);
             create.setCharacterSize(70);
         } else if (starship.getPosition().y == 550) {
-            create.setColor(sf::Color::White);
-            text2.setColor(sf::Color::Red);
+            create.setFillColor(sf::Color::White);
+            text2.setFillColor(sf::Color::Red);
             text2.setCharacterSize(72);
-            text.setColor(sf::Color::White);
-            roomname.setColor(sf::Color::White);
+            text.setFillColor(sf::Color::White);
+            roomname.setFillColor(sf::Color::White);
             text.setCharacterSize(30);
         } else {
-            create.setColor(sf::Color::White);
-            text.setColor(sf::Color::Red);
-            roomname.setColor(sf::Color::White);
+            create.setFillColor(sf::Color::White);
+            text.setFillColor(sf::Color::Red);
+            roomname.setFillColor(sf::Color::White);
             text.setCharacterSize(35);
-            text2.setColor(sf::Color::White);
+            text2.setFillColor(sf::Color::White);
             text2.setCharacterSize(70);
         }
         window->draw(this->background);

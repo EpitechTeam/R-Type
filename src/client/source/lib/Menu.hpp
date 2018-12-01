@@ -95,14 +95,14 @@ public:
         this->background.setPosition(this->x,0 );
 
         if (starship.getPosition().y > 550) {
-            text2.setColor(sf::Color::Red);
+            text2.setFillColor(sf::Color::Red);
             text2.setCharacterSize(128);
-            text.setColor(sf::Color::White);
+            text.setFillColor(sf::Color::White);
             text.setCharacterSize(120);
         } else {
-            text.setColor(sf::Color::Red);
+            text.setFillColor(sf::Color::Red);
             text.setCharacterSize(128);
-            text2.setColor(sf::Color::White);
+            text2.setFillColor(sf::Color::White);
             text2.setCharacterSize(120);
         }
 

@@ -47,8 +47,8 @@ public:
     };
 
     void updateView(std::string command) {
-        std::cout << "udp receive: " <<  command << std::endl;
         this->bullet.emplace_back(new Bullet(sf::Vector2f(1000, 380), "BULLET1", 1150, -1));
+        this->chat.push_back("udp receive: " + command);
     }
 
     void setRoomName(std::string str) {
@@ -94,7 +94,7 @@ public:
             promt = "";
         }
 
-        for (int i = 0;  i != starship.size(); i++) {
+        for (unsigned int i = 0;  i != starship.size(); i++) {
             starship[i]->event(event,&bullet,window);
         }
 
@@ -125,7 +125,7 @@ public:
             sf::Vector2f position = starship[0]->starship.getPosition();
             position.x = 1280;
 
-       mob.emplace_back(new Mob(position, std::to_string((rand() % 3) + 1) + std::to_string(mob.size()), 1280));
+       //mob.emplace_back(new Mob(position, std::to_string((rand() % 3) + 1) + std::to_string(mob.size()), 1280));
            // mob.emplace_back(new Mob(position, std::to_string(3) + std::to_string(mob.size()), 1280));
             // Substract the time consumed
             elapsed_time -= delay;
@@ -135,8 +135,8 @@ public:
         this->background.setPosition(this->x,0 );
         window->draw(this->background);
         int point = 0;
-        front_promt.setColor(sf::Color::White);
-        for (int i = chat.size();  i != 0 && (chat.size() - 10) != i ; i--) {
+        front_promt.setFillColor(sf::Color(sf::Color::White));
+        for (unsigned int i = chat.size();  i != 0 && (chat.size() - 10) != i ; i--) {
             if(chat.size() > 10) {
                 point = i - ( chat.size()  - 10 );
             }
@@ -147,12 +147,12 @@ public:
             window->draw(this->front_promt);
         }
 
-        for (int i = 0;  i != mob.size(); i++) {
+        for (unsigned int i = 0;  i != mob.size(); i++) {
             if(!mob[i]->draw(window, deltaTime)){
                 mob.erase(mob.begin() + i);
                 i--;
             } else{
-                for (int j = 0;  j != starship.size(); j++) {
+                for (unsigned int j = 0;  j != starship.size(); j++) {
                     if(starship[j]->starship.getPosition().x -1 <= mob[i]->_rect.getPosition().x  &&
                        starship[j]->starship.getPosition().x +1 >= mob[i]->_rect.getPosition().x)
                     {
@@ -166,12 +166,12 @@ public:
             }
         }
 
-        for (int i = 0;  i != bullet.size(); i++) {
+        for (unsigned int i = 0;  i != bullet.size(); i++) {
             if(!bullet[i]->draw(window, deltaTime)){
                 bullet.erase(bullet.begin() + i);
                 i--;
             } else{
-                for (int j = 0;  j != mob.size(); j++) {
+                for (unsigned int j = 0;  j != mob.size(); j++) {
                     if(mob[j]->_rect.getPosition().x -1 <= bullet[i]->_rect.getPosition().x  &&
                        mob[j]->_rect.getPosition().x +1 >= bullet[i]->_rect.getPosition().x)
                     {
@@ -187,7 +187,7 @@ public:
 
         }
 
-        for (int i = 0;  i != starship.size(); i++) {
+        for (unsigned int i = 0;  i != starship.size(); i++) {
             starship[i]->draw(window, deltaTime, &bullet);
         }
 
@@ -196,7 +196,7 @@ public:
         std::string s(ss.str());
         this->text.setString("fps: " + s + " : " + promt);
         window->draw(this->text);
-        front_promt.setColor(sf::Color::White);
+        front_promt.setFillColor(sf::Color(sf::Color::White));
     }
 };
 
