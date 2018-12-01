@@ -64,6 +64,7 @@ int JoinRoom::event(sf::Event event , sf::RenderWindow *window) {
                 if (response.getCommand() != "200") {
                     this->create.setString("Retry");
                 } else {
+                    this->rType->createRoom->int_nbplayer = std::stoi(response.getArg(0));
                     this->rType->view = ROOM;
                 }
             });

@@ -29,7 +29,7 @@ public:
     }
     sf::Clock r;
     sf::Time elapsed_time;
-    float  delay_msecond = 300.0f;
+    float  delay_msecond = 100.0f;
     void draw(sf::RenderWindow *window, float deltatime,  std::vector<Bullet*> *bullet);
 };
 

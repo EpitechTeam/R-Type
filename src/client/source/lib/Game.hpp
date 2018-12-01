@@ -61,17 +61,18 @@ public:
     }
 
     void updateView(std::string command) {
-        std::cout << "receive: " << command << std::endl;
+        if(!command.empty()){
+            std::cout << "non empyreceive: " << command << std::endl;
+            std::vector<std::string> cmd = split(command, " ");
+            if(cmd.size() > 0)
+            {
+                if(cmd[0] == "NEW_BULLET") {
+                    this->bullet.emplace_back(new Bullet(sf::Vector2f(std::stod(cmd[1]),std::stod(cmd[2])), cmd[3], 1150, cmd[3] == "monster" ? -1 : 1 ));
 
-        std::vector<std::string> cmd = split(command, " ");
-        if(cmd.size() > 0)
-        {
-            if(cmd[0] == "NEW_BULLET") {
-                this->bullet.emplace_back(new Bullet(sf::Vector2f(std::stod(cmd[1]),std::stod(cmd[2])), cmd[3], 1150, cmd[3] == "monster" ? -1 : 1 ));
-
+                }
             }
+            this->chat.push_back("l: " + command);
         }
-        this->chat.push_back("l: " + command);
     }
 
     void setRoomName(std::string str) {
@@ -166,9 +167,9 @@ public:
             // Substract the time consumed
 
 
-            client->request("GET_POSITIONS", [this](std::string cmd) {
+            /*client->request("GET_POSITIONS", [this](std::string cmd) {
                   this->chat.push_back("res_gp : " + cmd);
-              });
+              });*/
             elapsed_time -= delay;
         }
 

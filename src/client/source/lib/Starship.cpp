@@ -25,7 +25,9 @@ void Starship::draw(sf::RenderWindow *window, float deltatime,  std::vector<Bull
             sf::Vector2f position = starship.getPosition();
             position.x += 5;
             //bullet->emplace_back(new Bullet(position, id, 1150));
-            game->client->request("FIRE_BULLET " + std::to_string(position.x) + " " + std::to_string(position.y)  , [this](std::string cmd) {
+            std::string reqstr = "FIRE_BULLET " + std::to_string(position.x) + " " + std::to_string(position.y);
+            std::cout << "send _ bullet: " << reqstr << std::endl;
+            game->client->request(reqstr , [this](std::string cmd) {
                 this->game->chat.push_back("res_fire_bullet: " + cmd);
             });
             elapsed_time = sf::microseconds(0);
