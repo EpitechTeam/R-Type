@@ -27,7 +27,7 @@ Game::Game(RType *rType) : rType(rType) {
     front_promt.setPosition(10, 250);
     front_promt.setFillColor(sf::Color::White);
 
-    starship.push_back(new Starship());
+    starship.push_back(new Starship(this));
 };
 
 void Game::init_udp()
