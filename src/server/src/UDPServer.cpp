@@ -60,7 +60,6 @@ std::string UDPParser::fireBullet(UDPGame *game, UDPServer *server) {
 }
 
 std::string UDPParser::initPlayer(UDPGame *game, UDPServer *server) {
-    std::cout << "INIT PLAYER\n";
     server->AddClient(server->GetCommand()->at(1), server->GetRemoteEndpoint());
     return ("200");
 }
@@ -141,7 +140,6 @@ void UDPParser::parseCommand(UDPGame *game, UDPServer *server) {
         return;
     }
     std::string cmd = server->GetCommand()->at(0);
-    std::cout << cmd + "\n";
     if (_playerFncs.count(cmd) == 0) {
         _cmdToSend = "404";
         return;
@@ -182,11 +180,14 @@ void UDPServer::handleReceive(const boost::system::error_code& error,
 
         _udpParser.parseCommand(_game, this);
 
+        std::cout << "UDP receive: " << _recvBuffer.data() << "\n";
+
         auto message = std::make_shared<std::string>(_udpParser.getCmdToSend());
         _socket.async_send_to(boost::asio::buffer(*message), _remoteEndpoint,
                               boost::bind(&UDPServer::handleSend, this, message,
                                           boost::asio::placeholders::error,
                                           boost::asio::placeholders::bytes_transferred));
+        _recvBuffer.assign(0);
         startReceive();
     }
 }

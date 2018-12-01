@@ -66,10 +66,8 @@ public:
         std::vector<std::string> cmd = split(command, " ");
         if(cmd.size() > 0)
         {
-            if(cmd[0] == "NEW_BULLET")
-            {
-
-                this->bullet.emplace_back(new Bullet(sf::Vector2f(std::stod(cmd[1]),std::stod(cmd[2])), "BULLET1", 1150, -1));
+            if(cmd[0] == "NEW_BULLET") {
+                this->bullet.emplace_back(new Bullet(sf::Vector2f(std::stod(cmd[1]),std::stod(cmd[2])), cmd[3], 1150, cmd[3] == "monster" ? -1 : 1 ));
 
             }
         }
