@@ -13,8 +13,8 @@ if [ "$unameOut" = "Linux" ]; then
     cd build
 
     conan install .. --build=missing -s compiler.libcxx=libstdc++11
-    CC=gcc CXX=g++ cmake .. -G "Unix Makefiles"
-    CC=gcc CXX=g++ cmake --build .
+    cmake .. -G "Unix Makefiles"
+    cmake --build .
 elif [ "$unameOut" = "Darwin" ]; then
     echo "MAC OS"
     brew install python3
