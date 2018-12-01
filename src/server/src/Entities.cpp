@@ -142,3 +142,11 @@ int Bullet::GetSpeed() {
 void Bullet::SetSpeed(int speed) {
     _speed = speed;
 }
+
+std::string Bullet::GetOwner() {
+    return (this->_owner);
+}
+
+void Bullet::SetOwner(std::string owner) {
+    _owner = owner;
+}

@@ -15,7 +15,7 @@ UDPParser::UDPParser() {
     _playerFncs["INIT_PLAYER"] = UDPParser::initPlayer;
     _playerFncs["UPDATE_SCORE"] = UDPParser::updateScore;
     _playerFncs["GET_SCORE"] = UDPParser::getScore;
-    _playerFncs["MSG"] = UDPParser::sendMessageToAll; // Todo handle messages with spaces
+    _playerFncs["MSG"] = UDPParser::sendMessageToAll;
     _playerFncs["READY"] = UDPParser::playerReady;
     _playerFncs["MOVE_PLAYER"] = UDPParser::movePlayer;
     _playerFncs["COLLISION"] = UDPParser::collision;
@@ -53,7 +53,8 @@ std::string UDPParser::killEntity(UDPGame *game, UDPServer *server) {
 }
 
 std::string UDPParser::fireBullet(UDPGame *game, UDPServer *server) {
-    game->CreateBullet(std::stoi(server->GetCommand()->at(1)), std::stoi(server->GetCommand()->at(2)), std::stoi(server->GetCommand()->at(3)));
+    game->CreateBullet(std::stoi(server->GetCommand()->at(1)), std::stoi(server->GetCommand()->at(2)), "player");
+    server->NewBullet(std::stoi(server->GetCommand()->at(1)), std::stoi(server->GetCommand()->at(2)), "player");
     return ("200");
 }
 
@@ -257,8 +258,7 @@ ClientList &UDPServer::GetClients() {
     return (_clients);
 }
 
-void UDPServer::NewBullet(double x, double y, double speed) {
-    std::cout << "Firing a monster bullet\n";
-    SendToAll("NEW_BULLET " + std::to_string(x) + " " + std::to_string(y) + " " + std::to_string(speed));
+void UDPServer::NewBullet(double x, double y, std::string owner) {
+    SendToAll("NEW_BULLET " + std::to_string(x) + " " + std::to_string(y) + " " + owner);
 }
 

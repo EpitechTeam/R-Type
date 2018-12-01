@@ -74,7 +74,7 @@ public:
 
     Player *GetPlayerByClient(Client& client);
 
-    void NewBullet(double x, double y, double speed);
+    void NewBullet(double x, double y, std::string owner);
 
 private:
 
