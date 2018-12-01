@@ -205,8 +205,10 @@ void UDPGame::CheckAllMonsters() {
             monster.Spawn();
         }
 
+        std::cout << "monster spawn:" << monster.isSpawned() << " \n";
         if (monster.isSpawned() && monster.GetWaitingCycle() <= monster.GetFireCycle()) {
             if (monster.GetWaitingCycle() == monster.GetFireCycle()) {
+                std::cout << "Monster firing\n";
                 bullet.SetPosition({monster.GetPosition().x, monster.GetPosition().y});
                 bullet.SetSpeed(monster.GetSpeedFromType(monster.GetType()));
                 _udpServer->NewBullet(bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetSpeed());

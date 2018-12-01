@@ -28,6 +28,7 @@ std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
     std::ostringstream ss;
 
     ss << "200 ";
+    ss << "for testing PlayerLife = " << std::to_string(game->GetPlayers()[0].GetLife());
     for(auto player: (game->GetPlayers())) {
         if (player.GetLife() == 0)
             continue;
@@ -257,6 +258,7 @@ ClientList &UDPServer::GetClients() {
 }
 
 void UDPServer::NewBullet(double x, double y, double speed) {
+    std::cout << "Firing a monster bullet\n";
     SendToAll("NEW_BULLET " + std::to_string(x) + " " + std::to_string(y) + " " + std::to_string(speed));
 }
 

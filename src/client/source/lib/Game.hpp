@@ -46,8 +46,33 @@ public:
         udpclientIoThread->join();
     };
 
+    std::vector<std::string> split(std::string phrase, std::string delimiter) {
+        std::vector<std::string> list;
+        std::string s = std::string(phrase);
+        size_t pos = 0;
+        std::string token;
+        while ((pos = s.find(delimiter)) != std::string::npos) {
+            token = s.substr(0, pos);
+            list.push_back(token);
+            s.erase(0, pos + delimiter.length());
+        }
+        list.push_back(s);
+        return list;
+    }
+
     void updateView(std::string command) {
-        this->bullet.emplace_back(new Bullet(sf::Vector2f(1000, 380), "BULLET1", 1150, -1));
+        std::cout << "receive: " << command << std::endl;
+
+        std::vector<std::string> cmd = split(command, " ");
+        if(cmd.size() > 0)
+        {
+            if(cmd[0] == "NEW_BULLET")
+            {
+
+                this->bullet.emplace_back(new Bullet(sf::Vector2f(std::stod(cmd[1]),std::stod(cmd[2])), "BULLET1", 1150, -1));
+
+            }
+        }
         this->chat.push_back("l: " + command);
     }
 
@@ -64,7 +89,7 @@ public:
     std::string event_to_string(sf::Event event, std::string str){
         sf::Uint32 key = event.text.unicode;
 
-       // std::cout << "key "<< key << "c = " << backspace << std::endl;
+        // std::cout << "key "<< key << "c = " << backspace << std::endl;
         if (key >= 128 || key ==  27 || key == 13)
             return str;
         if (key ==   8) {
@@ -136,16 +161,16 @@ public:
         sf::Time delay = sf::milliseconds(200);
         elapsed_time += r.restart();
         while( elapsed_time >= delay ){
-         //sf::Vector2f position = starship[0]->starship.getPosition();
-         // position.x = 1280;
-         //mob.emplace_back(new Mob(position, std::to_string((rand() % 3) + 1) + std::to_string(mob.size()), 1280));
-         // mob.emplace_back(new Mob(position, std::to_string(3) + std::to_string(mob.size()), 1280));
-         // Substract the time consumed
+            //sf::Vector2f position = starship[0]->starship.getPosition();
+            // position.x = 1280;
+            //mob.emplace_back(new Mob(position, std::to_string((rand() % 3) + 1) + std::to_string(mob.size()), 1280));
+            // mob.emplace_back(new Mob(position, std::to_string(3) + std::to_string(mob.size()), 1280));
+            // Substract the time consumed
 
 
-            client->request("GET_POSITIONS", [this](std::string cmd) {
-                this->chat.push_back("res_gp : " + cmd);
-            });
+            /*  client->request("GET_POSITIONS", [this](std::string cmd) {
+                  this->chat.push_back("res_gp : " + cmd);
+              });*/
             elapsed_time -= delay;
         }
 
@@ -157,7 +182,7 @@ public:
 
 
         if(chat.size() > 30){
-             chat = this->slice(chat,chat.size() - 20, chat.size());
+            chat = this->slice(chat,chat.size() - 20, chat.size());
         }
         for (unsigned int i = chat.size();  i != 0 && (chat.size() - 10) != i ; i--) {
             if(chat.size() > 10) {
@@ -199,7 +224,7 @@ public:
                        mob[j]->_rect.getPosition().x +1 >= bullet[i]->_rect.getPosition().x)
                     {
                         if(mob[j]->_rect.getPosition().y -3 <= bullet[i]->_rect.getPosition().y  &&
-                        mob[j]->_rect.getPosition().y +50 >= bullet[i]->_rect.getPosition().y) {
+                           mob[j]->_rect.getPosition().y +50 >= bullet[i]->_rect.getPosition().y) {
                             mob.erase(mob.begin() + j);
                             j--;
                             bullet[i]->_rect.setPosition(1280,0);

@@ -94,7 +94,7 @@ void Monster::SetStyle(int style) {
 }
 
 void Monster::Spawn() {
-    _spawned = 0;
+    _spawned = true;
 }
 
 bool Monster::isSpawned() {
