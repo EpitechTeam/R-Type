@@ -31,15 +31,15 @@ std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
     for(auto player: (game->GetPlayers())) {
         if (player.GetLife() == 0)
             continue;
-        ss << player.GetPosition().x << ":" << player.GetPosition().y << ":1:";
-        ss << "0:" << player.GetId() << ":-1:" << player.GetAsset();
+        ss << player.GetPosition().x << ":" << player.GetPosition().y;
+        ss << ":" << player.GetId() << ":-1:" << player.GetAsset();
         ss << " ";
     }
     for(auto monster: (game->GetMonsters())) {
         if (monster.GetLife() == 0)
             continue;
-        ss << monster.GetPosition().x << ":" << monster.GetPosition().y << ":-1:";
-        ss << "0:" << "-1:" << monster.GetId() << ":" << 1;
+        ss << monster.GetPosition().x << ":" << monster.GetPosition().y;
+        ss << ":-1:" << monster.GetId() << ":" << 1;
         ss << " ";
     }
     ss << std::endl;
