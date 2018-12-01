@@ -39,11 +39,15 @@ public:
     void CheckAllReady();
     void CheckAllMonsters();
 
+    void KillMonster(std::string id);
+
     bool isGameStarted() const;
 
     void startGame() {
         this->_gameStarted = true;
     }
+
+    void MoveMonsters();
 
 private:
     int _cycle;

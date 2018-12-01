@@ -48,7 +48,9 @@ std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
 }
 
 std::string UDPParser::killEntity(UDPGame *game, UDPServer *server) {
+    std::string id = server->GetCommand()->at(1);
 
+    game->KillMonster(id);
     return ("200");
 }
 

@@ -221,3 +221,28 @@ void UDPGame::CheckAllMonsters() {
 bool UDPGame::isGameStarted() const {
     return (this->_gameStarted);
 }
+
+void UDPGame::MoveMonsters() {
+    for (auto &monster : _Monsters) {
+        if (monster.isSpawned()) {
+            if (monster.GetType() == "normal") {
+                monster.SetPosition({
+                    monster.GetPosition().x - 0.1,
+                    monster.GetPosition().y,
+                });
+            }
+        }
+    }
+}
+
+void UDPGame::KillMonster(std::string id)
+{
+    int i = 0;
+
+    for (auto &monster : _Monsters) {
+        if (monster.GetId() == id) {
+            _Monsters.erase(_Monsters.begin() + i);
+        }
+        i++;
+    }
+};
