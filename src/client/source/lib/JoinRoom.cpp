@@ -74,4 +74,5 @@ int JoinRoom::event(sf::Event event , sf::RenderWindow *window) {
     } else {
         return JOINROOM;
     }
+    return JOINROOM;
 };
