@@ -73,12 +73,12 @@ void RType::draw() {
         case 6: {
             if(client && this->client->connected) {
                 std::cout << "client => " << "connected" << std::endl;
-
                 std::cout << "connection oklm " << std::endl;
                 this->network->request("SET_NAME " + auth->playername, [this](Command &response) {
                     print("set name: " + response.toStr());
-                    this->view = LOBBY;;
+
                 });
+                this->view = LOBBY;
             } else
                 std::cout << "client => " <<  "not connected" << std::endl;
 

@@ -24,7 +24,7 @@ public:
         _position = position;
         this->range = range;
         _id = id;
-        print("crate mob: " + _id);
+      //  print("crate mob: " + _id);
         switch(id[0]) {
             case '2':  _rect = sf::RectangleShape(sf::Vector2f(33 * 2, 34 * 2));
                 _rect.setPosition(0, 0.f);

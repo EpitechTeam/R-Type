@@ -48,6 +48,7 @@ public:
 
     void updateView(std::string command) {
         std::cout << "udp receive: " <<  command << std::endl;
+        this->bullet.emplace_back(new Bullet(sf::Vector2f(1000, 380), "BULLET1", 1150, -1));
     }
 
     void setRoomName(std::string str) {
@@ -193,8 +194,7 @@ public:
         std::ostringstream ss;
         ss << fps;
         std::string s(ss.str());
-
-        this->text.setString("fps: " + s + " : " +promt);
+        this->text.setString("fps: " + s + " : " + promt);
         window->draw(this->text);
         front_promt.setColor(sf::Color::White);
     }

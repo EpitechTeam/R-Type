@@ -18,10 +18,12 @@ public:
     Animation *animation;
     sf::RectangleShape _rect;
     float  range;
+    int dir = 1;
 
 
 
-    Bullet(sf::Vector2f position, std::string id, float range) {
+    Bullet(sf::Vector2f position, std::string id, float range, int dir = 1) {
+        this->dir = dir;
         if (!texture.loadFromFile("myasset/shoot.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
         }
@@ -55,7 +57,7 @@ public:
         return MAP;
     }
     bool draw(sf::RenderWindow *window, float deltatime) {
-        _rect.move(1, 0);
+        _rect.move(1 * this->dir, 0);
         animation->Update(0, deltatime);
         _rect.setTextureRect(animation->uvRect);
         if( (_rect.getPosition().x -  _position.x) <= range){

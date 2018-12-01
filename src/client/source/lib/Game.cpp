@@ -36,6 +36,8 @@ void Game::init_udp()
 
     udpclientIoThread = new std::thread([this]() {
         rType->io_context.run();
+        std::cout << "udp disconnected : " << std::endl;
+        this->rType->view = AUTH;
     });
 
     client->request("INIT_PLAYER " + rType->auth->playername, [this](std::string cmd) {
