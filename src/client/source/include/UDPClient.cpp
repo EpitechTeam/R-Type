@@ -58,7 +58,7 @@ void UDPClient::handleReceive(const boost::system::error_code& error,
 			startListener();
 		}
 		else {
-		std::cout << "response: " << _recvBuffer.data() << std::endl;
+//			std::cout << "response: " << _recvBuffer.data() << std::endl;
 		}
 	}
 }

@@ -28,7 +28,6 @@ std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
     std::ostringstream ss;
 
     ss << "200 ";
-    ss << "for testing PlayerLife = " << std::to_string(game->GetPlayers()[0].GetLife());
     for(auto player: (game->GetPlayers())) {
         if (player.GetLife() == 0)
             continue;
