@@ -169,15 +169,14 @@ std::vector<Bullet> &UDPGame::GetBullets() {
     return _Bullets;
 }
 
-void UDPGame::CreateBullet(double x, double y, int speed) {
+void UDPGame::CreateBullet(double x, double y, std::string owner) {
     static int i = 0;
     Bullet bullet;
 
     bullet.SetId(std::to_string(i));
     bullet.SetPosition({x, y});
-    bullet.SetSpeed(speed);
+    bullet.SetOwner(owner);
     _Bullets.push_back(bullet);
-    std::cout << "Bullet " << i << " created." << std::endl;
     i++;
 }
 
@@ -209,7 +208,7 @@ void UDPGame::CheckAllMonsters() {
             if (monster.GetWaitingCycle() == monster.GetFireCycle()) {
                 bullet.SetPosition({monster.GetPosition().x, monster.GetPosition().y});
                 bullet.SetSpeed(monster.GetSpeedFromType(monster.GetType()));
-                _udpServer->NewBullet(bullet.GetPosition().x, bullet.GetPosition().y, bullet.GetSpeed());
+                _udpServer->NewBullet(bullet.GetPosition().x, bullet.GetPosition().y, "monster");
             }
             monster.SetWaitingCycle(monster.GetWaitingCycle() + 1);
         }
@@ -220,5 +219,5 @@ void UDPGame::CheckAllMonsters() {
 }
 
 bool UDPGame::isGameStarted() const {
-    return this->_gameStarted;
+    return (this->_gameStarted);
 }

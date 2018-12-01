@@ -94,7 +94,7 @@ void Monster::SetStyle(int style) {
 }
 
 void Monster::Spawn() {
-    _spawned = 0;
+    _spawned = true;
 }
 
 bool Monster::isSpawned() {
@@ -141,4 +141,12 @@ int Bullet::GetSpeed() {
 
 void Bullet::SetSpeed(int speed) {
     _speed = speed;
+}
+
+std::string Bullet::GetOwner() {
+    return (this->_owner);
+}
+
+void Bullet::SetOwner(std::string owner) {
+    _owner = owner;
 }

@@ -34,7 +34,7 @@ public:
     std::vector<Monster> &GetMonsters();
     std::vector<Bullet> &GetBullets();
 
-    void CreateBullet(double x, double y, int speed);
+    void CreateBullet(double x, double y, std::string owner);
 
     void CheckAllReady();
     void CheckAllMonsters();

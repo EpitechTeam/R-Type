@@ -100,8 +100,12 @@ public:
     int GetSpeed();
     void SetSpeed(int speed);
 
+    std::string GetOwner();
+    void SetOwner(std::string owner);
+
 private:
     int _speed;
+    std::string _owner;
 };
 
 #endif //R_TYPE_ENTITIES_H

@@ -20,13 +20,6 @@ using boost::asio::ip::udp;
 
 std::vector<std::string> split(std::string phrase, std::string delimiter);
 
-struct TestPlayer {
-    int id;
-    std::string name;
-    int posX;
-    int posY;
-};
-
 typedef std::string (*FncPtr)(UDPGame *game, UDPServer *server);
 
 class UDPParser {
@@ -81,7 +74,7 @@ public:
 
     Player *GetPlayerByClient(Client& client);
 
-    void NewBullet(double x, double y, double speed);
+    void NewBullet(double x, double y, std::string owner);
 
 private:
 
