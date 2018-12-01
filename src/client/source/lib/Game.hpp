@@ -168,9 +168,9 @@ public:
             // Substract the time consumed
 
 
-            /*  client->request("GET_POSITIONS", [this](std::string cmd) {
+            client->request("GET_POSITIONS", [this](std::string cmd) {
                   this->chat.push_back("res_gp : " + cmd);
-              });*/
+              });
             elapsed_time -= delay;
         }
 
