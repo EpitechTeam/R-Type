@@ -200,7 +200,12 @@ void UDPGame::CheckAllMonsters() {
     Bullet bullet;
 
     for (auto &monster : _Monsters) {
-        if (monster.GetWaitingCycle() <= monster.GetFireCycle()) {
+
+        if (_cycle == monster.GetSpawnCycle() && monster.isSpawned() == false) {
+            monster.Spawn();
+        }
+
+        if (monster.isSpawned() && monster.GetWaitingCycle() <= monster.GetFireCycle()) {
             if (monster.GetWaitingCycle() == monster.GetFireCycle()) {
                 bullet.SetPosition({monster.GetPosition().x, monster.GetPosition().y});
                 bullet.SetSpeed(monster.GetSpeedFromType(monster.GetType()));

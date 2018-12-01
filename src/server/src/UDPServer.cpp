@@ -39,13 +39,8 @@ std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
         if (monster.GetLife() == 0)
             continue;
         ss << monster.GetPosition().x << ":" << monster.GetPosition().y << ":-1:";
-        ss << "0:" << "-1:" << monster.GetId() << ":lool.png";
-    }
-
-    ss << " ";
-    for(auto bullet: (game->GetBullets())) {
-        ss << bullet.GetPosition().x << ":" << bullet.GetPosition().y << ":-1:"; // Todo: change this "-1"
-        ss << "1:" << "-1:" << "-1:" << "lool.png";
+        ss << "0:" << "-1:" << monster.GetId() << ":" << 1;
+        ss << " ";
     }
     ss << std::endl;
     return (ss.str());

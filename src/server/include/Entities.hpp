@@ -59,6 +59,9 @@ public:
 
     int GetStyle();
     void SetStyle(int style);
+
+    void Spawn();
+    bool isSpawned();
 private:
     std::string _type;
     int _style;
@@ -66,6 +69,7 @@ private:
     int _fireCycle;
     int _speed;
     int _waitingCycle;
+    bool _spawned;
 };
 
 class Player : public Entity {

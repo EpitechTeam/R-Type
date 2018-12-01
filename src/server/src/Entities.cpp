@@ -33,7 +33,7 @@ void Entity::SetId(std::string id) {
 }
 
 Monster::Monster()
-        : _waitingCycle(0){
+        : _waitingCycle(0), _spawned(false) {
 
 };
 
@@ -91,6 +91,14 @@ int Monster::GetStyle() {
 
 void Monster::SetStyle(int style) {
     _style = style;
+}
+
+void Monster::Spawn() {
+    _spawned = 0;
+}
+
+bool Monster::isSpawned() {
+    return (_spawned);
 }
 
 std::string Player::GetAsset() {
