@@ -6,8 +6,7 @@
 #include "RequestManager.hpp"
 #include "RType.hpp"
 
-JoinRoom::JoinRoom(RType *rType)
-        : rType(rType) {
+JoinRoom::JoinRoom(RType *rType) : rType(rType) {
 
     if (!texture.loadFromFile("myasset/background.png")) {
         std::cout << "ERROR TEXTURE" << std::endl;
@@ -26,9 +25,6 @@ JoinRoom::JoinRoom(RType *rType)
     starship = sf::Sprite(texture3);
     starship.setPosition(positionx, positiony);
     starship.setScale(2.0f, 2.0f);
-
-    //text
-
     if (!font.loadFromFile("myasset/space font.ttf")) {
         std::cout << "ERROR FONT" << std::endl;
     }
@@ -36,25 +32,10 @@ JoinRoom::JoinRoom(RType *rType)
     text.setString("Room name:");
     text.setCharacterSize(30);
     text.setPosition(250, 430);
-
     roomname.setFont(font);
     roomname.setString(str_roomname);
     roomname.setCharacterSize(50);
     roomname.setPosition(250, 467);
-
-/*
-    text2.setFont(font);
-    text2.setString("player:");
-    text2.setCharacterSize(70);
-    text2.setPosition(200, 520);
-
-    nbplayer.setFont(font);
-    nbplayer.setString(std::to_string(int_nbplayer));
-    nbplayer.setCharacterSize(70);
-    nbplayer.setPosition(420, 520);
-
-*/
-
     create.setFont(font);
     create.setString("Join Room");
     create.setCharacterSize(70);
@@ -63,8 +44,7 @@ JoinRoom::JoinRoom(RType *rType)
     pointer[1] = 620;
 };
 
-int
-JoinRoom::event(sf::Event event , sf::RenderWindow *window) {
+int JoinRoom::event(sf::Event event , sf::RenderWindow *window) {
     if((starship.getPosition().y < 550) && (event.type == sf::Event::TextEntered || event.text.unicode == 8)) {
         str_roomname = event_to_string(event, str_roomname);
         roomname.setString(str_roomname);
@@ -94,4 +74,4 @@ JoinRoom::event(sf::Event event , sf::RenderWindow *window) {
     } else {
         return JOINROOM;
     }
-}
+};

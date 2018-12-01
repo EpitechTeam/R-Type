@@ -122,8 +122,8 @@ public:
 
         // We have enough time to spawn a sprite. ( may be for several ? )
         while( elapsed_time >= delay ){
-            sf::Vector2f position = starship[0]->starship.getPosition();
-            position.x = 1280;
+//            sf::Vector2f position = starship[0]->starship.getPosition();
+  //          position.x = 1280;
 
        //mob.emplace_back(new Mob(position, std::to_string((rand() % 3) + 1) + std::to_string(mob.size()), 1280));
            // mob.emplace_back(new Mob(position, std::to_string(3) + std::to_string(mob.size()), 1280));
