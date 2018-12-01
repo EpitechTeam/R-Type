@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="Conan-RootDirs">
+    <Conan-boost-Root>/home/cherkaoui/.conan/data/boost/1.68.0/conan/stable/package/d6cb600df9137cb7943d00f26e402be306584995</Conan-boost-Root>
+    <Conan-sfml-Root>/home/cherkaoui/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f8e4bfb02f242244391538ca9005dd3f99facc7</Conan-sfml-Root>
+    <Conan-freetype-Root>/home/cherkaoui/.conan/data/freetype/2.9.0/bincrafters/stable/package/1e25f8fc336196e0898e984c1f0498b55571827c</Conan-freetype-Root>
+    <Conan-stb-Root>/home/cherkaoui/.conan/data/stb/20180214/conan/stable/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9</Conan-stb-Root>
+    <Conan-bzip2-Root>/home/cherkaoui/.conan/data/bzip2/1.0.6/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b</Conan-bzip2-Root>
+    <Conan-libpng-Root>/home/cherkaoui/.conan/data/libpng/1.6.34/bincrafters/stable/package/b781af3f476d0aa5070a0a35b544db7a3c193cc8</Conan-libpng-Root>
+    <Conan-zlib-Root>/home/cherkaoui/.conan/data/zlib/1.2.11/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b</Conan-zlib-Root>
+  </PropertyGroup>
+  <PropertyGroup Label="ConanVariables">
+    <ConanBinaryDirectories>/home/cherkaoui/.conan/data/bzip2/1.0.6/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b/bin;/home/cherkaoui/.conan/data/libpng/1.6.34/bincrafters/stable/package/b781af3f476d0aa5070a0a35b544db7a3c193cc8/bin;</ConanBinaryDirectories>
+    <ConanResourceDirectories></ConanResourceDirectories>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LocalDebuggerEnvironment>PATH=%PATH%;/home/cherkaoui/.conan/data/bzip2/1.0.6/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b/bin;/home/cherkaoui/.conan/data/libpng/1.6.34/bincrafters/stable/package/b781af3f476d0aa5070a0a35b544db7a3c193cc8/bin;</LocalDebuggerEnvironment>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>/home/cherkaoui/.conan/data/boost/1.68.0/conan/stable/package/d6cb600df9137cb7943d00f26e402be306584995/include;/home/cherkaoui/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f8e4bfb02f242244391538ca9005dd3f99facc7/include;/home/cherkaoui/.conan/data/freetype/2.9.0/bincrafters/stable/package/1e25f8fc336196e0898e984c1f0498b55571827c/include;/home/cherkaoui/.conan/data/freetype/2.9.0/bincrafters/stable/package/1e25f8fc336196e0898e984c1f0498b55571827c/include/freetype2;/home/cherkaoui/.conan/data/stb/20180214/conan/stable/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include;/home/cherkaoui/.conan/data/bzip2/1.0.6/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b/include;/home/cherkaoui/.conan/data/libpng/1.6.34/bincrafters/stable/package/b781af3f476d0aa5070a0a35b544db7a3c193cc8/include;/home/cherkaoui/.conan/data/zlib/1.2.11/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>STB_TEXTEDIT_KEYTYPE=unsigned;SFML_STATIC;BOOST_USE_STATIC_LIBS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>/home/cherkaoui/.conan/data/boost/1.68.0/conan/stable/package/d6cb600df9137cb7943d00f26e402be306584995/lib;/home/cherkaoui/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f8e4bfb02f242244391538ca9005dd3f99facc7/lib;/home/cherkaoui/.conan/data/freetype/2.9.0/bincrafters/stable/package/1e25f8fc336196e0898e984c1f0498b55571827c/lib;/home/cherkaoui/.conan/data/bzip2/1.0.6/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b/lib;/home/cherkaoui/.conan/data/libpng/1.6.34/bincrafters/stable/package/b781af3f476d0aa5070a0a35b544db7a3c193cc8/lib;/home/cherkaoui/.conan/data/zlib/1.2.11/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>boost_wave.lib;boost_container.lib;boost_contract.lib;boost_exception.lib;boost_graph.lib;boost_iostreams.lib;boost_locale.lib;boost_log.lib;boost_program_options.lib;boost_random.lib;boost_regex.lib;boost_serialization.lib;boost_wserialization.lib;boost_signals.lib;boost_coroutine.lib;boost_fiber.lib;boost_context.lib;boost_timer.lib;boost_thread.lib;boost_chrono.lib;boost_date_time.lib;boost_atomic.lib;boost_filesystem.lib;boost_system.lib;boost_type_erasure.lib;boost_math_c99.lib;boost_unit_test_framework.lib;boost_log_setup.lib;boost_math_tr1.lib;boost_math_tr1l.lib;boost_math_c99f.lib;boost_stacktrace_basic.lib;boost_math_c99l.lib;boost_stacktrace_noop.lib;boost_math_tr1f.lib;boost_stacktrace_addr2line.lib;boost_stacktrace_backtrace.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;Xrandr.lib;Xext.lib;Xrender.lib;X11.lib;pthread.lib;xcb.lib;Xau.lib;Xdmcp.lib;GL.lib;udev.lib;freetype.lib;bz2.lib;png16.lib;m.lib;z.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <Midl>
+      <AdditionalIncludeDirectories>/home/cherkaoui/.conan/data/boost/1.68.0/conan/stable/package/d6cb600df9137cb7943d00f26e402be306584995/include;/home/cherkaoui/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f8e4bfb02f242244391538ca9005dd3f99facc7/include;/home/cherkaoui/.conan/data/freetype/2.9.0/bincrafters/stable/package/1e25f8fc336196e0898e984c1f0498b55571827c/include;/home/cherkaoui/.conan/data/freetype/2.9.0/bincrafters/stable/package/1e25f8fc336196e0898e984c1f0498b55571827c/include/freetype2;/home/cherkaoui/.conan/data/stb/20180214/conan/stable/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include;/home/cherkaoui/.conan/data/bzip2/1.0.6/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b/include;/home/cherkaoui/.conan/data/libpng/1.6.34/bincrafters/stable/package/b781af3f476d0aa5070a0a35b544db7a3c193cc8/include;/home/cherkaoui/.conan/data/zlib/1.2.11/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>/home/cherkaoui/.conan/data/boost/1.68.0/conan/stable/package/d6cb600df9137cb7943d00f26e402be306584995/include;/home/cherkaoui/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f8e4bfb02f242244391538ca9005dd3f99facc7/include;/home/cherkaoui/.conan/data/freetype/2.9.0/bincrafters/stable/package/1e25f8fc336196e0898e984c1f0498b55571827c/include;/home/cherkaoui/.conan/data/freetype/2.9.0/bincrafters/stable/package/1e25f8fc336196e0898e984c1f0498b55571827c/include/freetype2;/home/cherkaoui/.conan/data/stb/20180214/conan/stable/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include;/home/cherkaoui/.conan/data/bzip2/1.0.6/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b/include;/home/cherkaoui/.conan/data/libpng/1.6.34/bincrafters/stable/package/b781af3f476d0aa5070a0a35b544db7a3c193cc8/include;/home/cherkaoui/.conan/data/zlib/1.2.11/conan/stable/package/d50a0d523d98c15bb147b18fa7d203887c38be8b/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>STB_TEXTEDIT_KEYTYPE=unsigned;SFML_STATIC;BOOST_USE_STATIC_LIBS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

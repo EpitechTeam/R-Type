@@ -72,7 +72,10 @@ void Monster::SetSpeed(int speed) {
 
 int Monster::GetSpeedFromType(const std::string& type) {
     if (type == "normal") {
-        return (2);
+        return (10);
+    }
+    if (type == "runner") {
+        return (40);
     }
     return (0);
 }
