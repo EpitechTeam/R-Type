@@ -12,9 +12,9 @@ if [ "$unameOut" = "Linux" ]; then
     mkdir build
     cd build
 
-    conan install .. --build=missing
-    cmake .. -G "Unix Makefiles"
-    cmake --build .
+    conan install .. --build=missing -s compiler.libcxx=libstdc++11
+    CC=gcc CXX=g++ cmake .. -G "Unix Makefiles"
+    CC=gcc CXX=g++ cmake --build .
 elif [ "$unameOut" = "Darwin" ]; then
     echo "MAC OS"
     brew install python3
@@ -27,7 +27,7 @@ elif [ "$unameOut" = "Darwin" ]; then
     cmake .. -G "Unix Makefiles"
     make
 else
-    echo "WINDOWS"	
+    echo "WINDOWS"
 	echo "Files initiation ..."
 	mkdir x64
 	mkdir x64/Release
