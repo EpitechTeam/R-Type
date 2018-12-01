@@ -8,7 +8,7 @@ UDPClient::UDPClient(boost::asio::io_context &io_context, const std::string &ip,
 	_receiverEndpoint = new udp::endpoint(address::from_string(ip), port);
 	_socket = new udp::socket(io_context);
 	_socket->open(udp::v4());
-	std::cout << "listener started\n";
+	//std::cout << "listener started\n";
 	_updListenenerThread = new std::thread([this]() {
 		startListener();
 	});
@@ -26,7 +26,7 @@ void UDPClient::startListener()
 {
 	_type = 0;
 
-	std::cout << "\tListening in thread...\n";
+	//std::cout << "\tListening in thread...\n";
 	_socket->async_receive_from(boost::asio::buffer(_listenerRecvBuffer),
 			_listenerSenderEndpoint,
 			boost::bind(&UDPClient::handleReceive,
@@ -54,16 +54,18 @@ void UDPClient::handleReceive(const boost::system::error_code& error,
 							  std::size_t bytes_transferred) {
 	if (!error || error == boost::asio::error::message_size) {
 		if (_type == 0) {
-            std::cout << "Receive some packets.... == 0\n";
+            //std::cout << "Receive some packets.... == 0\n";
 			_game->updateView(std::string(_listenerRecvBuffer.data()));
-			_listenerRecvBuffer.assign(0);
-			startListener();
 		}
 		else {
 			// Reçu du server
+            //std::cout << "Receive some packets.... != 0" << _recvBuffer.data() << std::endl;
 			_game->updateView(std::string(_recvBuffer.data()));
 //			std::cout << "response: " << _recvBuffer.data() << std::endl;
 		}
+        _listenerRecvBuffer.assign(0);
+        _recvBuffer.assign(0);
+        startListener();
 	}
 }
 

@@ -76,12 +76,12 @@ void RType::draw() {
                 std::cout << "connection oklm " << std::endl;
                 this->network->request("SET_NAME " + auth->playername, [this](Command &response) {
                     print("set name: " + response.toStr());
-
+                    this->view = LOBBY;
                 });
                 this->view = LOBBY;
+
             } else
                 std::cout << "client => " <<  "not connected" << std::endl;
-
             auth->draw(this->window);
             break;
         }

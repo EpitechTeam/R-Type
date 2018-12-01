@@ -24,7 +24,7 @@ public:
         _position = position;
         this->range = range;
         _id = id;
-      //  print("crate mob: " + _id);
+        //print("crate mob: " + _id);
         switch(id[0]) {
             case '2':  _rect = sf::RectangleShape(sf::Vector2f(33 * 2, 34 * 2));
                 _rect.setPosition(0, 0.f);
@@ -68,10 +68,10 @@ public:
     bool draw(sf::RenderWindow *window, float deltatime) {
 
 
-        _rect.move(-0.2f, 0);
+       // _rect.move(-0.2f, 0);
         animation->Update(0, deltatime);
         _rect.setTextureRect(animation->uvRect);
-        if( (_position.x - _rect.getPosition().x) <= range){
+        if(_rect.getPosition().x > 0){
             window->draw(_rect);
             return true;
         }

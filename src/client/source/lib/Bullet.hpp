@@ -23,6 +23,7 @@ public:
 
 
     Bullet(sf::Vector2f position, std::string id, float range, int dir = 1) {
+        //std::cout << "create bullet: X=" << position.x << " Y=" << position.y << "  dir=" << dir << std::endl;
         this->dir = dir;
         if (!texture.loadFromFile("myasset/shoot.png")) {
             std::cout << "ERROR TEXTURE" << std::endl;
@@ -58,6 +59,7 @@ public:
     }
     bool draw(sf::RenderWindow *window, float deltatime) {
         _rect.move(1 * this->dir, 0);
+        _rect.setPosition(_rect.getPosition().x,  _position.y);
         animation->Update(0, deltatime);
         _rect.setTextureRect(animation->uvRect);
         if(dir == 1 && (_rect.getPosition().x -  _position.x) <= range) {

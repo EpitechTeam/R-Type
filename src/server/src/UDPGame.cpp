@@ -57,6 +57,7 @@ void UDPGame::Start() {
                 delta = ticks / (double) (CLOCKS_PER_SEC);
                 if (delta >= 0.5) {
                     CheckAllMonsters();
+                    MoveMonsters();
                     _cycle++;
                     clock1 = clock2;
                 }
@@ -149,6 +150,18 @@ void UDPGame::ParseMonsterFile() {
                 monster.SetFireCycle(val);
                 monster.SetSpeed(Monster::GetSpeedFromType(monster.GetType()));
             }
+            if (monster.GetType() == "runner") {
+                is >> val; // SpawnCycle
+                monster.SetSpawnCycle(val);
+                is >> tmp_string; // Position
+                std::vector<std::string> positions = split(tmp_string, ",");
+                pos.x = std::stoi(positions[0]);
+                pos.y = std::stoi(positions[1]);
+                monster.SetPosition(pos);
+                is >> val; // FireCycle
+                monster.SetFireCycle(val);
+                monster.SetSpeed(Monster::GetSpeedFromType(monster.GetType()));
+            }
             monster.SetLife(100);
             monster.SetId(std::to_string(i));
             _Monsters.push_back(monster);
@@ -197,8 +210,14 @@ void UDPGame::CheckAllReady() {
 
 void UDPGame::CheckAllMonsters() {
     Bullet bullet;
+    int i = 0;
 
     for (auto &monster : _Monsters) {
+
+        if (monster.GetPosition().x < 0) {
+            std::cout << "Monster removed from stack\n";
+            _Monsters.erase(_Monsters.begin() + i);
+        }
 
         if (_cycle == monster.GetSpawnCycle() && monster.isSpawned() == false) {
             monster.Spawn();
@@ -208,13 +227,14 @@ void UDPGame::CheckAllMonsters() {
             if (monster.GetWaitingCycle() == monster.GetFireCycle()) {
                 bullet.SetPosition({monster.GetPosition().x, monster.GetPosition().y});
                 bullet.SetSpeed(monster.GetSpeedFromType(monster.GetType()));
-                _udpServer->NewBullet(bullet.GetPosition().x, bullet.GetPosition().y, "monster");
+                _udpServer->NewBullet(bullet.GetPosition().x - 60, bullet.GetPosition().y, "monster");
             }
             monster.SetWaitingCycle(monster.GetWaitingCycle() + 1);
         }
         else {
             monster.SetWaitingCycle(0);
         }
+        i++;
     }
 }
 
@@ -227,9 +247,15 @@ void UDPGame::MoveMonsters() {
         if (monster.isSpawned()) {
             if (monster.GetType() == "normal") {
                 monster.SetPosition({
-                    monster.GetPosition().x - 0.1,
+                    monster.GetPosition().x - monster.GetSpeed(),
                     monster.GetPosition().y,
                 });
+            }
+            else if (monster.GetType() == "runner") {
+                monster.SetPosition({
+                    monster.GetPosition().x - monster.GetSpeed(),
+                    monster.GetPosition().y,
+                    });
             }
         }
     }

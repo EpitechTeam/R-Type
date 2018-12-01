@@ -27,7 +27,7 @@ UDPParser::~UDPParser() = default;
 std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
     std::ostringstream ss;
 
-    ss << "200 ";
+    ss << "GET_POSITIONS ";
     for(auto player: (game->GetPlayers())) {
         if (player.GetLife() == 0)
             continue;
@@ -35,11 +35,20 @@ std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
         ss << ":" << player.GetId() << ":-1:" << player.GetAsset();
         ss << " ";
     }
+
+    int monsterAsset;
+
     for(auto monster: (game->GetMonsters())) {
-        if (monster.GetLife() == 0)
+        if (monster.GetLife() == 0 || monster.isSpawned() == false)
             continue;
+        if (monster.GetType() == "normal") {
+            monsterAsset = 1;
+        }
+        if (monster.GetType() == "runner") {
+            monsterAsset = 2;
+        }
         ss << monster.GetPosition().x << ":" << monster.GetPosition().y;
-        ss << ":-1:" << monster.GetId() << ":" << 1;
+        ss << ":-1:" << monster.GetId() << ":" << monsterAsset;
         ss << " ";
     }
     ss << std::endl;
@@ -47,8 +56,9 @@ std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
 }
 
 std::string UDPParser::killEntity(UDPGame *game, UDPServer *server) {
-    std::string id = server->GetCommand()->at(1);
 
+    std::string id = server->GetCommand()->at(1);
+    std::cout << "kill monster id: " << id << std::endl;
     game->KillMonster(id);
     return ("200");
 }
