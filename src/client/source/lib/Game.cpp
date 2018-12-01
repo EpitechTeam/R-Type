@@ -82,7 +82,6 @@ void Game::updateView(std::string command) {
                 this->bullet.emplace_back(new Bullet(sf::Vector2f(std::stod(cmd[1]), std::stod(cmd[2])), cmd[3], 1150, cmd[3] == "monster" ? -1 : 1));
 
             } else if (cmd[0] == "GET_POSITIONS") {
-                std::cout << command << std::endl;
                 std::vector<std::string> tokens;
 
                 for (unsigned int index = 1; index < cmd.size() - 1; index++) {
@@ -101,9 +100,6 @@ void Game::updateView(std::string command) {
 
                     }
                 }
-
-                std::cout << "Nombre de mosntres : " << mob.size() << std::endl;
-
             }
         }
         this->chat.push_back("l: " + command);

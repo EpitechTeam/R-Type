@@ -190,7 +190,7 @@ void UDPServer::handleReceive(const boost::system::error_code& error,
 
         _udpParser.parseCommand(_game, this);
 
-        std::cout << "UDP receive: " << _recvBuffer.data() << "\n";
+        //std::cout << "UDP receive: " << _recvBuffer.data() << "\n";
 
         auto message = std::make_shared<std::string>(_udpParser.getCmdToSend());
         _socket.async_send_to(boost::asio::buffer(*message), _remoteEndpoint,
