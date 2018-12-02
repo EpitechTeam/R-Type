@@ -218,6 +218,7 @@ void UDPGame::CheckAllMonsters() {
 
         if (monster.GetPosition().x < 0) {
             std::cout << "Monster removed from stack\n";
+						_udpServer->SendToAll("DEAD " + monster.GetId());
             _Monsters.erase(_Monsters.begin() + i);
         }
 
