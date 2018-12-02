@@ -55,11 +55,17 @@ void UDPClient::handleReceive(const boost::system::error_code& error,
 	if (!error || error == boost::asio::error::message_size) {
 		if (_type == 0) {
             //std::cout << "Receive some packets.... == 0\n";
+
+            if (_listenerRecvBuffer.data()[0] == 'D') {
+                std::cout << "Receive some packets.... == 0  " << _listenerRecvBuffer.data() << std::endl;
+            }
 			_game->updateView(std::string(_listenerRecvBuffer.data()));
 		}
 		else {
 			// Reçu du server
-            //std::cout << "Receive some packets.... != 0" << _recvBuffer.data() << std::endl;
+			//if (_listenerRecvBuffer.data().at(0) == 'D') {
+                //std::cout << "Receive some packets.... != 0  " << _listenerRecvBuffer.data() << std::endl;
+			//}
 			_game->updateView(std::string(_recvBuffer.data()));
 //			std::cout << "response: " << _recvBuffer.data() << std::endl;
 		}

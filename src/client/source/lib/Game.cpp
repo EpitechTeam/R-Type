@@ -130,10 +130,14 @@ void Game::updateView(std::string command) {
             }
             else if (cmd[0] == "DEAD")
             {
+                std::cout << "recive kill monster: " << cmd[1] << std::endl;
+
                 this->chat.push_back("destroy monster " + cmd[1]);
                 if(GetMonsterByIdFromServer(cmd[1]) != -1) {
                     std::cout << "clean monster: " << cmd[1] << " index: " << (GetMonsterByIdFromServer(cmd[1])) << std::endl;
+                    this->chat.push_back("erase monster in index: " +  GetMonsterByIdFromServer(cmd[1]));
                     std::cout << "before mob size: " << mob.size()  << std::endl;
+                    ;
                     mob.erase(mob.begin() + GetMonsterByIdFromServer(cmd[1]));
                     std::cout << "after mob size: " << mob.size()  << std::endl;
                 }

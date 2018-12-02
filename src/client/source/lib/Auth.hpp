@@ -27,7 +27,8 @@ public:
     sf::Text roomname;
     sf::Text create;
     std::string playername = "guest" +  std::to_string((rand() % 400 + 1));
-    std::string  server_ip = "192.168.1.98:4242";
+    //std::string  server_ip = "192.168.1.98:4242";
+    std::string  server_ip = "127.0.0.1:4242";
     float x  = 0;
     float positionx = 30;
     float positiony = 442;
