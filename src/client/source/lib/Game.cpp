@@ -69,7 +69,7 @@ int Game::GetMonsterById(std::string id) {
     return (-1);
 }
 
-unsigned int Game::GetMonsterByIdFromServer(std::string id) {
+int Game::GetMonsterByIdFromServer(std::string id) {
     for (unsigned int i = 0; i < mob.size(); i++) {
         if (mob[i]->_id.substr(1, mob[i]->_id.length()) == id)
             return (i);
@@ -110,6 +110,7 @@ void Game::updateView(std::string command) {
                             mob.emplace_back(new Mob(sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])),
                                                      tokens[4] + tokens[3], 1280));
                         } else {
+                            if(GetMonsterById(tokens[4] + tokens[3]) != -1)
                             mob[GetMonsterById(tokens[4] + tokens[3])]->_rect.setPosition(
                                     sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])));
                         }
@@ -119,6 +120,7 @@ void Game::updateView(std::string command) {
                             std::cout << "create player " << tokens[2] << std::endl;
                             starship.push_back(new Starship(this, tokens[2]));
                         } else {
+                            if(GetPlayerById(tokens[4] + tokens[3]) != -1)
                             starship[GetPlayerById(tokens[2])]->starship.setPosition(
                                     sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])));
                         }
@@ -128,12 +130,11 @@ void Game::updateView(std::string command) {
                 std::cout << "Nombre de mosntres : " << mob.size() << std::endl;
             } else if (cmd[0] == "DEAD") {
                 std::cout << "erase Monster " << cmd[1] << "index: " << GetMonsterByIdFromServer(cmd[1]) << std::endl;
-                if(mob.size() > GetMonsterByIdFromServer(cmd[1]))
+                if(GetMonsterByIdFromServer(cmd[1]) != -1)
                 {
                     std::cout << "clean monster: " << cmd[1] << std::endl;
                     mob.erase(mob.begin() + GetMonsterByIdFromServer(cmd[1]));
                 }
-
             }
         }
         this->chat.push_back("l: " + command);
@@ -144,7 +145,7 @@ void Game::updateView(std::string command) {
 void Game::draw(sf::RenderWindow *window) {
     deltaTime = clock.restart().asSeconds();
     fps = 1.f / deltaTime;
-    sf::Time delay = sf::milliseconds(100);
+    sf::Time delay = sf::milliseconds(50);
     elapsed_time += r.restart();
     while( elapsed_time >= delay ){
         client->request("GET_POSITIONS", [this](std::string cmd) {

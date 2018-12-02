@@ -49,7 +49,7 @@ public:
     bool MobAleadyExist(std::string id);
     bool PlayerAleadyExist(std::string id);
     int GetMonsterById(std::string id);
-    unsigned int GetMonsterByIdFromServer(std::string id);
+    int GetMonsterByIdFromServer(std::string id);
     int GetPlayerById(std::string id);
 
     std::vector<std::string> split(std::string phrase, std::string delimiter) {
