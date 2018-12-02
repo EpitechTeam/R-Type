@@ -130,7 +130,7 @@ void Game::updateView(std::string command) {
                                 starship.push_back(new Starship(this, tokens[2], std::stoi(tokens[4])));
                             }
                             else {
-                                if (GetPlayerById(tokens[2]) != -1)
+                                if (GetPlayerById(tokens[2]) != -1 && starship[GetPlayerById(tokens[2])]->id != this->rType->auth->playername)
                                     starship[GetPlayerById(tokens[2])]->starship.setPosition(
                                             sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])));
                             }
