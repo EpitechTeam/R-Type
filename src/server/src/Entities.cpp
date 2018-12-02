@@ -77,9 +77,6 @@ int Monster::GetSpeedFromType(const std::string& type) {
     if (type == "runner") {
         return (20);
     }
-    if (type == "robot") {
-        return (10);
-    }
     return (0);
 }
 

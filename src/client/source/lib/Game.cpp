@@ -28,6 +28,16 @@ Game::Game(RType *rType) : rType(rType) {
     front_promt.setFillColor(sf::Color::White);
 };
 
+int Game::event(sf::Event event , sf::RenderWindow *window){
+    for (unsigned int i = 0;  i != starship.size(); i++) {
+        starship[i]->event(event,&bullet,window);
+    }
+    if (event.key.code == sf::Keyboard::Escape) {
+        this->rType->view = ROOM;
+    }
+    return MAP;
+}
+
 void Game::init_udp() {
     if (this->rType->udpPort == "0") {
         std::cout << "UDP Client bad Port" << std::endl;
@@ -140,6 +150,13 @@ void Game::updateView(std::string command) {
                 else if (cmd[0] == "GET_ALL_SCORE"){
                      promt = command.substr(std::string("GET_ALL_SCORE ").length(), command.length());
                 }
+                else if (cmd[0] == "END_GAME"){
+                    this->text.setString("Scores: " + promt);
+                    text.setFillColor(sf::Color::White);
+                    text.setCharacterSize(50);
+                    text.setPosition(100, 270);
+                    rType->view = SCORE;
+                }
                 else if (cmd[0] != "200")
                     this->chat.push_back(command);
             }
@@ -163,30 +180,13 @@ void Game::draw(sf::RenderWindow *window) {
             });
             elapsed_time -= delay;
         }
-
         this->x -= 0.018;
         this->background.setPosition(this->x, 0);
         window->draw(this->background);
-
         front_promt.setFillColor(sf::Color(sf::Color::White));
-
-
         if (chat.size() > 30) {
             chat = this->slice(chat, chat.size() - 20, chat.size());
         }
-        //int point = 0;
-/*
-        for (unsigned int i = chat.size(); i != 0 && (chat.size() - 10) != i; i--) {
-            if (chat.size() > 10) {
-                point = i - (chat.size() - 10);
-            } else
-                point = i;
-            front_promt.setString(chat[i - 1]);
-            front_promt.setPosition(20, 200 + (39 * point));
-            window->draw(this->front_promt);
-        }
-*/
-
         for (unsigned int i = 0; i != mob.size(); i++) {
             if (mob[i]->draw(window, deltaTime)) {
                 for (unsigned int j = 0; j != starship.size(); j++) {
@@ -208,7 +208,6 @@ void Game::draw(sf::RenderWindow *window) {
                 i--;
             }
         }
-
         for (unsigned int i = 0; i != bullet.size(); i++) {
             if (!bullet[i]->draw(window, deltaTime)) {
                 bullet.erase(bullet.begin() + i);

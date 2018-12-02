@@ -102,6 +102,11 @@ void RType::draw() {
         case 7:
             game->draw(this->window);
             break;
+        case 8:
+            window->draw(menu->background);
+            window->draw(room->bigrect);
+            window->draw(game->text);
+            break;
         default:
             menu->draw(this->window);
             break;
@@ -137,7 +142,9 @@ void RType::event(sf::Event event) {
             case 62:
                 break;
             case 7:
-                this->view = game->event(event, window);
+                game->event(event, window);
+                break;
+            case 8:
                 break;
             default:
                 this->view = menu->event(event, window);

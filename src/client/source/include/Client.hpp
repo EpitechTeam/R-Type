@@ -17,9 +17,10 @@
 #define  CREATEROOM 3
 #define  JOINROOM 4
 #define  ROOM 5
-#define AUTH 6
-#define AUTH_CONNECT 61
+#define  AUTH 6
+#define  AUTH_CONNECT 61
 #define  MAP 7
+#define  SCORE 8
 
 
 #include <cstdlib>

@@ -98,29 +98,7 @@ public:
 
         return str += static_cast<char>(key);
     }
-
-
-    int event(sf::Event event , sf::RenderWindow *window){
-
-        /*if((event.type == sf::Event::TextEntered || event.text.unicode == 8)) {
-            promt = event_to_string(event, promt);
-            text.setString( "cmd : " + promt);
-        }
-        if (event.key.code == sf::Keyboard::Return) {
-            chat.push_back("sudo : " + promt);
-            promt = "";
-        }*/
-
-        for (unsigned int i = 0;  i != starship.size(); i++) {
-            starship[i]->event(event,&bullet,window);
-        }
-
-        if (event.key.code == sf::Keyboard::Escape) {
-            return ROOM;
-        }
-        return MAP;
-    }
-
+    int event(sf::Event event , sf::RenderWindow *window);
     std::vector<std::string> slice(const std::vector<std::string> &v, int start=0, int end=-1) {
         int oldlen = v.size();
         int newlen;
