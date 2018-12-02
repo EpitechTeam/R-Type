@@ -233,12 +233,10 @@ void Game::draw(sf::RenderWindow *window) {
                     if (bullet[i] && starship[x] &&
                         starship[x]->starship.getPosition().x - 1 <= bullet[i]->_rect.getPosition().x &&
                         starship[x]->starship.getPosition().x + 1 >= bullet[i]->_rect.getPosition().x && bullet[i]->_id == "monster" && starship[x]->id == this->rType->auth->playername) {
-                        std::cout << "X collision: " << starship[x]->id << std::endl;
                         if (bullet[i] && starship[x] &&
                             starship[x]->starship.getPosition().y - 3 <= bullet[i]->_rect.getPosition().y &&
                             starship[x]->starship.getPosition().y + 30 >= bullet[i]->_rect.getPosition().y)
                         {
-                            std::cout << "Y collision: " << bullet[i]->_id << std::endl;
                             client->request("DAMAGE", [this](std::string cmd) {});
                             bullet[i]->_rect.setPosition(-100, 0);
                         }
