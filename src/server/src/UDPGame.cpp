@@ -285,8 +285,6 @@ void UDPGame::MoveMonsters() {
                     monster.GetPosition().y,
                     });
             }
-            std::string positions = UDPParser::getAllPositions(this, _udpServer);
-            _udpServer->SendToAll(positions);
         }
     }
 }
