@@ -160,10 +160,12 @@ void Game::draw(sf::RenderWindow *window) {
         sf::Time delay = sf::milliseconds(40);
         elapsed_time += r.restart();
         while (elapsed_time >= delay) {
+/*
 
          client->request("GET_POSITIONS", [this](std::string cmd) {
                 //     this->chat.push_back("res_gp : " + cmd);
             });
+*/
 
             elapsed_time -= delay;
         }
