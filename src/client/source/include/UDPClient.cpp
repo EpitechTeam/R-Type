@@ -38,7 +38,9 @@ void UDPClient::request(std::string msg, std::function<void(std::string)> callba
 
 	_type = 1;
 
-	_socket->async_send_to(boost::asio::buffer(msg), *_receiverEndpoint,
+	boost::shared_ptr<std::string>	message(new std::string(msg));
+
+	_socket->async_send_to(boost::asio::buffer(*message), *_receiverEndpoint,
 						   boost::bind(&UDPClient::handleSend, this,
 									   boost::asio::placeholders::error,
 									   boost::asio::placeholders::bytes_transferred));
