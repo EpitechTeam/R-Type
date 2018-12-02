@@ -115,9 +115,9 @@ void Game::updateView(std::string command) {
                             }
                         } else {
                             if (PlayerAleadyExist(tokens[2]) == false) {
-                                //this->chat.push_back("create player " + tokens[2]);
+                                this->chat.push_back("create player " + tokens[2] + "color: " + tokens[4]);
                                 //std::cout << "create player " << tokens[2] << std::endl;
-                                starship.push_back(new Starship(this, tokens[2]));
+                                starship.push_back(new Starship(this, tokens[2], std::stoi(tokens[4])));
                             }
                             else {
                                 if (GetPlayerById(tokens[2]) != -1)
@@ -157,12 +157,14 @@ void Game::draw(sf::RenderWindow *window) {
     try {
         deltaTime = clock.restart().asSeconds();
         fps = 1.f / deltaTime;
-        sf::Time delay = sf::milliseconds(10);
+        sf::Time delay = sf::milliseconds(40);
         elapsed_time += r.restart();
         while (elapsed_time >= delay) {
-            client->request("GET_POSITIONS", [this](std::string cmd) {
+
+         client->request("GET_POSITIONS", [this](std::string cmd) {
                 //     this->chat.push_back("res_gp : " + cmd);
             });
+
             elapsed_time -= delay;
         }
 

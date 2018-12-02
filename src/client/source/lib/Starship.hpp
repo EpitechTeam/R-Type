@@ -19,7 +19,7 @@ public:
     std::vector <std::string> buffer;
     float speed = 350.f;
 
-    Starship(Game *game, std::string id);
+    Starship(Game *game, std::string id, int color);
     ~Starship(){};
     int event(sf::Event event , std::vector<Bullet*> *bullet, sf::RenderWindow *window) {
         if (event.key.code == sf::Keyboard::Escape) {

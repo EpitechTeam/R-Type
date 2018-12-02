@@ -6,13 +6,18 @@
 #include "RType.hpp"
 #include "Game.hpp"
 
-Starship::Starship(Game *game, std::string id) : game(game) {
+Starship::Starship(Game *game, std::string id, int color) : game(game) {
     this->id = id;
     if (!texture3.loadFromFile("myasset/starship.png")) {
         std::cout << "ERROR TEXTURE" << std::endl;
     }
     starship = sf::Sprite(texture3);
-    starship.setPosition(310, 10);
+    if (color == 1)
+        starship.setColor(sf::Color::Green);
+    else if (color == 2)
+        starship.setColor(sf::Color::Red);
+    else if (color == 3)
+        starship.setColor(sf::Color::Yellow);
     starship.setScale(2.0f, 2.0f);
 };
 
