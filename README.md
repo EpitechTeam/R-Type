@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-### Usage
+# Usage
 
 #### Linux
 
@@ -18,10 +18,10 @@ $ ./R-Type_Client
 $ ./setup.sh
 ```
 
-Launch solution file R-Type.sln with Visual Studio
-Generate solution with realese x64 environement
-Go to X64/realese directory
-Launch R-Type Server and R-Type client
+Launch solution file R-Type.sln with Visual Studio\n
+Generate solution with realese x64 environement\n
+Go to X64/realese directory\n
+Launch R-Type Server and R-Type client\n
 
 # Screen
 
