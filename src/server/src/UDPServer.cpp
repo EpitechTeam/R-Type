@@ -65,7 +65,7 @@ std::string UDPParser::killEntity(UDPGame *game, UDPServer *server) {
 }
 
 std::string UDPParser::fireBullet(UDPGame *game, UDPServer *server) {
-    game->CreateBullet(std::stoi(server->GetCommand()->at(1)), std::stoi(server->GetCommand()->at(2)), "player");
+    //game->CreateBullet(std::stoi(server->GetCommand()->at(1)), std::stoi(server->GetCommand()->at(2)), "player");
     server->NewBullet(std::stoi(server->GetCommand()->at(1)), std::stoi(server->GetCommand()->at(2)), "player");
     return ("200");
 }
