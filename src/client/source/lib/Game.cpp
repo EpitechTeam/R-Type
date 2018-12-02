@@ -220,19 +220,32 @@ void Game::draw(sf::RenderWindow *window) {
                         if (mob[j] && mob[j]->_rect.getPosition().y - 3 <= bullet[i]->_rect.getPosition().y &&
                             mob[j]->_rect.getPosition().y + 50 >= bullet[i]->_rect.getPosition().y &&
                             bullet[i]->_id != "monster") {
-                            std::cout << "client::request " << "DEAD " + mob[j]->_id.substr(1, mob[j]->_id.length())
-                                      << std::endl;
-
+                            std::cout << "client::request " << "DEAD " + mob[j]->_id.substr(1, mob[j]->_id.length()) << std::endl;
                             if(GetMonsterById(mob[j]->_id) != -1)
-                                client->request("DEAD " + mob[j]->_id.substr(1, mob[j]->_id.length()), [this](std::string cmd) {
-                                    //std::cout << "DEAD udp: "<< cmd << std::endl;
-                                });
+                                client->request("DEAD " + mob[j]->_id.substr(1, mob[j]->_id.length()), [this](std::string cmd) {});
                             bullet[i]->_rect.setPosition(1280, 0);
                         }
                     }
                 }
-            }
 
+                for (unsigned int x = 0; x != starship.size(); x++)
+                {
+                    if (bullet[i] && starship[x] &&
+                        starship[x]->starship.getPosition().x - 1 <= bullet[i]->_rect.getPosition().x &&
+                        starship[x]->starship.getPosition().x + 1 >= bullet[i]->_rect.getPosition().x && bullet[i]->_id == "monster" && starship[x]->id == this->rType->auth->playername) {
+                        std::cout << "X collision: " << starship[x]->id << std::endl;
+                        if (bullet[i] && starship[x] &&
+                            starship[x]->starship.getPosition().y - 3 <= bullet[i]->_rect.getPosition().y &&
+                            starship[x]->starship.getPosition().y + 30 >= bullet[i]->_rect.getPosition().y)
+                        {
+                            std::cout << "Y collision: " << bullet[i]->_id << std::endl;
+                            client->request("DAMAGE", [this](std::string cmd) {});
+                            bullet[i]->_rect.setPosition(-100, 0);
+                        }
+                    }
+                }
+
+            }
         }
 
         for (unsigned int i = 0; i != starship.size(); i++) {

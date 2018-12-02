@@ -302,4 +302,3 @@ void UDPServer::NewBullet(double x, double y, std::string owner) {
     std::cout << "New bullet created by " << owner << std::endl;
     SendToAll("NEW_BULLET " + std::to_string(x) + " " + std::to_string(y) + " " + owner);
 }
-
