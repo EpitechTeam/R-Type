@@ -49,7 +49,7 @@ public:
             std::cout << "ERROR FONT" << std::endl;
         }
         text.setFont(font); // font est un sf::Font
-        text.setString("multyplayer");
+        text.setString("multiplayer");
         text.setCharacterSize(120);
         text.setPosition(140, 180 + 200);
         text2.setFont(font);

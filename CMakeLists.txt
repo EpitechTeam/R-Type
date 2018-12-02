@@ -124,11 +124,6 @@ if (LINUX)
             src/client/source/main.cpp
             )
 
-    target_link_libraries(R-Type_Client sfml-graphics)
-    target_link_libraries(R-Type_Client sfml-window)
-    target_link_libraries(R-Type_Client sfml-system)
-    target_link_libraries(R-Type_Client sfml-audio)
-
     target_link_libraries(R-Type_Server pthread)
     target_link_libraries(R-Type_Client ${CONAN_LIBS})
 
