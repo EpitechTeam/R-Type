@@ -60,6 +60,7 @@ std::string UDPParser::killEntity(UDPGame *game, UDPServer *server) {
     std::string id = server->GetCommand()->at(1);
     std::cout << "kill monster id: " << id << std::endl;
     game->KillMonster(id);
+    server->SendToAll("DEAD " + id);
     return ("200");
 }
 
