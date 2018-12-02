@@ -106,8 +106,8 @@ std::string UDPParser::movePlayer(UDPGame *game, UDPServer *server) {
     Player *player = server->GetPlayerByClient(client);
 
     player->SetPosition({std::stod(server->GetCommand()->at(1)), std::stod(server->GetCommand()->at(2))});
-    //std::string positions = UDPParser::getAllPositions(game, server);
-    //server->SendToAll(positions);
+    std::string positions = UDPParser::getAllPositions(game, server);
+    server->SendToAll(positions);
     return ("200");
 }
 

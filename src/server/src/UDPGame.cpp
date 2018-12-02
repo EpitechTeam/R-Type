@@ -235,9 +235,9 @@ void UDPGame::CheckAllMonsters() {
     Bullet bullet;
     int i = 0;
 
-//    if (_Monsters.size() == 0) {
-//        _udpServer->SendToAll("END_GAME");
-//    }
+    if (_Monsters.size() == 0) {
+        _udpServer->SendToAll("END_GAME");
+    }
 
     for (auto &monster : _Monsters) {
 
@@ -285,8 +285,8 @@ void UDPGame::MoveMonsters() {
                     monster.GetPosition().y,
                     });
             }
-            //std::string positions = UDPParser::getAllPositions(this, _udpServer);
-            //_udpServer->SendToAll(positions);
+            std::string positions = UDPParser::getAllPositions(this, _udpServer);
+            _udpServer->SendToAll(positions);
         }
     }
 }
