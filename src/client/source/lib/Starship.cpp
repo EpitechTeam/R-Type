@@ -6,7 +6,8 @@
 #include "RType.hpp"
 #include "Game.hpp"
 
-Starship::Starship(Game *game, std::string id) : game(game) , id(id) {
+Starship::Starship(Game *game, std::string id) : game(game) {
+    this->id = id;
     if (!texture3.loadFromFile("myasset/starship.png")) {
         std::cout << "ERROR TEXTURE" << std::endl;
     }

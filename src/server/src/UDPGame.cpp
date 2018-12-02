@@ -136,7 +136,7 @@ void UDPGame::ParseMonsterFile() {
         exit(1);
     }
     while (getline(File, line)) {
-        if (line.at(0) != '#') {
+        if (line.at(0) != '#' && line.at(0) != '\n') {
             std::istringstream is(line);
             is >> tmp_string; // Type
             monster.SetType(tmp_string);

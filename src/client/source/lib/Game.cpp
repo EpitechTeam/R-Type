@@ -69,6 +69,14 @@ int Game::GetMonsterById(std::string id) {
     return (-1);
 }
 
+unsigned int Game::GetMonsterByIdFromServer(std::string id) {
+    for (unsigned int i = 0; i < mob.size(); i++) {
+        if (mob[i]->_id.substr(1, mob[i]->_id.length()) == id)
+            return (i);
+    }
+    return (-1);
+}
+
 int Game::GetPlayerById(std::string id) {
     for (unsigned int i = 0; i < starship.size(); i++) {
         if (starship[i]->id == id)
@@ -99,26 +107,32 @@ void Game::updateView(std::string command) {
                     tokens = split(cmd[index], ":");
                     if (tokens[2] == "-1") {
                         if (MobAleadyExist(tokens[4] + tokens[3]) == false) {
-                            mob.emplace_back(new Mob(sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1]))
-                                    , tokens[4] + tokens[3], 1280));
-                        }
-                        else {
-                            mob[GetMonsterById(tokens[4] + tokens[3])]->_rect.setPosition(sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])));
+                            mob.emplace_back(new Mob(sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])),
+                                                     tokens[4] + tokens[3], 1280));
+                        } else {
+                            mob[GetMonsterById(tokens[4] + tokens[3])]->_rect.setPosition(
+                                    sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])));
                         }
                     } else {
-                        std::cout << "create other " <<  tokens[2] << std::endl;
+                        std::cout << "create other " << tokens[2] << std::endl;
                         if (PlayerAleadyExist(tokens[2]) == false) {
-                            std::cout << "create player " <<  tokens[2] << std::endl;
-                            starship.push_back(new Starship(this ,tokens[2]));
-                        }
-                        else {
-                            starship[GetPlayerById(tokens[2])]->starship.setPosition(sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])));
+                            std::cout << "create player " << tokens[2] << std::endl;
+                            starship.push_back(new Starship(this, tokens[2]));
+                        } else {
+                            starship[GetPlayerById(tokens[2])]->starship.setPosition(
+                                    sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])));
                         }
                     }
                 }
                 std::cout << "Nombre de starship : " << starship.size() << std::endl;
                 std::cout << "Nombre de mosntres : " << mob.size() << std::endl;
-
+            } else if (cmd[0] == "DEAD") {
+                std::cout << "erase Monster " << cmd[1] << "index: " << GetMonsterByIdFromServer(cmd[1]) << std::endl;
+                if(mob.size() > GetMonsterByIdFromServer(cmd[1]))
+                {
+                    std::cout << "clean monster: " << cmd[1] << std::endl;
+                    mob.erase(mob.begin() + GetMonsterByIdFromServer(cmd[1]));
+                }
 
             }
         }
@@ -162,15 +176,15 @@ void Game::draw(sf::RenderWindow *window) {
 
     //std::cout << "nb mob ===========> " << mob.size() << std::endl;
     for (unsigned int i = 0;  i != mob.size(); i++) {
-        if(!mob[i]->draw(window, deltaTime)){
+        if(mob[i] && !mob[i]->draw(window, deltaTime)){
             mob.erase(mob.begin() + i);
             i--;
         } else{
             for (unsigned int j = 0;  j != starship.size(); j++) {
-                if(starship[j]->starship.getPosition().x -1 <= mob[i]->_rect.getPosition().x  &&
+                if(mob[i] && starship[j]->starship.getPosition().x -1 <= mob[i]->_rect.getPosition().x  &&
                    starship[j]->starship.getPosition().x +1 >= mob[i]->_rect.getPosition().x)
                 {
-                    if(starship[j]->starship.getPosition().y -3 <= mob[i]->_rect.getPosition().y  &&
+                    if(mob[i] && starship[j]->starship.getPosition().y -3 <= mob[i]->_rect.getPosition().y  &&
                        starship[j]->starship.getPosition().y +30 >= mob[i]->_rect.getPosition().y) {
                         std::cout << "collision starship: " << j << std::endl;
                         mob[i]->_rect.setPosition(-100,0);
@@ -186,17 +200,15 @@ void Game::draw(sf::RenderWindow *window) {
             i--;
         } else{
             for (unsigned int j = 0;  j != mob.size(); j++) {
-                if(mob[j]->_rect.getPosition().x -1 <= bullet[i]->_rect.getPosition().x  &&
+                if(mob[j] && mob[j]->_rect.getPosition().x -1 <= bullet[i]->_rect.getPosition().x  &&
                    mob[j]->_rect.getPosition().x +1 >= bullet[i]->_rect.getPosition().x)
                 {
-                    if(mob[j]->_rect.getPosition().y -3 <= bullet[i]->_rect.getPosition().y  &&
+                    if(mob[j] && mob[j]->_rect.getPosition().y -3 <= bullet[i]->_rect.getPosition().y  &&
                        mob[j]->_rect.getPosition().y +50 >= bullet[i]->_rect.getPosition().y) {
                         std::cout << "cout::request " <<  "DEAD " + mob[j]->_id.substr(1, mob[j]->_id.length()) << std::endl;
                         client->request("DEAD " + mob[j]->_id.substr(1, mob[j]->_id.length()), [this](std::string cmd) {
-                            std::cout << "DEAD udp: "<< cmd << std::endl;
+                            //std::cout << "DEAD udp: "<< cmd << std::endl;
                         });
-                        mob.erase(mob.begin() + j);
-                        j--;
                         bullet[i]->_rect.setPosition(1280,0);
                     }
                 }
