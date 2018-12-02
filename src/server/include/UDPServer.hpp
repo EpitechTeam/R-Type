@@ -42,6 +42,7 @@ public:
     static std::string playerReady(UDPGame *game, UDPServer *server);
     static std::string movePlayer(UDPGame *game, UDPServer *server);
     static std::string collision(UDPGame *game, UDPServer *server);
+    static std::string damage(UDPGame *game, UDPServer *server);
 
 private:
     std::string _cmdToSend;

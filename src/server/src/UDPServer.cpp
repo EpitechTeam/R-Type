@@ -20,6 +20,7 @@ UDPParser::UDPParser() {
     _playerFncs["READY"] = UDPParser::playerReady;
     _playerFncs["MOVE_PLAYER"] = UDPParser::movePlayer;
     _playerFncs["COLLISION"] = UDPParser::collision;
+    _playerFncs["DAMAGE"] = UDPParser::damage;
 
 }
 UDPParser::~UDPParser() = default;
@@ -133,6 +134,16 @@ std::string UDPParser::collision(UDPGame *game, UDPServer *server) {
 
     if (player->GetLife() > 0)
         player->SetLife(player->GetLife() - 1);
+    return ("200");
+}
+
+std::string UDPParser::damage(UDPGame *game, UDPServer *server) {
+    Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
+    Player *player = server->GetPlayerByClient(client);
+
+    player->SetScore(player->GetScore() - 10);
+    if (player->GetScore() <= 0)
+        player->SetScore(0);
     return ("200");
 }
 
