@@ -115,12 +115,12 @@ void Game::updateView(std::string command) {
                             }
                         } else {
                             if (PlayerAleadyExist(tokens[2]) == false) {
-                                this->chat.push_back("create player " + tokens[2]);
-                                std::cout << "create player " << tokens[2] << std::endl;
+                                //this->chat.push_back("create player " + tokens[2]);
+                                //std::cout << "create player " << tokens[2] << std::endl;
                                 starship.push_back(new Starship(this, tokens[2]));
                             }
                             else {
-                                if (GetPlayerById(tokens[4] + tokens[3]) != -1)
+                                if (GetPlayerById(tokens[2]) != -1)
                                     starship[GetPlayerById(tokens[2])]->starship.setPosition(
                                             sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])));
                             }
