@@ -29,16 +29,16 @@ Launch R-Type Server and R-Type client
 ![GitHub Logo](./documentation/images/homepage.png)
 
 ### Join Server
-![GitHub Logo](https://avatars0.githubusercontent.com/u/16563634?s=400&u=d45af2f9e532559284b1ce5b8c2e0c4565550d29&v=4)
+![GitHub Logo](./documentation/images/join_server.png)
 
 ### Create Room
-![GitHub Logo](https://avatars0.githubusercontent.com/u/16563634?s=400&u=d45af2f9e532559284b1ce5b8c2e0c4565550d29&v=4)
+![GitHub Logo](./documentation/images/create_room.png)
 
 ### Room
-![GitHub Logo](https://avatars0.githubusercontent.com/u/16563634?s=400&u=d45af2f9e532559284b1ce5b8c2e0c4565550d29&v=4)
+![GitHub Logo](./documentation/images/room.png)
 
 ### Game
-![GitHub Logo](https://avatars0.githubusercontent.com/u/16563634?s=400&u=d45af2f9e532559284b1ce5b8c2e0c4565550d29&v=4)
+![GitHub Logo](./documentation/images/game.png)
 
 
 License
