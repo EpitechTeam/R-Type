@@ -66,15 +66,9 @@ public:
     }
 
     bool draw(sf::RenderWindow *window, float deltatime) {
-
-
-       // _rect.move(-0.2f, 0);
         animation->Update(0, deltatime);
         _rect.setTextureRect(animation->uvRect);
-        if(_rect.getPosition().x > 0){
-            window->draw(_rect);
-            return true;
-        }
+        window->draw(_rect);
         return false;
     }
 };
