@@ -28,13 +28,14 @@ private:
                     const boost::system::error_code& error,
                     std::size_t bytes_transferred);
 
+
 private:
 	udp::socket *_socket;
 	udp::endpoint *_receiverEndpoint;
 	udp::endpoint _senderEndpoint;
 	udp::endpoint _listenerSenderEndpoint;
-	boost::array<char, 1024> _recvBuffer;
-	boost::array<char, 1024> _listenerRecvBuffer;
+	char _recvBuffer[1024];
+	char _listenerRecvBuffer[1024];
 	std::thread *_updListenenerThread;
 	Game *_game;
 	int _type;
