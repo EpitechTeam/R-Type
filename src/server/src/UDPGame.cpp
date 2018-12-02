@@ -291,7 +291,9 @@ void UDPGame::KillMonster(std::string id)
 
     for (auto &monster : _Monsters) {
         if (monster.GetId() == id) {
+            _udpServer->SendToAll("DEAD " + id);
             _Monsters.erase(_Monsters.begin() + i);
+            return;
         }
         i++;
     }
