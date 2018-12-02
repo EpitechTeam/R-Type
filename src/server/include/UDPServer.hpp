@@ -37,6 +37,7 @@ public:
     static std::string initPlayer(UDPGame *game, UDPServer *server);
     static std::string updateScore(UDPGame *game, UDPServer *server);
     static std::string getScore(UDPGame *game, UDPServer *server);
+    static std::string getAllScore(UDPGame *game, UDPServer *server);
     static std::string sendMessageToAll(UDPGame *game, UDPServer *server);
     static std::string playerReady(UDPGame *game, UDPServer *server);
     static std::string movePlayer(UDPGame *game, UDPServer *server);

@@ -15,6 +15,7 @@ UDPParser::UDPParser() {
     _playerFncs["INIT_PLAYER"] = UDPParser::initPlayer;
     _playerFncs["UPDATE_SCORE"] = UDPParser::updateScore;
     _playerFncs["GET_SCORE"] = UDPParser::getScore;
+    _playerFncs["GET_ALL_SCORE"] = UDPParser::getAllScore;
     _playerFncs["MSG"] = UDPParser::sendMessageToAll;
     _playerFncs["READY"] = UDPParser::playerReady;
     _playerFncs["MOVE_PLAYER"] = UDPParser::movePlayer;
@@ -58,6 +59,9 @@ std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
 std::string UDPParser::killEntity(UDPGame *game, UDPServer *server) {
     std::string id = server->GetCommand()->at(1);
     std::cout << "kill monster id: " << id << std::endl;
+    Client client = server->GetClientByRemotepoint(server->GetRemoteEndpoint());
+    Player *player = server->GetPlayerByClient(client);
+    player->SetScore(player->GetScore() + 100);
     game->KillMonster(id);
     return ("200");
 }
@@ -86,6 +90,18 @@ std::string UDPParser::getScore(UDPGame *game, UDPServer *server) {
     Player *player = server->GetPlayerByClient(client);
     score = player->GetScore();
     return ("200 " + std::to_string(score));
+}
+
+std::string UDPParser::getAllScore(UDPGame *game, UDPServer *server) {
+    std::ostringstream ss;
+
+    ss << "GET_ALL_SCORE ";
+    for(auto player: (game->GetPlayers())) {
+        ss << player.GetId() << ":" << player.GetScore();
+        ss << " ";
+    }
+    ss << std::endl;
+    return (ss.str());
 }
 
 std::string UDPParser::sendMessageToAll(UDPGame *game, UDPServer *server) {
