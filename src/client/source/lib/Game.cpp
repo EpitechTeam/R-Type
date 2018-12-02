@@ -157,7 +157,7 @@ void Game::draw(sf::RenderWindow *window) {
     try {
         deltaTime = clock.restart().asSeconds();
         fps = 1.f / deltaTime;
-        sf::Time delay = sf::milliseconds(50);
+        sf::Time delay = sf::milliseconds(10);
         elapsed_time += r.restart();
         while (elapsed_time >= delay) {
             client->request("GET_POSITIONS", [this](std::string cmd) {
