@@ -1,27 +1,21 @@
 #TYPE        SPAWNCYCLE      POSITION        FIRECYCLE
 normal      5              1200,360           5
 normal      5              1200,200           3
-#
 normal      20             1200,360           5
 normal      20              1200,200          1
-#
 runner      30              1200,500          4
 runner      30              1200,100          4
-#
 runner      35              1200,360          4
 normal      35              1200,360          1
-#
 normal      50              1200,100          4
 robot      50              1200,200           1
 normal      50              1200,300          4
 robot      50              1200,500          1
 normal      50              1200,550          2
-#
 runner      70              1200,360          4
 normal      70              1200,400          1
 normal      75              1200,500          1
 normal      75              1200,250          1
-#
 normal       90              1200,50          1
 robot        92              1200,100         3
 normal       94              1200,200         4
