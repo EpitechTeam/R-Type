@@ -32,20 +32,23 @@ void Starship::draw(sf::RenderWindow *window, float deltatime,  std::vector<Bull
                 game->client->request(reqstr , [this](std::string cmd) {
                 });
             }
-            this->game->client->request("MOVE_PLAYER " + std::to_string(starship.getPosition().x) + " " + std::to_string(starship.getPosition().y), [this](std::string cmd) {});
             elapsed_time = sf::microseconds(0);
         }
         if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) && starship.getPosition().x > 0 ) {
             starship.setPosition(starship.getPosition().x -speed * deltatime, starship.getPosition().y);
+            this->game->client->request("MOVE_PLAYER " + std::to_string(starship.getPosition().x) + " " + std::to_string(starship.getPosition().y), [this](std::string cmd) {});
         }
         if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) && starship.getPosition().x < 1220) {
             starship.setPosition(starship.getPosition().x + speed * deltatime, starship.getPosition().y);
+            this->game->client->request("MOVE_PLAYER " + std::to_string(starship.getPosition().x) + " " + std::to_string(starship.getPosition().y), [this](std::string cmd) {});
         }
         if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) && starship.getPosition().y > 0) {
             starship.setPosition(starship.getPosition().x, starship.getPosition().y -speed * deltatime);
+            this->game->client->request("MOVE_PLAYER " + std::to_string(starship.getPosition().x) + " " + std::to_string(starship.getPosition().y), [this](std::string cmd) {});
         }
         if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Down  ) && starship.getPosition().y < 690) {
             starship.setPosition(starship.getPosition().x, starship.getPosition().y +  speed * deltatime);
+            this->game->client->request("MOVE_PLAYER " + std::to_string(starship.getPosition().x) + " " + std::to_string(starship.getPosition().y), [this](std::string cmd) {});
         }
     }
 }
