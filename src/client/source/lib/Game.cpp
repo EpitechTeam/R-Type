@@ -115,7 +115,8 @@ void Game::updateView(std::string command) {
                                     sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])));
                         }
                     } else {
-                        std::cout << "create other " << tokens[2] << std::endl;
+                        std::cout << "create other " <<  (PlayerAleadyExist(tokens[2]) ? "exist" : "not exist") << tokens[2] << std::endl;
+
                         if (PlayerAleadyExist(tokens[2]) == false) {
                             std::cout << "create player " << tokens[2] << std::endl;
                             starship.push_back(new Starship(this, tokens[2]));
@@ -182,10 +183,10 @@ void Game::draw(sf::RenderWindow *window) {
             i--;
         } else{
             for (unsigned int j = 0;  j != starship.size(); j++) {
-                if(mob[i] && starship[j]->starship.getPosition().x -1 <= mob[i]->_rect.getPosition().x  &&
+                if(mob[i] && starship[j] && starship[j]->starship.getPosition().x -1 <= mob[i]->_rect.getPosition().x  &&
                    starship[j]->starship.getPosition().x +1 >= mob[i]->_rect.getPosition().x)
                 {
-                    if(mob[i] && starship[j]->starship.getPosition().y -3 <= mob[i]->_rect.getPosition().y  &&
+                    if(mob[i] && starship[j] && starship[j]->starship.getPosition().y -3 <= mob[i]->_rect.getPosition().y  &&
                        starship[j]->starship.getPosition().y +30 >= mob[i]->_rect.getPosition().y) {
                         std::cout << "collision starship: " << j << std::endl;
                         mob[i]->_rect.setPosition(-100,0);
@@ -205,7 +206,8 @@ void Game::draw(sf::RenderWindow *window) {
                    mob[j]->_rect.getPosition().x +1 >= bullet[i]->_rect.getPosition().x)
                 {
                     if(mob[j] && mob[j]->_rect.getPosition().y -3 <= bullet[i]->_rect.getPosition().y  &&
-                       mob[j]->_rect.getPosition().y +50 >= bullet[i]->_rect.getPosition().y) {
+                       mob[j]->_rect.getPosition().y +50 >= bullet[i]->_rect.getPosition().y && bullet[i]->_id != "monster") {
+
                         std::cout << "cout::request " <<  "DEAD " + mob[j]->_id.substr(1, mob[j]->_id.length()) << std::endl;
                         client->request("DEAD " + mob[j]->_id.substr(1, mob[j]->_id.length()), [this](std::string cmd) {
                             //std::cout << "DEAD udp: "<< cmd << std::endl;
