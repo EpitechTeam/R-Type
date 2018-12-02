@@ -43,10 +43,6 @@ public:
 
     bool isGameStarted() const;
 
-    void startGame() {
-        this->_gameStarted = true;
-    }
-
     void MoveMonsters();
 
 private:

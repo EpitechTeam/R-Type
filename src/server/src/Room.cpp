@@ -47,6 +47,11 @@ Room::getMessages() {
 }
 
 bool Room::isAllPlayerReady() const {
+
+    if (this->_participants.size() < _maxSlots) {
+        return false;
+    }
+
     for (auto it : this->_participants) {
         if (!it->getReady()) {
             return false;

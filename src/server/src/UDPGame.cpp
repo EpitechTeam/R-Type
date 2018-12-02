@@ -43,6 +43,8 @@ void UDPGame::Init() {
  * Main UDPGame loop
  */
 void UDPGame::Start() {
+    this->_gameStarted = true;
+
     _gameThread = new std::thread([this]() {
         std::clock_t clock1;
         std::clock_t clock2;
