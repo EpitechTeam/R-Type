@@ -12,12 +12,12 @@ class Game;
 class Starship {
 
 public:
+    Game *game;
+    std::string id;
     sf::Texture texture3;
     sf::Sprite starship;
     std::vector <std::string> buffer;
-    std::string id;
     float speed = 350.f;
-    Game *game;
 
     Starship(Game *game, std::string id);
     ~Starship(){};
