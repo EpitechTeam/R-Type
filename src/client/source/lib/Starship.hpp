@@ -15,11 +15,11 @@ public:
     sf::Texture texture3;
     sf::Sprite starship;
     std::vector <std::string> buffer;
-    std::string id = "random";
+    std::string id;
     float speed = 350.f;
     Game *game;
 
-    Starship(Game *game);
+    Starship(Game *game, std::string id);
     ~Starship(){};
     int event(sf::Event event , std::vector<Bullet*> *bullet, sf::RenderWindow *window) {
         if (event.key.code == sf::Keyboard::Escape) {

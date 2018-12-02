@@ -124,7 +124,7 @@ void RType::event(sf::Event event) {
                 this->view = createRoom->event(event, window);
                 break;
             case 4:
-                this->view = joinRoom->event(event, window);
+                joinRoom->event(event, window);
                 break;
             case 5:
                 this->view = room->event(event, window);

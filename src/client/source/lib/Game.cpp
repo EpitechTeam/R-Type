@@ -26,8 +26,6 @@ Game::Game(RType *rType) : rType(rType) {
     front_promt.setCharacterSize(30);
     front_promt.setPosition(10, 250);
     front_promt.setFillColor(sf::Color::White);
-
-    starship.push_back(new Starship(this));
 };
 
 void Game::init_udp()
@@ -46,9 +44,6 @@ void Game::init_udp()
 }
 
 bool Game::MobAleadyExist(std::string id) {
-    /*std::cout << "Id= " << id << std::endl;
-    std::cout << "Size= " << std::to_string(mob.size()) << std::endl;
-     */
 
     for (unsigned int i = 0; i < mob.size(); i++) {
         if (mob[i]->_id == id)
@@ -57,6 +52,14 @@ bool Game::MobAleadyExist(std::string id) {
     return (false);
 }
 
+bool Game::PlayerAleadyExist(std::string id) {
+
+    for (unsigned int i = 0; i < starship.size(); i++) {
+        if (starship[i]->id == id)
+            return (true);
+    }
+    return (false);
+}
 
 int Game::GetMonsterById(std::string id) {
     for (unsigned int i = 0; i < mob.size(); i++) {
@@ -66,6 +69,13 @@ int Game::GetMonsterById(std::string id) {
     return (-1);
 }
 
+int Game::GetPlayerById(std::string id) {
+    for (unsigned int i = 0; i < starship.size(); i++) {
+        if (starship[i]->id == id)
+            return (i);
+    }
+    return (-1);
+}
 
 void Game::updateView(std::string command) {
     if(!command.empty()){
@@ -87,9 +97,7 @@ void Game::updateView(std::string command) {
 
                 for (unsigned int index = 1; index < cmd.size() - 1; index++) {
                     tokens = split(cmd[index], ":");
-                    if (tokens[2] == rType->room->playername) {
-                        continue;
-                    } else if (tokens[2] == "-1") {
+                    if (tokens[2] == "-1") {
                         if (MobAleadyExist(tokens[4] + tokens[3]) == false) {
                             mob.emplace_back(new Mob(sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1]))
                                     , tokens[4] + tokens[3], 1280));
@@ -98,11 +106,19 @@ void Game::updateView(std::string command) {
                             mob[GetMonsterById(tokens[4] + tokens[3])]->_rect.setPosition(sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])));
                         }
                     } else {
-
+                        std::cout << "create other " <<  tokens[2] << std::endl;
+                        if (PlayerAleadyExist(tokens[2]) == false) {
+                            std::cout << "create player " <<  tokens[2] << std::endl;
+                            starship.push_back(new Starship(this ,tokens[2]));
+                        }
+                        else {
+                            starship[GetPlayerById(tokens[2])]->starship.setPosition(sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])));
+                        }
                     }
                 }
-
+                std::cout << "Nombre de starship : " << starship.size() << std::endl;
                 std::cout << "Nombre de mosntres : " << mob.size() << std::endl;
+
 
             }
         }

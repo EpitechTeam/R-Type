@@ -47,7 +47,9 @@ public:
     };
 
     bool MobAleadyExist(std::string id);
+    bool PlayerAleadyExist(std::string id);
     int GetMonsterById(std::string id);
+    int GetPlayerById(std::string id);
 
     std::vector<std::string> split(std::string phrase, std::string delimiter) {
         std::vector<std::string> list;
