@@ -5,7 +5,8 @@
  [options]
  boost:shared=False
 
- sfml:shared=False
+ sfml:shared=True
+ sfml:network=True
  sfml:graphics=True
  sfml:window=True
 
