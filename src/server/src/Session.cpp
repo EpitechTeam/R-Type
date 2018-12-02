@@ -41,6 +41,7 @@ Session::doReadHeader() {
                                     this->doReadBody();
                                 } else if (this->_currentRoom) {
                                     this->_currentRoom->leave(shared_from_this());
+                                    this->close();
                                 }
                             });
 }
@@ -56,6 +57,7 @@ Session::doReadBody() {
                                     doReadHeader();
                                 } else if (this->_currentRoom) {
                                     this->_currentRoom->leave(shared_from_this());
+                                    this->close();
                                 }
                             });
 }
@@ -74,6 +76,7 @@ Session::doWrite() {
                                      }
                                  } else if (this->_currentRoom) {
                                      this->_currentRoom->leave(shared_from_this());
+                                     this->close();
                                  }
                              });
 }

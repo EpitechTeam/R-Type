@@ -6,10 +6,10 @@
 
 const int NUM_SECONDS = 5;
 
-Server::Server
-        (boost::asio::io_context &io_context, const tcp::endpoint &endpoint, const udp::endpoint &udpEndpoint)
-        : _acceptor(io_context, endpoint), _parser(new Parser(this)),
-          _udpEndPoint(udpEndpoint) {
+Server::Server(const int port)
+        : _acceptor(io_context, tcp::endpoint(tcp::v4(), port)),
+          _udpEndPoint(udp::v4(), port),
+          _parser(new Parser(this)) {
     this->_updateT = new std::thread([this]() {
 
         while (true) {
@@ -22,6 +22,15 @@ Server::Server
 Server::~Server() {
     if (this->_updateT) {
         this->_updateT->join();
+    }
+}
+
+void Server::run() {
+    try {
+        this->io_context.run();
+    }
+    catch (std::exception &e) {
+        std::cerr << "Exception: " << e.what() << "\n";
     }
 }
 

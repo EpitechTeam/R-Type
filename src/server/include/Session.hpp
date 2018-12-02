@@ -16,6 +16,15 @@ class Session
 public:
     Session(tcp::socket socket, Server *server);
 
+    ~Session() {
+        this->close();
+    }
+
+    void close() {
+        std::cout << "SOCKET CLOSED" << std::endl;
+        this->_socket.close();
+    }
+
     void start();
 
     void deliver(const Message &msg);

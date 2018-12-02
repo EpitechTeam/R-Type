@@ -14,8 +14,7 @@
 
 class Server {
 public:
-    Server(boost::asio::io_context &io_context,
-           const tcp::endpoint &endpoint, const udp::endpoint& udpEndpoint);
+    Server(const int port);
 
     ~Server();
 
@@ -25,14 +24,17 @@ public:
     boost::asio::io_context &getIo_context();
     void deleteEmptyRooms();
 
-        std::list<Room> _rooms;
+    void run();
+
+    std::list<Room> _rooms;
 private:
     void doAccept();
 
+    boost::asio::io_context io_context;
 
     tcp::acceptor _acceptor;
+
     Parser *_parser;
-    boost::asio::io_context io_context;
 
 private:
     udp::endpoint _udpEndPoint;
