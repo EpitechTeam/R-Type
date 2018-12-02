@@ -27,7 +27,7 @@ Parser::createRoom(Command &command, participant_ptr participant, Server *server
     auto tmp = Room::find(server->_rooms, name);
 
     if (tmp == NULL) {
-        server->_rooms.emplace_back(server->getIo_context(), name, std::stoi(slots), server->getUdpEndpoint());
+        server->RoomAdd(name, std::stoi(slots));
         return { 200,  "ROOM_CREATED"};
     } else {
         return { 400,  "ROOM_ALREADY_EXIST"};

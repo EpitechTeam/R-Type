@@ -21,23 +21,30 @@ public:
     void deliver(const Message &msg, participant_ptr participant);
 
     udp::endpoint &getUdpEndpoint();
+
     boost::asio::io_context &getIo_context();
+
     void deleteEmptyRooms();
 
     void run();
 
-    std::list<Room> _rooms;
+    void RoomAdd(std::string &name, int maxSlots);
+
+    std::list <Room> _rooms;
+
 private:
-    void doAccept();
+void doAccept();
 
-    boost::asio::io_context io_context;
+boost::asio::io_context io_context;
 
-    tcp::acceptor _acceptor;
+tcp::acceptor _acceptor;
 
-    udp::endpoint _udpEndPoint;
+udp::endpoint _udpEndPoint;
 
-    Parser *_parser;
-    std::thread *_updateT = NULL;
+std::mutex roomMutex;
+
+Parser *_parser;
+std::thread *_updateT = NULL;
 };
 
 #endif //PROJECT_Server_HPP

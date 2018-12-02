@@ -35,7 +35,16 @@ void Server::run() {
     }
 }
 
+void Server::RoomAdd(std::string &name, int maxSlots) {
+    this->roomMutex.lock();
+
+    this->_rooms.emplace_back(this->io_context, name, maxSlots, this->_udpEndPoint);
+    std::cout << "Room " << name << " with " << maxSlots << " max slots created." << std::endl;
+    this->roomMutex.unlock();
+}
+
 void Server::deleteEmptyRooms() {
+    this->roomMutex.lock();
     for (auto it = this->_rooms.begin(); it != this->_rooms.end(); ++it) {
         if (!it->_participants.empty()) {
             it->_timeout = 0;
@@ -47,6 +56,7 @@ void Server::deleteEmptyRooms() {
             this->_rooms.erase(it);
         }
     }
+    this->roomMutex.unlock();
 }
 
 void

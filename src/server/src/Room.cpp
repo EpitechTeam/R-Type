@@ -14,8 +14,8 @@ Room::join(participant_ptr participant) {
     _participants.insert(participant);
     participant->setRoom(this);
     std::cout << participant->getName() << " enter the room " << this->getName() << "." << std::endl;
-    for (auto msg: _recent_msgs)
-        participant->deliver(msg);
+    /*for (auto msg: _recent_msgs)
+        participant->deliver(msg);*/
 }
 
 void
@@ -28,9 +28,9 @@ Room::leave(participant_ptr participant) {
 void
 Room::deliver(const Message &msg) {
     _recent_msgs.push_back(msg);
-   /* while (_recent_msgs.size() > max_recent_msgs)
+   while (_recent_msgs.size() > max_recent_msgs)
         _recent_msgs.pop_front();
-
+/*
     for (auto participant: _participants)
         participant->deliver(msg);*/
 }

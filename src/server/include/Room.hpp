@@ -63,7 +63,7 @@ public:
 
 public:
     enum {
-        max_recent_msgs = 100
+        max_recent_msgs = 9
     };
     MessageQueue _recent_msgs;
     std::string _name;
