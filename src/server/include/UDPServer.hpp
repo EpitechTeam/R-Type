@@ -57,7 +57,7 @@ typedef std::vector<std::string> UDPCommand;
 
 class UDPServer {
 public:
-    UDPServer(boost::asio::io_context &, const udp::endpoint &, UDPGame *game);
+    UDPServer(udp::socket socket, UDPGame *game);
     ~UDPServer();
 
     void SendTo(std::string msg, udp::endpoint ep);

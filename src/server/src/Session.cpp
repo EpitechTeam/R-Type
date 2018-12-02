@@ -39,8 +39,11 @@ Session::doReadHeader() {
                             [this, self](boost::system::error_code ec, std::size_t /*length*/) {
                                 if (!ec && _read_msg.decode_header()) {
                                     this->doReadBody();
-                                } else if (this->_currentRoom) {
-                                    this->_currentRoom->leave(shared_from_this());
+                                } else {
+                                    if (this->_currentRoom) {
+                                        this->_currentRoom->leave(shared_from_this());
+                                    }
+                                    this->close();
                                 }
                             });
 }
@@ -54,8 +57,11 @@ Session::doReadBody() {
                                 if (!ec) {
                                     _server->deliver(_read_msg, shared_from_this());
                                     doReadHeader();
-                                } else if (this->_currentRoom) {
-                                    this->_currentRoom->leave(shared_from_this());
+                                } else {
+                                    if (this->_currentRoom) {
+                                        this->_currentRoom->leave(shared_from_this());
+                                    }
+                                    this->close();
                                 }
                             });
 }
@@ -72,8 +78,11 @@ Session::doWrite() {
                                      if (!_write_msgs.empty()) {
                                          doWrite();
                                      }
-                                 } else if (this->_currentRoom) {
-                                     this->_currentRoom->leave(shared_from_this());
+                                 } else {
+                                     if (this->_currentRoom) {
+                                         this->_currentRoom->leave(shared_from_this());
+                                     }
+                                     this->close();
                                  }
                              });
 }

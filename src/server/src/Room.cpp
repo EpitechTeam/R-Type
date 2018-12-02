@@ -4,8 +4,8 @@
 
 #include "../include/Room.hpp"
 
-Room::Room(boost::asio::io_context &io_context, std::string &name, int maxSlots, const udp::endpoint& udpEndpoint)
-        : _name(name), _maxSlots(maxSlots), _game(io_context, udpEndpoint) {
+Room::Room(const std::string &name, const int maxSlots)
+        : _name(name), _maxSlots(maxSlots), _game(name) {
     std::cout << "Room " << name << " with " << maxSlots << " slots max created." << std::endl;
 }
 
@@ -14,8 +14,8 @@ Room::join(participant_ptr participant) {
     _participants.insert(participant);
     participant->setRoom(this);
     std::cout << participant->getName() << " enter the room " << this->getName() << "." << std::endl;
-    for (auto msg: _recent_msgs)
-        participant->deliver(msg);
+    /*for (auto msg: _recent_msgs)
+        participant->deliver(msg);*/
 }
 
 void
@@ -28,9 +28,9 @@ Room::leave(participant_ptr participant) {
 void
 Room::deliver(const Message &msg) {
     _recent_msgs.push_back(msg);
-   /* while (_recent_msgs.size() > max_recent_msgs)
+   while (_recent_msgs.size() > max_recent_msgs)
         _recent_msgs.pop_front();
-
+/*
     for (auto participant: _participants)
         participant->deliver(msg);*/
 }
@@ -47,6 +47,11 @@ Room::getMessages() {
 }
 
 bool Room::isAllPlayerReady() const {
+
+    if (this->_participants.size() < (unsigned)_maxSlots) {
+        return false;
+    }
+
     for (auto it : this->_participants) {
         if (!it->getReady()) {
             return false;

@@ -45,6 +45,10 @@ public:
         do_connect(endpoints);
     }
 
+    ~Client() {
+        this->close();
+    }
+
     void write(const Message &msg) {
         boost::asio::post(*_ioContext,
                           [this, msg]() {

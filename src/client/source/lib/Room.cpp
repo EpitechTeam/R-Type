@@ -36,7 +36,7 @@ Room::Room(RType *rType) : rType(rType) {
         std::cout << "ERROR FONT" << std::endl;
     }
     text.setFont(font);
-    text.setString("Room name:");
+    text.setString("Chat: ");
     text.setCharacterSize(30);
     text.setPosition(350, 555);
     front_promt.setFont(font);
@@ -168,8 +168,10 @@ void Room::draw(sf::RenderWindow *window) {
             }
         });
         this->rType->network->request("GET_READY", [this](Command &response) {
-            if (response.getCommand() == "200") {
+
                 std::cout << "Response READY: " << response.toStr() << std::endl;
+                this->rType->udpPort = response.getCommand();
+
                 std::string line = response.toStr();
                 line = line.substr(3, line.size());
                 int len = line.length();
@@ -189,9 +191,6 @@ void Room::draw(sf::RenderWindow *window) {
                     }
                 }
                 this->player = subArray;
-            } else {
-                std::cout << "Error: " << response.toStr() << std::endl;
-            }
         });
         check_start_game();
         std::cout << "check_start_game()" << std::endl;
@@ -236,10 +235,10 @@ void Room::draw(sf::RenderWindow *window) {
     window->draw(this->exit_room);
     window->draw(this->starship);
     front_promt.setFillColor(sf::Color::White);
-    for(unsigned int i = 0; this->player.size() != i; i++) {
+    for(unsigned int i = 0; this->player.size() - 1 != i; i++) {
         tag.setPosition(1290, 100 + (i * 60));
         window->draw(tag);
-        front_promt.setString("player"+ std::to_string(i + 1) + ": " + player[i]);
+        front_promt.setString(std::to_string(i + 1) + ": " + player[i]);
         front_promt.setPosition(900, 115 + (i * 60));
         window->draw(this->front_promt);
     }

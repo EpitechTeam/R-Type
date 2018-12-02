@@ -9,16 +9,37 @@
 #include <sstream>
 #include "UDPServer.hpp"
 
-UDPGame::UDPGame(boost::asio::io_context &io, const udp::endpoint &endpoint)
-    : _cycle(0), _running(true), _numberOfPlayers(0), _gameStarted(false) {
+UDPGame::UDPGame(const std::string &roomName)
+    : _port(4444), _cycle(0), _running(true), _numberOfPlayers(0), _gameStarted(false) {
 
-    _udpThread = new std::thread([this, &io, &endpoint]() {
+    _udpThread = new std::thread([this, roomName]() {
 
         boost::asio::io_context io_context;
 
-        _udpServer = new UDPServer(io_context, endpoint, this);
+        udp::socket *socket = NULL;
 
-        io_context.run();
+        while (!socket) {
+            try {
+                socket = new udp::socket(io_context, udp::endpoint(udp::v4(), this->_port));
+            }
+            catch (std::exception &e) {
+                socket = NULL;
+                std::cerr << "--------------------------------------------------------------" << std::endl;
+                std::cerr << "UdpServer: Port " << this->_port++ << " already in used." << std::endl;
+                std::cerr << "UdpServer: Trying port " << this->_port << "..." << std::endl;
+                std::cerr << "--------------------------------------------------------------" << std::endl;
+            }
+        }
+
+        std::cout << "UDP Server for " << roomName << " listening to " << this->_port << std::endl;
+        try {
+            _udpServer = new UDPServer(std::move(*socket), this);
+
+            io_context.run();
+        }
+        catch (std::exception &e) {
+            std::cerr << "Reset: " << e.what() << "\n";
+        }
     });
 
     this->Init();
@@ -43,6 +64,8 @@ void UDPGame::Init() {
  * Main UDPGame loop
  */
 void UDPGame::Start() {
+    this->_gameStarted = true;
+
     _gameThread = new std::thread([this]() {
         std::clock_t clock1;
         std::clock_t clock2;
@@ -214,26 +237,26 @@ void UDPGame::CheckAllMonsters() {
 
     for (auto &monster : _Monsters) {
 
-        if (monster.GetPosition().x < 0) {
+        if (monster.GetPosition().x < -10) {
             std::cout << "Monster removed from stack\n";
+            _udpServer->SendToAll("DEAD " + monster.GetId());
             _Monsters.erase(_Monsters.begin() + i);
         }
 
         if (_cycle == monster.GetSpawnCycle() && monster.isSpawned() == false) {
             monster.Spawn();
-            std::cout << "Spawned new monster" << std::endl;
+            std::cout << "Spawned new monster ID: " << monster.GetId() << std::endl;
         }
 
-        if (monster.isSpawned() && monster.GetWaitingCycle() <= monster.GetFireCycle()) {
+        if (monster.isSpawned()) {
             if (monster.GetWaitingCycle() == monster.GetFireCycle()) {
                 bullet.SetPosition({monster.GetPosition().x, monster.GetPosition().y});
                 bullet.SetSpeed(monster.GetSpeedFromType(monster.GetType()));
                 _udpServer->NewBullet(bullet.GetPosition().x - 60, bullet.GetPosition().y, "monster");
+                monster.SetWaitingCycle(0);
             }
-            monster.SetWaitingCycle(monster.GetWaitingCycle() + 1);
-        }
-        else {
-            monster.SetWaitingCycle(0);
+            else
+                monster.SetWaitingCycle(monster.GetWaitingCycle() + 1);
         }
         i++;
     }

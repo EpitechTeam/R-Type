@@ -19,7 +19,7 @@ using boost::asio::ip::udp;
 
 class UDPGame {
 public:
-    UDPGame(boost::asio::io_context &io, const udp::endpoint &endpoint);
+    UDPGame(const std::string &roomName);
     ~UDPGame();
 
     void Init();
@@ -43,13 +43,14 @@ public:
 
     bool isGameStarted() const;
 
-    void startGame() {
-        this->_gameStarted = true;
-    }
-
     void MoveMonsters();
 
+    int getPort() const {
+        return this->_port;
+    }
+
 private:
+    int _port;
     int _cycle;
     std::vector<Monster> _Monsters;
     std::vector<Player> _Players;
