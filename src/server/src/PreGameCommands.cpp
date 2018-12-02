@@ -45,6 +45,8 @@ Parser::joinRoom(Command &command, participant_ptr participant, Server *server) 
         return { 400,  "UNKNOWN_ROOM"};
     } else if (tmp->_game.isGameStarted()) {
         return { 400,  "GAME_ALREADY_STARTED"};
+    } else if (tmp->_maxSlots <= tmp->_participants.size()) {
+        return { 400,  "ROOM_FULL"};
     } else {
         tmp->join(participant);
         return { 200, std::to_string(tmp->_maxSlots) };
