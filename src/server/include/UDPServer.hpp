@@ -31,7 +31,6 @@ public:
 
     std::string getCmdToSend();
 
-private:
     static std::string getAllPositions(UDPGame *game, UDPServer *server);
     static std::string killEntity(UDPGame *game, UDPServer *server);
     static std::string fireBullet(UDPGame *game, UDPServer *server);
