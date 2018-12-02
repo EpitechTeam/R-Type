@@ -26,11 +26,11 @@ void UDPClient::startListener()
 {
 	_type = 0;
 
-	//std::cout << "\tListening in thread...\n";
 	_socket->async_receive_from(boost::asio::buffer(_listenerRecvBuffer),
 			_listenerSenderEndpoint, [this](const boost::system::error_code& ec,
 											std::size_t len) {
 		_game->updateView(std::string(_listenerRecvBuffer));
+		memset(_listenerRecvBuffer, 0, sizeof(_listenerRecvBuffer));
 		startListener();
 	});
 }
@@ -42,29 +42,14 @@ void UDPClient::request(std::string msg, std::function<void(std::string)> callba
 
 
 	_socket->async_send_to(boost::asio::buffer(*message), *_receiverEndpoint,
-						   [this, message, callback](boost::shared_ptr<std::string> message,
-										   const boost::system::error_code& error,
-										   std::size_t bytes_transferred) {
-		callback(_recvBuffer);
-	});
+                           boost::bind(&UDPClient::handleSend, this, message,
+							boost::asio::placeholders::error,
+							boost::asio::placeholders::bytes_transferred));
 }
 
-//void UDPClient::handleReceive(const boost::system::error_code& error,
-//							  std::size_t bytes_transferred) {
-//	if (!error || error == boost::asio::error::message_size) {
-//		_game->updateView(std::string(_recvBuffer));
-//        startListener();
-//	}
-//}
-
-//void UDPClient::handleSend(boost::shared_ptr<std::string> message,
-//						   const boost::system::error_code& error,
-//						   std::size_t bytes_transferred) {
-//	if (!error || error == boost::asio::error::message_size) {
-//		_socket->async_receive_from(
-//				boost::asio::buffer(_recvBuffer), _senderEndpoint,
-//				boost::bind(&UDPClient::handleReceive, this,
-//							boost::asio::placeholders::error,
-//							boost::asio::placeholders::bytes_transferred));
-//	}
-//}
+void UDPClient::handleSend(boost::shared_ptr<std::string> message,
+						   const boost::system::error_code& error,
+						   std::size_t bytes_transferred) {
+	if (!error || error == boost::asio::error::message_size) {
+	}
+}
