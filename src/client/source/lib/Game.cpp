@@ -184,8 +184,6 @@ void Game::draw(sf::RenderWindow *window) {
     //std::cout << "nb mob ===========> " << mob.size() << std::endl;
     for (unsigned int i = 0;  i != mob.size(); i++) {
         if(mob[i] && !mob[i]->draw(window, deltaTime)){
-            mob.erase(mob.begin() + i);
-            i--;
         } else{
             for (unsigned int j = 0;  j != starship.size(); j++) {
                 if(mob[i] && starship[j] && starship[j]->starship.getPosition().x -1 <= mob[i]->_rect.getPosition().x  &&
