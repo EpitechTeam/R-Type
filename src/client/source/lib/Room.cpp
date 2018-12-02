@@ -168,8 +168,10 @@ void Room::draw(sf::RenderWindow *window) {
             }
         });
         this->rType->network->request("GET_READY", [this](Command &response) {
-            if (response.getCommand() == "200") {
+
                 std::cout << "Response READY: " << response.toStr() << std::endl;
+                this->rType->udpPort = response.getCommand();
+
                 std::string line = response.toStr();
                 line = line.substr(3, line.size());
                 int len = line.length();
@@ -189,9 +191,6 @@ void Room::draw(sf::RenderWindow *window) {
                     }
                 }
                 this->player = subArray;
-            } else {
-                std::cout << "Error: " << response.toStr() << std::endl;
-            }
         });
         check_start_game();
         std::cout << "check_start_game()" << std::endl;

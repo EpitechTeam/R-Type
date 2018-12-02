@@ -37,6 +37,7 @@ public:
     RequestManager *network;
     std::string ip = "127.0.0.1";
     std::string port = "4242";
+    std::string udpPort = "0";
     int view = 1;
     boost::asio::io_context io_context;
     Client *client = NULL;

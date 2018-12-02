@@ -175,7 +175,7 @@ Parser::getReady(Command &command, participant_ptr participant, Server *server) 
         for (auto &it : participant->_currentRoom->_participants) {
             response += it->getName() + (it->getReady() ?  ": READY" : ": NOT READY") + "|";
         }
-        return { 200, response };
+        return { participant->_currentRoom->_game.getPort(), response };
     } else {
         return { 400, "NOT_IN_ROOM" };
     }
