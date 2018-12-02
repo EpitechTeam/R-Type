@@ -18,10 +18,10 @@ $ ./R-Type_Client
 $ ./setup.sh
 ```
 
-Launch solution file R-Type.sln with Visual Studio\n
-Generate solution with realese x64 environement\n
-Go to X64/realese directory\n
-Launch R-Type Server and R-Type client\n
+Launch solution file R-Type.sln with Visual Studio <br />
+Generate solution with realese x64 environement <br />
+Go to X64/realese directory <br />
+Launch R-Type Server and R-Type client <br />
 
 # Screen
 
