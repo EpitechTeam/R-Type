@@ -12,7 +12,7 @@ if [ "$unameOut" = "Linux" ]; then
     mkdir build
     cd build
 
-    conan install .. --build=missing
+    conan install .. --build=missing -s compiler.libcxx=libstdc++11
     cmake .. -G "Unix Makefiles"
     cmake --build .
 elif [ "$unameOut" = "Darwin" ]; then
@@ -27,7 +27,7 @@ elif [ "$unameOut" = "Darwin" ]; then
     cmake .. -G "Unix Makefiles"
     make
 else
-    echo "WINDOWS"	
+    echo "WINDOWS"
 	echo "Files initiation ..."
 	mkdir x64
 	mkdir x64/Release
