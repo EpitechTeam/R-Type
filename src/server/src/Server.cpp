@@ -10,6 +10,7 @@ Server::Server(const int port)
         : _acceptor(io_context, tcp::endpoint(tcp::v4(), port)),
           _udpEndPoint(udp::v4(), port),
           _parser(new Parser(this)) {
+    std::cout << "Server listening to " << port << std::endl;
     this->_updateT = new std::thread([this]() {
 
         while (true) {

@@ -34,10 +34,9 @@ private:
 
     tcp::acceptor _acceptor;
 
-    Parser *_parser;
-
-private:
     udp::endpoint _udpEndPoint;
+
+    Parser *_parser;
     std::thread *_updateT = NULL;
 };
 
