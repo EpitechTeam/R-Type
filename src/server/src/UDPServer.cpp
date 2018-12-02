@@ -38,7 +38,7 @@ std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
         ss << " ";
     }
 
-    int monsterAsset;
+    int monsterAsset = 1;
 
     for(auto monster: (game->GetMonsters())) {
         if (monster.GetLife() == 0 || monster.isSpawned() == false)
@@ -48,6 +48,9 @@ std::string UDPParser::getAllPositions(UDPGame *game, UDPServer *server) {
         }
         if (monster.GetType() == "runner") {
             monsterAsset = 2;
+        }
+        if (monster.GetType() == "robot") {
+            monsterAsset = 3;
         }
         ss << monster.GetPosition().x << ":" << monster.GetPosition().y;
         ss << ":-1:" << monster.GetId() << ":" << monsterAsset;
