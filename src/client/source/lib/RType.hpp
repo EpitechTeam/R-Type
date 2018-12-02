@@ -42,8 +42,8 @@ public:
     boost::asio::io_context io_context;
     Client *client = NULL;
     tcp::resolver *resolver;
-    std::thread *t;
-    std::thread *inputT;
+    std::thread *t = NULL;
+    std::thread *inputT = NULL;
     tcp::resolver::results_type endpoints;
     bool connected = false;
 
@@ -56,7 +56,9 @@ public:
         if (this->inputT) {
             this->inputT->join();
         }
-        this->client->close();
+        if (this->client) {
+            this->client->close();
+        }
         //inputT.join();
         //inputT.join();
         //inputT.join();
