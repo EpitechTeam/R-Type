@@ -27,8 +27,8 @@ private:
 
     void doWrite();
 
+		tcp::socket _socket;
     Server *_server;
-    tcp::socket _socket;
     Message _read_msg;
     MessageQueue _write_msgs;
     static int counter;
