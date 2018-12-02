@@ -36,7 +36,7 @@ Room::Room(RType *rType) : rType(rType) {
         std::cout << "ERROR FONT" << std::endl;
     }
     text.setFont(font);
-    text.setString("Room name:");
+    text.setString("Chat: ");
     text.setCharacterSize(30);
     text.setPosition(350, 555);
     front_promt.setFont(font);

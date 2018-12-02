@@ -92,10 +92,8 @@ void Game::updateView(std::string command) {
         std::vector<std::string> cmd = split(command, " ");
         if (cmd.size() > 0)
         {
-
-            if (cmd[0] == "NEW_BULLET")
-            {
-                this->chat.push_back("create bullet " + cmd[3]);
+            if (cmd[0] == "NEW_BULLET") {
+               // this->chat.push_back("create bullet " + cmd[3]);
                 this->bullet.emplace_back(new Bullet(sf::Vector2f(std::stod(cmd[1]), std::stod(cmd[2])), cmd[3], 1150, cmd[3] == "monster" ? -1 : 1));
 
             }
@@ -106,10 +104,10 @@ void Game::updateView(std::string command) {
                 {
                     tokens = split(cmd[index], ":");
                     if (tokens[2] == "-1") {
-                        if (MobAleadyExist(tokens[4] + tokens[3]) == false) {
+                        if (!MobAleadyExist(tokens[4] + tokens[3])) {
+                            std::cout << "create monster " + tokens[4] + tokens[3] << std::endl;
                             this->chat.push_back("create monster " + tokens[4] + tokens[3]);
-                            mob.emplace_back(new Mob(sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])),
-                                                     tokens[4] + tokens[3], 1280));
+                            mob.emplace_back(new Mob(sf::Vector2f(std::stod(tokens[0]), std::stod(tokens[1])), tokens[4] + tokens[3], 1280));
                         } else {
                             if(GetMonsterById(tokens[4] + tokens[3]) != -1)
                                 mob[GetMonsterById(tokens[4] + tokens[3])]->_rect.setPosition(
@@ -180,11 +178,9 @@ void Game::draw(sf::RenderWindow *window) {
         front_promt.setPosition(20, 200 + (39 * point ));
         window->draw(this->front_promt);
     }
-
-    //std::cout << "nb mob ===========> " << mob.size() << std::endl;
     for (unsigned int i = 0;  i != mob.size(); i++) {
-        if(mob[i] && !mob[i]->draw(window, deltaTime)){
-        } else{
+         if (mob[i]) {
+             mob[i]->draw(window, deltaTime);
             for (unsigned int j = 0;  j != starship.size(); j++) {
                 if(mob[i] && starship[j] && starship[j]->starship.getPosition().x -1 <= mob[i]->_rect.getPosition().x  &&
                    starship[j]->starship.getPosition().x +1 >= mob[i]->_rect.getPosition().x)

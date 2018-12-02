@@ -27,7 +27,7 @@ public:
     sf::Text roomname;
     sf::Text create;
     std::string playername = "guest" +  std::to_string((rand() % 400 + 1));
-    std::string  server_ip = "127.0.0.1:4242";
+    std::string  server_ip = "192.168.1.98:4242";
     float x  = 0;
     float positionx = 30;
     float positiony = 442;
@@ -41,8 +41,6 @@ public:
 
     std::string event_to_string(sf::Event event, std::string str){
         sf::Uint32 key = event.text.unicode;
-
-        std::cout << "key "<< key << "c = " << backspace << std::endl;
         if (key >= 128 || key ==  27 || key == 13)
             return str;
         if (key ==   8) {
@@ -51,7 +49,6 @@ public:
             return  str.substr(0, str.size() != 0 ? str.size() -1 : 0);
         }
         if(backspace < 0 && key == 105) {
-            std::cout << "add " << backspace << std::endl;
             str += static_cast<char>((backspace * -1));
             backspace = key;
         } else

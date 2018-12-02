@@ -67,7 +67,9 @@ public:
 
     bool draw(sf::RenderWindow *window, float deltatime) {
         animation->Update(0, deltatime);
-        return true;
+        _rect.setTextureRect(animation->uvRect);
+        window->draw(_rect);
+        return false;
     }
 };
 
