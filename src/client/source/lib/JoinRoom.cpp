@@ -70,7 +70,7 @@ int JoinRoom::event(sf::Event event , sf::RenderWindow *window) {
             });
         }
     } else if (event.key.code == sf::Keyboard::Escape) {
-        return LOBBY;
+        this->rType->view = LOBBY;
     }
     return JOINROOM;
 };
