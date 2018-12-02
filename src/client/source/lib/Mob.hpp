@@ -19,6 +19,7 @@ public:
     Animation *animation;
     sf::RectangleShape _rect;
     float range;
+    bool alive = true;
 
     Mob(sf::Vector2f position, const std::string &id, float range) {
         _position = position;
@@ -69,7 +70,7 @@ public:
         animation->Update(0, deltatime);
         _rect.setTextureRect(animation->uvRect);
         window->draw(_rect);
-        return false;
+        return alive;
     }
 };
 

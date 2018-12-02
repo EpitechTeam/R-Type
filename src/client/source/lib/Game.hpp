@@ -102,14 +102,14 @@ public:
 
     int event(sf::Event event , sf::RenderWindow *window){
 
-        if((event.type == sf::Event::TextEntered || event.text.unicode == 8)) {
+        /*if((event.type == sf::Event::TextEntered || event.text.unicode == 8)) {
             promt = event_to_string(event, promt);
             text.setString( "cmd : " + promt);
         }
         if (event.key.code == sf::Keyboard::Return) {
             chat.push_back("sudo : " + promt);
             promt = "";
-        }
+        }*/
 
         for (unsigned int i = 0;  i != starship.size(); i++) {
             starship[i]->event(event,&bullet,window);

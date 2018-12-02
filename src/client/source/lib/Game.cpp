@@ -134,14 +134,13 @@ void Game::updateView(std::string command) {
                         std::cout << "clean monster: " << cmd[1] << " index: " << (GetMonsterByIdFromServer(cmd[1])) << std::endl;
                         this->chat.push_back("erase monster in index: " + std::to_string(GetMonsterByIdFromServer(cmd[1])));
                         std::cout << "Get monster by id from server : #" + std::to_string(GetMonsterByIdFromServer(cmd[1])) + "#" << std::endl;
-
-                        std::cout << "before mob size: " << mob.size() << std::endl;
-
-                        mob.erase(mob.begin() + GetMonsterByIdFromServer(cmd[1]));
-
-                        std::cout << "after mob size: " << mob.size() << std::endl;
+                        mob[GetMonsterByIdFromServer(cmd[1])]->alive = false;
                     }
-                } else if (cmd[0] != "200")
+                }
+                else if (cmd[0] == "GET_ALL_SCORE"){
+                     promt = command.substr(std::string("GET_ALL_SCORE ").length(), command.length());
+                }
+                else if (cmd[0] != "200")
                     this->chat.push_back(command);
             }
 
@@ -157,29 +156,26 @@ void Game::draw(sf::RenderWindow *window) {
     try {
         deltaTime = clock.restart().asSeconds();
         fps = 1.f / deltaTime;
-        sf::Time delay = sf::milliseconds(40);
+        sf::Time delay = sf::milliseconds(1000);
         elapsed_time += r.restart();
         while (elapsed_time >= delay) {
-/*
-
-         client->request("GET_POSITIONS", [this](std::string cmd) {
-                //     this->chat.push_back("res_gp : " + cmd);
+         client->request("GET_ALL_SCORE", [this](std::string cmd) {
             });
-*/
-
             elapsed_time -= delay;
         }
 
         this->x -= 0.018;
         this->background.setPosition(this->x, 0);
         window->draw(this->background);
-        int point = 0;
+
         front_promt.setFillColor(sf::Color(sf::Color::White));
 
 
         if (chat.size() > 30) {
             chat = this->slice(chat, chat.size() - 20, chat.size());
         }
+        //int point = 0;
+/*
         for (unsigned int i = chat.size(); i != 0 && (chat.size() - 10) != i; i--) {
             if (chat.size() > 10) {
                 point = i - (chat.size() - 10);
@@ -189,9 +185,10 @@ void Game::draw(sf::RenderWindow *window) {
             front_promt.setPosition(20, 200 + (39 * point));
             window->draw(this->front_promt);
         }
+*/
+
         for (unsigned int i = 0; i != mob.size(); i++) {
-            if (mob[i]) {
-                mob[i]->draw(window, deltaTime);
+            if (mob[i]->draw(window, deltaTime)) {
                 for (unsigned int j = 0; j != starship.size(); j++) {
                     if (mob[i] && starship[j] &&
                         starship[j]->starship.getPosition().x - 1 <= mob[i]->_rect.getPosition().x &&
@@ -204,6 +201,11 @@ void Game::draw(sf::RenderWindow *window) {
                         }
                     }
                 }
+            } else {
+                std::cout << "before mob size: " << mob.size() << std::endl;
+                mob.erase(mob.begin() + i);
+                std::cout << "after mob size: " << mob.size() << std::endl;
+                i--;
             }
         }
 
@@ -241,7 +243,7 @@ void Game::draw(sf::RenderWindow *window) {
         std::ostringstream ss;
         ss << fps;
         std::string s(ss.str());
-        this->text.setString("fps: " + s + " : " + promt);
+        this->text.setString(promt + " fps: " + s);
         window->draw(this->text);
         front_promt.setFillColor(sf::Color(sf::Color::White));
     }
