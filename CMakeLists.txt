@@ -73,20 +73,18 @@ if (LINUX)
 
     conan_basic_setup()
 
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-
     file(COPY src/client/asset
-            DESTINATION ${CMAKE_BINARY_DIR})
+            DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
     file(COPY src/client/myasset
-            DESTINATION ${CMAKE_BINARY_DIR})
+            DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
     file(COPY monsters
-            DESTINATION ${CMAKE_BINARY_DIR})
+            DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
     include_directories(src/server/include)
 
-    add_executable(R-Type_Server
+    add_executable(r-type_server
             src/server/src/Entities.cpp
             src/server/src/UDPGame.cpp
             src/server/src/main.cpp
@@ -99,13 +97,13 @@ if (LINUX)
             src/server/src/UDPServer.cpp
             )
 
-    target_link_libraries(R-Type_Server pthread)
-    target_link_libraries(R-Type_Server ${CONAN_LIBS})
+    target_link_libraries(r-type_server pthread)
+    target_link_libraries(r-type_server ${CONAN_LIBS})
 
     include_directories(src/client/source/include)
     include_directories(src/client/source/lib)
 
-    add_executable(R-Type_Client
+    add_executable(r-type_client
             src/client/source/include/UDPClient.cpp
             src/client/source/lib/Animation.cpp
             src/client/source/lib/Auth.cpp
@@ -124,8 +122,8 @@ if (LINUX)
             src/client/source/main.cpp
             )
 
-    target_link_libraries(R-Type_Server pthread)
-    target_link_libraries(R-Type_Client ${CONAN_LIBS})
+    target_link_libraries(r-type_client pthread)
+    target_link_libraries(r-type_client ${CONAN_LIBS})
 
     set(CMAKE_CXX_FLAGS "-g3 -Wall -O0 -std=c++11")
 

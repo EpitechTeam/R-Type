@@ -25,14 +25,10 @@ Parser::createRoom(Command &command, participant_ptr participant, Server *server
     std::string name(command.getArg(0));
     std::string slots(command.getArg(1));
 
-    std::cout << "BEFORE ROOM FIND" << std::endl;
     auto tmp = server->roomFind(name);
 
-    std::cout << "AFTER ROOM FIND" << std::endl;
     if (tmp == NULL) {
-        std::cout << "BEFORE ROOM ADD" << std::endl;
         server->RoomAdd(name, std::stoi(slots));
-        std::cout << "AFTER ROOM ADD: " << server->_rooms.size() << std::endl;
         return { 200,  "ROOM_CREATED"};
     } else {
         return { 400,  "ROOM_ALREADY_EXIST"};
@@ -92,9 +88,6 @@ Parser::message(Command &command, participant_ptr participant, Server *server) {
     if (participant->_currentRoom) {
 
         Message msg(message);
-        std::cout << "Message [";
-        std::cout.write(msg.body(), msg.body_length());
-        std::cout << "] sent to the room." << std::endl;
         participant->_currentRoom->deliver(msg);
         return { 200, "MESSAGE_DELIVER" };
     } else {

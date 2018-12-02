@@ -49,12 +49,10 @@ Room *Server::roomFind(std::string &name) {
 }
 
 void Server::RoomAdd(std::string &name, int maxSlots) {
-    std::cout << "LOCK" << std::endl;
     this->roomMutex.lock();
 
     this->_rooms.emplace_back(name, maxSlots);
     this->roomMutex.unlock();
-    std::cout << "UNLOCK" << std::endl;
 }
 
 void Server::deleteEmptyRooms() {

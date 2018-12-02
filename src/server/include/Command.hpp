@@ -32,7 +32,6 @@ public:
         strncpy (cstr, msg.body(), msg.body_length());
 
         this->_str = std::string(cstr);
-        std::cout << "STR: " << this->_str << std::endl;
         this->init(this->_str);
     }
 
