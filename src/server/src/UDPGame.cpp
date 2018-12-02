@@ -185,6 +185,18 @@ void UDPGame::ParseMonsterFile() {
                 monster.SetFireCycle(val);
                 monster.SetSpeed(Monster::GetSpeedFromType(monster.GetType()));
             }
+            if (monster.GetType() == "robot") {
+                is >> val; // SpawnCycle
+                monster.SetSpawnCycle(val);
+                is >> tmp_string; // Position
+                std::vector<std::string> positions = split(tmp_string, ",");
+                pos.x = std::stoi(positions[0]);
+                pos.y = std::stoi(positions[1]);
+                monster.SetPosition(pos);
+                is >> val; // FireCycle
+                monster.SetFireCycle(val);
+                monster.SetSpeed(Monster::GetSpeedFromType(monster.GetType()));
+            }
             monster.SetLife(100);
             monster.SetId(std::to_string(i));
             _Monsters.push_back(monster);
