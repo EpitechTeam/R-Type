@@ -33,8 +33,8 @@ private:
 	udp::endpoint *_receiverEndpoint;
 	udp::endpoint _senderEndpoint;
 	udp::endpoint _listenerSenderEndpoint;
-	boost::array<char, 1024> _recvBuffer;
-	boost::array<char, 1024> _listenerRecvBuffer;
+	std::string _recvBuffer;
+	std::string _listenerRecvBuffer;
 	std::thread *_updListenenerThread;
 	Game *_game;
 	int _type;

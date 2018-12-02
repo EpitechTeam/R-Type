@@ -245,18 +245,18 @@ void UDPGame::CheckAllMonsters() {
 
         if (_cycle == monster.GetSpawnCycle() && monster.isSpawned() == false) {
             monster.Spawn();
+            std::cout << "Spawned new monster ID: " << monster.GetId() << std::endl;
         }
 
-        if (monster.isSpawned() && monster.GetWaitingCycle() <= monster.GetFireCycle()) {
+        if (monster.isSpawned()) {
             if (monster.GetWaitingCycle() == monster.GetFireCycle()) {
                 bullet.SetPosition({monster.GetPosition().x, monster.GetPosition().y});
                 bullet.SetSpeed(monster.GetSpeedFromType(monster.GetType()));
                 _udpServer->NewBullet(bullet.GetPosition().x - 60, bullet.GetPosition().y, "monster");
+                monster.SetWaitingCycle(0);
             }
-            monster.SetWaitingCycle(monster.GetWaitingCycle() + 1);
-        }
-        else {
-            monster.SetWaitingCycle(0);
+            else
+                monster.SetWaitingCycle(monster.GetWaitingCycle() + 1);
         }
         i++;
     }
