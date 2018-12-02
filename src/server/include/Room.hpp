@@ -33,17 +33,7 @@ typedef std::deque<Message> MessageQueue;
 
 class Room {
 public:
-    Room(boost::asio::io_context &, std::string &name, int maxSlots, const udp::endpoint&);
-
-    static Room *find(std::list<Room> &rooms, std::string &name) {
-
-        for (auto &i : rooms) {
-            if (i.getName() == name) {
-                return &i;
-            }
-        }
-        return (NULL);
-    }
+    Room(const std::string &name, const int maxSlots);
 
     std::string getName() const {
         return this->_name;

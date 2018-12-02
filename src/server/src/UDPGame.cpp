@@ -9,16 +9,37 @@
 #include <sstream>
 #include "UDPServer.hpp"
 
-UDPGame::UDPGame(boost::asio::io_context &io, const udp::endpoint &endpoint)
-    : _cycle(0), _running(true), _numberOfPlayers(0), _gameStarted(false) {
+UDPGame::UDPGame(const std::string &roomName)
+    : _port(4444), _cycle(0), _running(true), _numberOfPlayers(0), _gameStarted(false) {
 
-    _udpThread = new std::thread([this, &io, &endpoint]() {
+    _udpThread = new std::thread([this, roomName]() {
 
         boost::asio::io_context io_context;
 
-        _udpServer = new UDPServer(io_context, endpoint, this);
+        udp::socket *socket = NULL;
 
-        io_context.run();
+        while (!socket) {
+            try {
+                socket = new udp::socket(io_context, udp::endpoint(udp::v4(), this->_port));
+            }
+            catch (std::exception &e) {
+                socket = NULL;
+                std::cerr << "--------------------------------------------------------------" << std::endl;
+                std::cerr << "UdpServer: Port " << this->_port++ << " already in used." << std::endl;
+                std::cerr << "UdpServer: Trying port " << this->_port << "..." << std::endl;
+                std::cerr << "--------------------------------------------------------------" << std::endl;
+            }
+        }
+
+        std::cout << "UDP Server for " << roomName << " listening to " << this->_port << std::endl;
+        try {
+            _udpServer = new UDPServer(std::move(*socket), this);
+
+            io_context.run();
+        }
+        catch (std::exception &e) {
+            std::cerr << "Reset: " << e.what() << "\n";
+        }
     });
 
     this->Init();

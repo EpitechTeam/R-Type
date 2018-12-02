@@ -4,8 +4,8 @@
 
 #include "../include/Room.hpp"
 
-Room::Room(boost::asio::io_context &io_context, std::string &name, int maxSlots, const udp::endpoint& udpEndpoint)
-        : _name(name), _maxSlots(maxSlots), _game(io_context, udpEndpoint) {
+Room::Room(const std::string &name, const int maxSlots)
+        : _name(name), _maxSlots(maxSlots), _game(name) {
     std::cout << "Room " << name << " with " << maxSlots << " slots max created." << std::endl;
 }
 

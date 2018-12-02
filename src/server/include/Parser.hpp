@@ -43,6 +43,7 @@ private:
     static Response getMessages(Command &command, participant_ptr participant, Server *server);
     static Response setReady(Command &command, participant_ptr participant, Server *server);
     static Response getReady(Command &command, participant_ptr participant, Server *server);
+    static Response getPort(Command &command, participant_ptr participant, Server *server);
 
     static void writeResponse(participant_ptr participant, const Response &response);
     static void writeResponse(participant_ptr participant, Response &response);

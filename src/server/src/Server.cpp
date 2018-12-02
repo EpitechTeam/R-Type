@@ -8,15 +8,14 @@ const int NUM_SECONDS = 5;
 
 Server::Server(const int port)
         : _acceptor(io_context, tcp::endpoint(tcp::v4(), port)),
-          _udpEndPoint(udp::v4(), port),
           _parser(new Parser(this)) {
-    std::cout << "Server listening to " << port << std::endl;
-    this->_updateT = new std::thread([this]() {
+    std::cout << "Tcp Server listening to " << port << std::endl << std::endl;
+    /*this->_updateT = new std::thread([this]() {
 
         while (true) {
             this->deleteEmptyRooms();
         }
-    });
+    });*/
     doAccept();
 }
 
@@ -31,20 +30,36 @@ void Server::run() {
         this->io_context.run();
     }
     catch (std::exception &e) {
-        std::cerr << "Exception: " << e.what() << "\n";
+        std::cerr << "Tcp Server: " << e.what() << "\n";
     }
 }
 
-void Server::RoomAdd(std::string &name, int maxSlots) {
+Room *Server::roomFind(std::string &name) {
     this->roomMutex.lock();
 
-    this->_rooms.emplace_back(this->io_context, name, maxSlots, this->_udpEndPoint);
-    std::cout << "Room " << name << " with " << maxSlots << " max slots created." << std::endl;
+    for (auto &i : this->_rooms) {
+        if (i.getName() == name) {
+            this->roomMutex.unlock();
+            return &i;
+        }
+    }
+
     this->roomMutex.unlock();
+    return (NULL);
+}
+
+void Server::RoomAdd(std::string &name, int maxSlots) {
+    std::cout << "LOCK" << std::endl;
+    this->roomMutex.lock();
+
+    this->_rooms.emplace_back(name, maxSlots);
+    this->roomMutex.unlock();
+    std::cout << "UNLOCK" << std::endl;
 }
 
 void Server::deleteEmptyRooms() {
     this->roomMutex.lock();
+
     for (auto it = this->_rooms.begin(); it != this->_rooms.end(); ++it) {
         if (!it->_participants.empty()) {
             it->_timeout = 0;
@@ -81,10 +96,6 @@ Server::deliver(const Message &msg, participant_ptr participant) {
     Command cmd(tmp.substr(0, msg.body_length()));
 
     this->_parser->execCommand(cmd, participant);
-}
-
-udp::endpoint &Server::getUdpEndpoint() {
-    return (this->_udpEndPoint);
 }
 
 boost::asio::io_context &Server::getIo_context() {

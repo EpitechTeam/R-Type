@@ -162,8 +162,8 @@ std::string UDPParser::getCmdToSend() {
     return (_cmdToSend);
 }
 
-UDPServer::UDPServer(boost::asio::io_context& io_context, const udp::endpoint &endpoint, UDPGame *game)
-        : _socket(io_context, endpoint), _game(game){
+UDPServer::UDPServer(udp::socket socket, UDPGame *game)
+        : _socket(std::move(socket)), _game(game){
 
     startReceive();
 }
