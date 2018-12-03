@@ -77,7 +77,7 @@
     <IncludePath>C:\Users\ilyes\Desktop\new\R-Type\src\server\include;C:\Users\ilyes\Desktop\new\R-Type\src\client\source\lib;C:\Users\ilyes\Desktop\new\R-Type\src\client\source\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\ilyes\Desktop\new\R-Type\src\server\include;C:\Users\ilyes\Desktop\new\R-Type\src\client\source\lib;C:\Users\ilyes\Desktop\new\R-Type\src\client\source\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\src\server\include;$(ProjectDir)\source\lib;$(ProjectDir)\source\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -150,4 +150,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project>
+</Project>ct>
