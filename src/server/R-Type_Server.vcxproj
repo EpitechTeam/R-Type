@@ -77,7 +77,7 @@
     <IncludePath>C:\Users\ilyes\Desktop\new\R-Type\src\server\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\ilyes\Desktop\new\R-Type\src\server\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
